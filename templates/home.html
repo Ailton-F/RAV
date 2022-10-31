@@ -1,0 +1,78 @@
+{% extends 'index.html' %}
+
+{% block titulo %}
+  Página Inicial
+{% endblock %}
+
+{% block conteudo %}
+  <main class="main-home p-4">
+    <section class="container-fluid px-8 main-container">
+      <div class="home text-left py-12r">
+        <div class="title">
+          <h1 class="home-title">Mude a vida de idosos que merecem ser cuidados.</h1>
+        </div>
+        <h4 class="mt-5">Cadastre-se como voluntário no Asylum
+ou cadastre seu asilo para que ele possa receber doações e visitas de voluntários do projeto.
+        </h4>
+        <a href="/cadastro">
+          <button class="btn btn-cad-home mt-5 text-white fw-bold">Cadastre-se</button>
+        </a>
+      </div>
+    </section>
+    
+    <section class="container-fluid px-8"> 
+      <hr>
+      <h1 class="mt-8 title-2 text-center">Voluntarie-se ao projeto e ajude asilos que precisam de <span class="fw-bold">você!</span></h1>
+      <div class="row mt-9 d-flex volunteers">
+        <div class="col-md-4 text-center">
+          <div class="icon d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-person"></i>
+          </div>
+          <h4 class="icon-label">Pessoa</h4>
+          <p class="text-muted">Participe do projeto marcando uma visita a algum dos asilos cadastrados para doar seu tempo aos idosos lá presentes. Por meio de um tempo conversando com eles e fazendo companhia, você já faz uma grande diferença!</p>
+        </div>
+        
+        <div class="col-md-4 text-center">
+          <div class="icon d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-building"></i>
+          </div>
+          <h4 class="icon-label">Instituição</h4>
+          <p class="text-muted">Participe do projeto com sua Instituição marcando para fazer uma apresentação a algum dos asilos cadastrados. Seja apresentação de música, de dança, de teatro ou qualquer outra, terá um impacto muito significativo para eles!</p>
+        </div>
+        
+        <div class="col-md-4 text-center">
+          <div class="icon d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-user-doctor"></i>
+          </div>
+          <h4 class="icon-label">Profissional</h4>
+          <p class="text-muted">Participe do projeto como um profissional da saúde, seja você médico ou psicólogo, para prestar ajuda aos idosos dos asilos e contribuir para o bem-estar deles!</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container-fluid px-8 py-12r about-container">
+      <div class="py-18r about-info ms-auto">
+        <h1 class="about-title fw-bold">Sobre nós</h1>
+        <div class="about-info-text">
+          <p>O asylum é um projeto desenvolvido por alunos do curso técnico de informática para Internet do Instituto de Ciência e Tecnologia do Rio Grande do Norte. O projeto foi pensado como uma forma tecnológica e moderna de tentar ajudar os idosos em asilos, os quais são tão carentes de atenção, atividades de lazer e cuidados.</p>
+          <p>O site apresenta uma forma voluntária de realizar esse objetivo fazendo uma ponte entre os asilos que queiram receber ajuda com as pessoas, os profissionais e as instituições artísticas que queiram doar seu tempo por meio de uma visita ou doar alguma quantia a um ou mais dos asilos cadastrados, ajudando, assim, os idosos que lá residem por meio dessas ações e apresentando um significativo diferencial na vida deles.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container-fluid px-8 mt-12 donate-section">
+      <div class="card align-items-center">
+        <div class="card-body donate-container text-center">
+          <div class="text-start mb-4">
+            <h1 class="fw-bold text-center donate-title">Faça já a sua doação!</h1>
+            <p>Muitos asilos carecem de alguma ajuda financeira para melhorar as condições de vida dos idosos. Você pode doar qualquer quantia para qualquer asilo cadastrado e ajudá-lo a suprir algumas de suas necessidades e a construir um melhor ambiente aos idosos lá residentes. A doação poderá ser em seu nome ou em nome da sua Instituição, bem como anônima. Ajude a fazer o diferencial na vida dessas pessoas tão importantes!</p>
+          </div>
+          <a class="py-1 px-0" href="/cadastro">
+            <button class="btn btn-cad-donate py-3 px-5 fw-bold text-white">Cadastre-se</button>
+          </a>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+{% endblock %}

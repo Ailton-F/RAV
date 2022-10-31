@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+
+{% block titulo%}
+  Doações
+{% endblock %}
+
+{% block conteudo %}
+
+
+
+<main>
+  <section class="container d-flex justify-content-center align-items-center mt-3">
+    <div class="card w-50">
+    <div class="card-header">
+      <h1 class="display-3 text-center"> Espaço para doação </h1>
+    </div>
+      <div class=card-body>
+        <form>
+          <div class="mb-3">
+            <label for="nome-instituicao"> Nome do asilo que receberá sua doação: </label>
+            <input class="form-control" type="text" name="nome-instituicao" placeholder=""/>
+          </div>
+          <div class="mb-3">
+            <label for="email"> Informe o seu email: </label>
+            <input class="form-control" type="email" name="email" placeholder=""/>
+          </div>
+          
+          <label for="price">Valor a ser doado:</label>
+          <div class="mb-3">
+            <input class="form-control" type="number" name="price" min="0.00" max="10000.00" step="0.01" />
+          </div>
+          <div class="mb-3">
+            <button type="submit" class="btn btn-asylum">Doar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% endblock %}
+

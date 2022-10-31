@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+
+{% block titulo%}
+  Usuário
+{% endblock %}
+
+{% block conteudo %}
+
+
+
+<main>
+  <section class="container d-flex justify-content-center align-items-center mt-3">
+    <div class="card w-50">
+    <div class="card-header">
+      <h1 class="display-3 text-center"> Cadastro de Usuário </h1>
+    </div>
+      <div class=card-body>
+        <form action="/create" method="POST">
+          <div class="mb-3">
+            <label for="nome"> Nome completo: </label>
+            <input class="form-control" type="text" name="nome" placeholder=""/>
+          </div>
+          <div class="mb-3">
+            <label for="email"> Informe o seu email: </label>
+            <input class="form-control" type="email" name="email" placeholder=""/>
+          </div>
+          
+          <label for="cpf_cnpj">Informe seu CPF/CNPJ:</label>
+          <div class="mb-3">
+            <input class="form-control" type="text" name="cpf_cnpj" placeholder=""/>
+          </div>
+          
+          <label for="password">Senha:</label>
+          <div class="mb-3">
+            <input class="form-control" type="password" name="password" placeholder=""/>
+          </div>
+          <div class="mb-3">
+            <button type="submit" class="btn btn-asylum">Atualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% endblock %}

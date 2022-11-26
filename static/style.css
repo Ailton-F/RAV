@@ -4,6 +4,9 @@
 /*Configs*/
 body{
   font-family: 'Montserrat', sans-serif;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  overflow-x: hidden;
 }
 
 /*Tamanhos variados*/
@@ -46,10 +49,11 @@ body{
   font-size:  14px;
 }
 
-.btn-login{
+.btn-login-home{
   border: 1px solid;
   font-size:  14px;
 }
+
 
 .navbar{
   box-shadow: 0px 4px 5px 1px rgba(0, 0, 0, 0.25);
@@ -108,6 +112,7 @@ body{
   margin-right:auto;
   display: block;
   border-radius: 50%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .icon>i{
@@ -121,6 +126,8 @@ body{
 
 .about-container{
   position: relative;
+  background-color: #EEE;
+  z-index: -2;
 }
 
 .about-container:before{
@@ -149,13 +156,14 @@ body{
 }
 
 .donate-section{
-  margin-bottom: 11rem;  
+  margin-bottom: 11rem;
 }
 
 .donate-container{
   max-width: 63rem;
   padding: 3.75rem 6rem;
   filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.25));
+  background-color: #E3E3E3;
 }
 
 .donate-title{
@@ -196,10 +204,6 @@ footer {
     content: '';
 }
 
-.link--metis {
-    text-transform: lowercase;
-}
-
 .link--metis::before {
     transform-origin: 100% 50%;
     transform: scale3d(0, 1, 1);
@@ -209,4 +213,79 @@ footer {
 .link--metis:hover::before {
     transform-origin: 0% 50%;
     transform: scale3d(1, 1, 1);
+}
+
+/*Login page*/
+.login-section{
+  min-height: 100vh;
+}
+
+.btn-login{
+  font-size: 1.5em;
+  background-color: #195F82;
+}
+
+.login-home-form input,
+.cad-home-form input{
+  background-color: #ECECEC;
+  padding: 1em;
+}  
+
+.login-section>.col-md-6:nth-child(2){
+  position: relative;
+  min-height: 100vh;
+  background-color: #195F82;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  margin: 0 auto;
+}
+
+.login-section>.col-md-6:nth-child(2):after{
+  content: "";
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-image: url('img/top-r-detail.svg');
+  background-repeat: no-repeat;
+  position: absolute;
+  left: calc(100% - 259px);
+}
+
+/*cad container*/
+.subtitle-login{
+  max-width: fit-content;
+  margin: auto;
+}
+
+.cad-container>.col-md-6:nth-child(2):after{
+  content: "";
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-image: url('img/top-r-detail.svg');
+  background-repeat: no-repeat;
+  position: absolute;
+  left: calc(100% - 252px);
+  top: 0;
+}
+
+.cad-container>.col-md-6:nth-child(2){
+  position: relative;
+  min-height: 100vh;
+  background-color: #195F82;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  margin: 0 auto;
+}
+
+.form-check-input:checked[type=radio] {
+    background-image: none !important;
+}
+
+.form-check-input[type=radio] {
+    border-radius: 0;
+}
+
+.form-radio-options label{
+  font-size: 1.5em;
 }

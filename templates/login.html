@@ -6,9 +6,36 @@
 
 {% block conteudo %}
 
-  <section class="row">
-    <h1>Bem-vindo de volta!</h1>
-
+  <section class="row align-items-center login-section">
+    <div class="col-md-6 px-8">
+      <h1 class="fw-bold text-center py-3">Bem-vindo de volta!</h1>
+      <div class="card border-0">  
+        <div class="card-body border-top border-bottom px-0">
+          <form class="login-home-form">
+            <div class="mb-3 mt-5">
+              <label class="fw-bold form-label" for="login-email">Email</label>
+              <input class="form-control" type="email" placeholder="Email" name="login-email">
+            </div>
+            <div class="mb-3">
+              <label class="fw-bold form-label" for="login-password">Senha</label>
+              <input class="form-control" type="password" placeholder="Senha" name="login-password">
+            </div>
+            <p class="text-end py-3"><a class="text-dark text-decoration-none" href="#">Esqueceu sua senha?</a></p>
+            <button type="submit" class="btn btn-login form-control text-white fw-bold mb-5 py-3">Entrar</button>
+          </form>
+        </div>
+        <p class="text-center mt-5">Não tem uma conta? <a class="fw-bold text-decoration-none text-dark" href="/cadastro">Cadastre-se</a></p>
+      </div>
+    </div>
+    <div class="col-md-6 login-aside d-flex align-items-center justify-content-center">
+      <div class="text-center">
+        <img class="mb-5" src="{{url_for('static', filename='img/asylumm 3.svg')}}" width="200" alt=""><br>
+        <img class="mb-3" src="{{url_for('static', filename='img/Medical care-bro 2.svg')}}" width="561" alt="">
+        <div class="px-5">
+          <h4 class="mt-3 px-5 text-white subtitle-login">Ajude-nos a melhorar a vida dos idosos em asilos!</h4>
+        </div>
+      </div>
+    </div>
   </section>
 
 {% endblock %}

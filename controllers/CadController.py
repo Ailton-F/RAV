@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, flash, url_for
+from flask import render_template, request, redirect, flash
 from models import Usuario
 from database import db
 
@@ -19,8 +19,10 @@ class Cad():
       nome = request.form.get('nome')
       email = request.form.get('email')
       senha = request.form.get('senha')
-      cpf_cnpj = request.form.get('cpf_cnpj')
-      usuario = Usuario(nome, email, senha, cpf_cnpj)
+      admin = False
+      user_type = request.form.get('tipo')
+      usuario = Usuario(nome, email, senha, admin, user_type)
+      
       db.session.add(usuario)
       db.session.commit()
       flash('Dados cadastrados com sucesso!', 'success')

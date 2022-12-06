@@ -3,13 +3,13 @@ from database import db
 import routes
 from flask_migrate import Migrate
 from models import Usuario
-from models import Doacao
 
 app = Flask(__name__)
 
 app.secret_key =  'analin'
+
 for bluePrint in routes.__all__:
-  app.register_blueprint(bluePrint)
+  app.register_blueprint(bluePrint, url_prefix=f'/{bluePrint.name}')
 
 conexao = "sqlite:///meubanco.db"
 app.config["SQLALCHEMY_DATABASE_URI"] = conexao
@@ -20,7 +20,7 @@ migrate = Migrate(app, db)
 
 @app.route('/')
 def index():
-    return render_template('home.html')
+  return render_template('home.html')
 
 if __name__ == "__main__": 
   app.run(host='0.0.0.0', port=81, debug=True)

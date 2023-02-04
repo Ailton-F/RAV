@@ -11,7 +11,16 @@
       <h1 class="fw-bold text-center py-3">Bem-vindo de volta!</h1>
       <div class="card border-0">  
         <div class="card-body border-top border-bottom px-0">
-          <form class="login-home-form">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{category}} position-relative top-0 mx-auto" role="alert">
+              {{message}}
+            </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+          <form class="home-forms" method="post" action="/login/">
             <div class="mb-3 mt-5">
               <label class="fw-bold form-label" for="login-email">Email</label>
               <input class="form-control" type="email" placeholder="Email" name="login-email">

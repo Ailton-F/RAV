@@ -1,0 +1,39 @@
+{% extends 'indexwhf.html' %}
+{% block titulo %}
+  Editar usuário
+{% endblock %}
+
+{% block conteudo %}
+  <section>
+    <div class="d-flex">
+      {% include 'user/loghome.html' %}
+      
+      <div class="flex-grow-1 vh-100">
+        
+        {% with u=user %}
+          {% include 'user/logheader.html'%}
+        {% endwith %}
+        
+        <div class="user-home-content mt-3">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+              <div class="alert alert-{{category}} position-relative top-0 mx-auto" role="alert">
+                {{message}}
+              </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          
+          
+          <div class="card border-0 shadow-lg">
+            <div class="card-boyd">
+              <h2 class="fw-bold p-5">Olá, {{ user.nome.capitalize().split()[0] }}! Bem-vindo ao Asylum!</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+{% endblock %}

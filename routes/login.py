@@ -1,11 +1,16 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from controllers import login
+from utils import lm
+from models import Usuario
 
 log_bl = Blueprint('login', __name__)
 
 #Rotas de login
+#Carrega o usuário a partir do ID guardado na sessão
+@lm.user_loader
+def load_user(id):
+    return Usuario.query.get(id)
+
 #Retorna a página de login
-@log_bl.route('/login')
-@log_bl.route('/login')
-def log(): 
-  return login.getLoginPage()
+@log_bl.route('/', methods=['GET', 'POST'])
+def log(): return login.getLogin()

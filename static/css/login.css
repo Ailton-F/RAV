@@ -1,0 +1,34 @@
+/*Login page*/
+.login-section{
+  min-height: 100vh;
+}
+
+.btn-login{
+  font-size: 1.5em;
+  background-color: #195F82;
+}
+
+.home-forms input{
+  background-color: #ECECEC;
+  padding: 1em;
+}  
+
+.login-section>.col-md-6:nth-child(2){
+  position: relative;
+  min-height: 100vh;
+  background-color: #195F82;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  margin: 0 auto;
+}
+
+.login-section>.col-md-6:nth-child(2):after{
+  content: "";
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-image: url('img/top-r-detail.svg');
+  background-repeat: no-repeat;
+  position: absolute;
+  left: calc(100% - 259px);
+}

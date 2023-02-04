@@ -1,0 +1,26 @@
+.admin-sidebar{
+  background-color: #195F82;  
+}
+
+.sidebar-icon{
+  font-size: 1.5em;
+  margin-right: 1em;
+}
+
+.admin-sidebar-item{
+  padding: .5em 0;
+}
+
+.admin-content{
+  padding-right: 6em;
+  padding-left: 6em;
+  overflow: auto;
+}
+
+.admin-action{
+  font-size: 1.5em;
+}
+
+.swal2-styled.swal2-confirm{
+  background-color: #41C2A6 !important;
+}

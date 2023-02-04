@@ -1,17 +1,33 @@
 {
   "files": {
+    "routes/usuarios.py": [
+      {
+        "id": "e42bad5e-1486-4ee0-8987-2ae6af1426b2",
+        "line": 36,
+        "version": 1512,
+        "index": 848
+      }
+    ],
     "templates/index.html": [
       {
         "id": "e55bf068-28b6-447d-bc0c-3112dd9c1f17",
-        "line": 48,
-        "version": 2680,
-        "index": 2032
+        "line": 46,
+        "version": 2766,
+        "index": 2104
       },
       {
         "id": "dddc70b6-ec8f-4011-b235-0c37dd7d7b28",
-        "line": 48,
-        "version": 2680,
-        "index": 2032
+        "line": 46,
+        "version": 2766,
+        "index": 2104
+      }
+    ],
+    "templates/loghome.html": [
+      {
+        "id": "7dec16e9-9520-4d33-b01a-d562d2f67a2a",
+        "line": 26,
+        "version": 260,
+        "index": 1172
       }
     ]
   }

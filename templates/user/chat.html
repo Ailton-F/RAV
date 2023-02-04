@@ -1,0 +1,25 @@
+{% extends 'indexwhf.html' %}
+{% block titulo %}
+  Meu perfil
+{% endblock %}
+
+{% block conteudo %}
+  <section>
+    <div class="d-flex">
+      {% include 'loghome.html' %}
+      <div class="vh-100 user-chat-content flex-grow-1 p-3 bg-white">
+        <div class="chat-container h-100 d-flex align-items-end flex-grow-1">
+          <div class="w-100">
+              <div id="chat" class="d-flex justify-content-end flex-column"></div>
+              <div class="d-flex align-items-end">
+                <form class="d-flex w-100" onsubmit="subdReload(event)">
+                  <input id="msg" type="text" placeholder="Escreva algo!" class="form-control">
+                  <button id="sendMsg" class="btn btn-success" type="submit" value="{{user.id}}">Enviar</button>
+                </form>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

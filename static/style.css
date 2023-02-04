@@ -1,4 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+@import url("css/admin.css");
+@import url("css/edit_user.css");
+@import url("css/home_user.css");
+@import url("css/config_user.css");
+@import url("css/log_home.css");
+@import url("css/profile_user.css");
+@import url("css/login.css");
+@import url("css/cad.css");
+@import url("css/visit.css");
 
 
 /*Configs*/
@@ -43,6 +52,32 @@ body{
 }
 
 /*Estilos próprios*/
+.bg-blue-2{
+  background-color: #BEE0F0;  
+}
+
+.bg-green{
+  background-color: #41C2A6;
+}
+
+.bg-dark-blue{
+  background-color: #195F82;  
+}
+
+.bottom-l-detail:before{
+  content: "";
+  display: inline-block;
+  width: 22.5em;
+  height: 18em;
+  background-image: url('img/bottom-l-detail.svg');
+  background-repeat: no-repeat;
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  left: 0;
+  top: calc(100% - 18em);
+}
+
 .nav-link{
   font-size: 14px; 
 }
@@ -220,81 +255,19 @@ footer {
     transform: scale3d(1, 1, 1);
 }
 
-/*Login page*/
-.login-section{
-  min-height: 100vh;
-}
-
-.btn-login{
-  font-size: 1.5em;
-  background-color: #195F82;
-}
-
-.login-home-form input,
-.cad-home-form input{
-  background-color: #ECECEC;
-  padding: 1em;
-}  
-
-.login-section>.col-md-6:nth-child(2){
-  position: relative;
-  min-height: 100vh;
-  background-color: #195F82;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-  margin: 0 auto;
-}
-
-.login-section>.col-md-6:nth-child(2):after{
-  content: "";
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  background-image: url('img/top-r-detail.svg');
-  background-repeat: no-repeat;
-  position: absolute;
-  left: calc(100% - 259px);
-}
-
-/*cad container*/
-.cad-container{
-  min-height: 100vh;
-}
-
-.subtitle-login{
-  max-width: fit-content;
-  margin: auto;
-}
-
-.cad-container>.col-md-6:nth-child(2){
-  position: relative;
-  min-height: 100vh;
-  background-color: #195F82;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-  margin: 0;
-}
-
-.cad-container>.col-md-6:nth-child(2):after{
-  content: "";
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  background-image: url('img/top-r-detail.svg');
-  background-repeat: no-repeat;
-  position: absolute;
-  left: calc(100% - 259px);
-}
-
-
-.form-check-input:checked[type=radio] {
+.cad-check-input:checked[type=radio] {
     background-image: none !important;
 }
 
-.form-check-input[type=radio] {
+.cad-check-input[type=radio] {
     border-radius: 0;
 }
 
 .form-radio-options label{
   font-size: 1.5em;
+}
+
+.btn:focus{
+  outline: none;
+  background-color: #195F82;
 }

@@ -1,0 +1,56 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white admin-sidebar {%if wAfter %}after-none{%endif%}">
+      <a href="/" class="d-flex align-items-center mb-3 mt-3 mb-md-0 me-md-auto ms-md-auto text-white text-decoration-none">
+        <img src="{{url_for('static', filename='img/asylumm 3.svg')}}" width="94px"> 
+      </a>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto mt-5">
+        <li class="nav-item admin-sidebar-item">
+          <a href="/usuarios/profile" class="nav-link text-white d-flex align-items-center link link--metis">
+            <i class="ri-user-line sidebar-icon"></i>
+            Perfil
+          </a>
+        </li>
+        <li class="nav-item admin-sidebar-item">
+          <a href="/usuarios/visit" class="nav-link text-white d-flex align-items-center link link--metis">
+            <i class="ri-map-pin-line sidebar-icon"></i>
+            Visitas
+          </a>
+        </li>
+        <li class="nav-item admin-sidebar-item">
+          <a href="#" class="nav-link text-white d-flex align-items-center link link--metis">
+            <i class="ri-hand-heart-line sidebar-icon"></i>
+            Doações
+          </a>
+        </li>
+        {% if current_user.admin %}
+        <li class="nav-item admin-sidebar-item">
+          <a href="/usuarios/admin" class="nav-link text-white d-flex align-items-center link link--metis">
+            <i class="ri-group-line sidebar-icon"></i>
+            Usuários
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item admin-sidebar-item">
+          <a href="#" class="nav-link text-white d-flex align-items-center link link--metis">
+            <i class="ri-chat-1-line sidebar-icon"></i>
+            Chat
+          </a>
+        </li>
+        {% endif %}
+        <li class="nav-item admin-sidebar-item">
+          <a href="#" class="nav-link text-white d-flex align-items-center link link--metis">
+            <i class="ri-settings-5-line sidebar-icon"></i>
+            Configurações
+          </a>
+        </li>
+      </ul>
+      <hr>
+      <div>
+        <form method="post" action="/usuarios/logoff">
+          <button type="submit" class="btn d-flex align-items-center text-white text-decoration-none">
+            <i class="ri-logout-box-r-line sidebar-icon"></i>
+            <p class="px-3 mb-0">Sair</p>
+          </button>
+        </form>
+      </div>
+    </div>

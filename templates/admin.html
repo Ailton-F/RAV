@@ -1,0 +1,57 @@
+{% extends 'indexwhf.html' %}
+
+{% block titulo%}
+  Admin
+{% endblock %}
+
+{% block conteudo %}
+    <section>
+      <div class="d-flex">
+        {% include 'loghome.html'%}
+        <div class="vh-100 flex-grow-1 admin-content">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert alert-{{category}} position-relative top-0 mx-auto" role="alert">
+            {{message}}
+          </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      <div class="d-flex text-left align-items-center my-5">
+        <h2 class="fw-bold">Usuários</h2>
+      </div>
+      <table class="table table-striped mt-2">
+        <thead>
+          <tr>
+            <th scope="col">E-mail</th>
+            <th class="text-center" scope="col">Asilo/Voluntário</th>
+            <th class="text-center" scope="col">Editar</th>
+            <th class="text-center" scope="col">Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+        {%for u in usuarios%}
+          <tr>
+            <td class="align-middle">{{u.email}}</td>
+            <td class="text-center align-middle">{{u.user_type._value_}}</td>
+            <td class="text-center">
+              <form method="get" action="/usuarios/edit/{{u.id}}">
+                <button type="submit" id="{{u.id}}" class="btn border-0 text-info admin-edit">
+                  <i class="ri-edit-box-line admin-action"></i>
+                </button>
+              </form>
+            </td>
+            <td class="text-center">
+              <button id="{{u.id}}" class="btn border-0 text-danger admin-delete">
+                <i class="ri-delete-bin-6-line admin-action"></i>
+              </button>
+            </td>
+          </tr>
+        {%endfor%}
+        </tbody>
+      </table>
+    </div>
+      </div>
+    </section>
+{% endblock %}

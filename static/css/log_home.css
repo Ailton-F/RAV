@@ -1,0 +1,16 @@
+.admin-sidebar:after{
+  content: "";
+  background-image: url('../img/top-r-detail.svg');
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: calc(100% - 250px);
+  top: 0;
+  transform: rotateX(180deg);
+  z-index: -1;
+}
+
+.after-none:after{
+  background-image: url('');
+}

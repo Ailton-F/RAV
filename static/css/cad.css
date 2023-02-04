@@ -1,0 +1,29 @@
+/*cad container*/
+.cad-container{
+  min-height: 100vh;
+}
+
+.subtitle-login{
+  max-width: fit-content;
+  margin: auto;
+}
+
+.cad-container>.col-md-6:nth-child(2){
+  position: relative;
+  min-height: 100vh;
+  background-color: #195F82;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  margin: 0;
+}
+
+.cad-container>.col-md-6:nth-child(2):after{
+  content: "";
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-image: url('img/top-r-detail.svg');
+  background-repeat: no-repeat;
+  position: absolute;
+  left: calc(100% - 259px);
+}

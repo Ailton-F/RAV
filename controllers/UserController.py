@@ -137,7 +137,5 @@ class User():
     id_usuario = current_user.id
     visit = Visita(id_usuario, name, asylum_name, visit_date, visit_hour, visit_reason)
     
-    print(visit)
-    # db.session.add(visit)
-    # db.session.commit()
-    
+    db.session.add(visit)
+    db.session.commit()

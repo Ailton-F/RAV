@@ -4,7 +4,6 @@ $(document).ready( () => {
   var socket = io.connect('https://asylum.ailtonborges.repl.co');
 
   socket.on('message', function (data) {
-    // console.log(data)
     $.ajax({
       type: "GET",
       url: '/usuarios/chat_template'

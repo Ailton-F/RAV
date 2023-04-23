@@ -16,9 +16,9 @@ class Usuario(db.Model, UserMixin):
   login_step = db.Column(db.Integer)
   admin = db.Column(db.Boolean)
   
-  rs_usuario_asylum = db.relationship('Asilo', backref="usuario_asilo")
-  rs_usuario_volunteer = db.relationship('Voluntario', backref="usuario_voluntario")
-  rs_usuario_visit = db.relationship('Visita', backref="usuario_visita")
+  rs_usuario_asylum = db.relationship('Asilo', cascade="all,delete", backref="usuario_asilo")
+  rs_usuario_volunteer = db.relationship('Voluntario', cascade="all,delete", backref="usuario_voluntario")
+  rs_usuario_visit = db.relationship('Visita', cascade="all,delete", backref="usuario_visita")
 
   def __init__(self, email, senha, admin, user_type, login_step):
     self.email = email
@@ -68,24 +68,26 @@ class Asilo(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'), unique=True)
   nome = db.Column(db.String(100))
-  cep = db.Column(db.String(100))
+  # Não tá querendo entrar no banco de dados RESOLVER DEPOIS!!!!!!!!!
+  # pix = db.Column(db.String(100))
+  # cep = db.Column(db.String(100))
   cnpj = db.Column(db.String(100))
-  rs_asylum_visit = db.relationship('Visita', backref="asylum_visita")
+  rs_asylum_visit = db.relationship('Visita', cascade="all,delete", backref="asylum_visita")
 
 
-  def __init__(self, id_usuario, nome, cep, cnpj):
+  def __init__(self, id_usuario, nome, cnpj):
+    self.id_usuario = id_usuario
     self.nome = nome
-    self.cep= cep
     self.cnpj = cnpj
 
   def __repr__(self):
-    return f"asilo('{self.nome}, {self.cep}, {self.cnpj}')"
+    return f"asilo('{self.nome}, {self.cnpj}')"
 
 class Visita(db.Model):
   __tablename__ = 'visita'
   id = db.Column(db.Integer, primary_key=True)
-  id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'), unique=True)
-  id_asilo = db.Column(db.Integer, db.ForeignKey('asilo.id'), unique=True)
+  id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'))
+  id_asilo = db.Column(db.Integer, db.ForeignKey('asilo.id'))
   nome_voluntario = db.Column(db.String(100))
   nome_asilo = db.Column(db.String(100))
   data = db.Column(db.Date)
@@ -93,7 +95,9 @@ class Visita(db.Model):
   motivo = db.Column(db.String(500))
 
 
-  def __init__(self, id_usuario, nome_voluntario, nome_asilo, data, hora, motivo):
+  def __init__(self, id_usuario, id_asilo, nome_voluntario, nome_asilo, data, hora, motivo):
+    self.id_usuario = id_usuario
+    self.id_asilo = id_asilo
     self.nome_voluntario = nome_voluntario
     self.nome_asilo= nome_asilo
     self.data= data

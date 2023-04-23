@@ -1,6 +1,6 @@
 {% extends 'indexwhf.html' %}
 {% block titulo %}
-  Editar usuário
+  Marcar visita
 {% endblock %}
 
 {% block conteudo %}
@@ -10,7 +10,7 @@
         <h2 class="fw-bold">Formulário de visita</h2>
       </div>
       <div class="card-body">
-        <form class="form" action="/usuarios/book" method="POST">
+        <form class="form" action="/usuarios/book/{{asilo.id}}" method="POST">
           <div class="form-group row">
             <div class="col-6">    
               <label class="form-label mb-3 fw-bold" for="name">Nome do usuário</label>
@@ -20,7 +20,7 @@
             </div>
             <div class="col-6">    
               <label class="form-label mb-3 fw-bold" for="asylum-name">Asilo de destino</label>
-              <input class="form-control mb-5" name="asylum-name" placeholder="Asilo">
+              <input class="form-control mb-5" name="asylum-name" value="{{asilo.nome}}" readonly>
               <label class="form-label mb-3 fw-bold" for="visit-hour">Hora da visita</label>
               <input class="form-control mb-5" type="time" name="visit-hour">
             </div>

@@ -1,9 +1,11 @@
-{% extends 'index.html' %}
+{% extends 'indexwhf.html' %}
 
 {% block titulo %}
   Mapa
 {% endblock %}
 
 {% block conteudo %}
-  <div id="map"></div>
+  <main>
+    {{ iframe | safe }}
+  </main>
 {% endblock %}

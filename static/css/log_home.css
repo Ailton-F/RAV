@@ -8,9 +8,11 @@
   left: calc(100% - 250px);
   top: 0;
   transform: rotateX(180deg);
-  z-index: -1;
+  z-index: 999;
 }
 
 .after-none:after{
   background-image: url('');
+  height: 0;
+  width: 0;
 }

@@ -1,6 +1,6 @@
 $(document).ready( () => {
   $(".cpf-cnpj").mask("999.999.999-99");
-  
+
   var socket = io.connect('https://asylum.ailtonborges.repl.co');
 
   socket.on('message', function (data) {
@@ -30,28 +30,6 @@ $(document).ready( () => {
     $('#msg').val('');
   })
   
-  $('.admin-delete').click(function(){
-    let id = $(this).attr('id')
-    let url = `/usuarios/delete/${id}/`
-    Swal.fire({
-        title: 'Tem certeza?',
-        text: 'Quer mesmo excluir o usuário:? ',
-        icon: 'error',
-        showDenyButton: true,
-        confirmButtonText: 'Sim',
-        denyButtonText: `Não`,
-      }).then(function (result) {
-        if (result.isConfirmed){
-          $.ajax({
-            type: "POST",
-            url: url
-          }).done((res)=>{
-            console.log(res);
-            window.location.href = res;
-          });
-        }
-      });
-  });
 
   $('.config-radius').on('change', function(){
     if($('#cpf-radius').is(':checked')){
@@ -66,6 +44,54 @@ $(document).ready( () => {
   
   $('.config').css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, 'slow');
 });
+
+//DELETA USUÁRIOS
+function deleteUser(e){
+  let id = $(e).attr('id')
+  let url = `/usuarios/delete/${id}/`
+  Swal.fire({
+      title: 'Tem certeza?',
+      text: 'Quer mesmo excluir o usuário:? ',
+      icon: 'error',
+      showDenyButton: true,
+      confirmButtonText: 'Sim',
+      denyButtonText: `Não`,
+    }).then(function (result) {
+      if (result.isConfirmed){
+        $.ajax({
+          type: "POST",
+          url: url
+        }).done((res)=>{
+          let table = $(res).find('table').children()
+          $('table').html(table);
+        });
+      }
+    });
+}
+
+// DELETA VISITAS
+function deleteVisit(e) {
+    let id = $(e).attr('id')
+    let url = `/usuarios/delete_visit/${id}`
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: 'Quer mesmo desmarcar o agendamento? ',
+        icon: 'error',
+        showDenyButton: true,
+        confirmButtonText: 'Sim',
+        denyButtonText: `Não`,
+      }).then(function (result) {
+        if (result.isConfirmed){
+          $.ajax({
+            type: "POST",
+            url: url
+          }).done((res)=>{
+            let table = $(res).find('table').children()
+            $('table').html(table);
+          });
+        }
+      });
+  }
 
 function subdReload(e){
   e.preventDefault();

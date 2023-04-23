@@ -55,6 +55,22 @@ def asylumConfigPage(): return user.getAsylumConfigPage()
 @login_required
 def visitHomePage(): return user.getVisitHomePage()
 
-@users_bl.route('/book', methods=["GET", "POST"])
+@users_bl.route('/visit/<int:id>', methods=['GET'])
 @login_required
-def bookVisit(): return user.getBookVisitPage()
+def asylumProfile(id): return user.getAsylumProfile(id)
+
+@users_bl.route('/book/<int:id>', methods=["GET", "POST"])
+@login_required
+def bookVisit(id): return user.getBookVisitPage(id)
+
+@users_bl.route('/dashboard', methods=["GET", "POST"])
+@login_required
+def dashboard(): return user.getDashboard()
+
+@users_bl.route('/delete_visit/<int:id>', methods=["POST"])
+@login_required
+def deleteVisit(id): return user.deleteVisitLink(id)
+
+@users_bl.route('/edit_visit/<int:id>', methods=["GET", "POST"])
+@login_required
+def editVisit(id): return user.editVisitPage(id)

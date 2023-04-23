@@ -1,7 +1,7 @@
 {% extends 'indexwhf.html' %}
 
 {% block titulo%}
-  Admin
+  Dashboard de visitas
 {% endblock %}
 
 {% block conteudo %}
@@ -43,7 +43,7 @@
               </form>
             </td>
             <td class="text-center">
-              <button id="{{u.id}}" class="btn border-0 text-danger admin-delete">
+              <button id="{{u.id}}" class="btn border-0 text-danger" onclick="deleteUser(this)">
                 <i class="ri-delete-bin-6-line admin-action"></i>
               </button>
             </td>

@@ -8,6 +8,10 @@
   --body-color:#444;
 }
 
+.visit-info-btn{
+  cursor: pointer;
+}
+
 .group {
   &:after {
     content: "";

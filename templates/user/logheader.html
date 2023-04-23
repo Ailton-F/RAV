@@ -1,6 +1,11 @@
 <header>
-  <h4 class="fw-bold text-end px-5 pt-4 mb-0"> 
-    {{ u.nome.capitalize().split()[0] }}
-  </h4>
-  <hr>
+  <div class="d-flex align-items-center justify-content-end px-5 py-3">
+    <figure class="m-0 me-3">
+      <img class="profile-header-picture rounded-circle" src="https://www.thesoupspoon.com/wp-content/uploads/2014/11/user.jpg"/>
+    </figure>
+    <h4 class="fw-bold mb-0"> 
+      {{ u.nome.capitalize().split()[0] }}
+    </h4>
+  </div>
+  <hr class="m-0">
 </header>

@@ -1,5 +1,6 @@
 .admin-sidebar{
-  background-color: #195F82;  
+  background-color: #195F82;
+  min-width: 14em;
 }
 
 .sidebar-icon{

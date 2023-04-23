@@ -6,35 +6,42 @@
 
 {% block conteudo %}
 <section class="d-flex align-items-center justify-content-center vh-100 bg-dark-blue bottom-l-detail">
-  <div class="card config asylum-cad-card flex-grow-1 px-5 py-3 shadow-lg">
-  <div class="card-body">
-
-    <div class="my-4">
-      <h3 class="fw-bold text-center">Seja bem-vindo!</h3>
-      <hr>
+  <div class="flex-grow-1 asylum-cad-card">
+    <div>
+      <a href="#" class="text-white text-decoration-none d-flex align-items-center">
+        <i class="ri-arrow-left-line me-3"></i>
+        <span>voltar</span>
+      </a>
     </div>
-
-    <form action="/usuarios/user_config" method="POST" class="form-asylum-cad mt-5">
-      <label for="pro-name" class="mb-2 fw-bolder">Nome</label>
-      <input type="text" class="form-control mb-3" placeholder="Nome" name="user-name">
-      <div class="form-group d-flex">
-        <div class="form-check">
-          <input class="form-check-input config-radius" type="radio" name="flexRadioDefault" id="cpf-radius" checked>
-          <label class="form-check-label fw-bold" for="flexRadioDefault1">
-            CPF
-          </label>
+    <div class="card config mt-4 px-5 py-3 shadow-lg">
+      <div class="card-body">
+        <div class="my-4">
+          <h3 class="fw-bold text-center">Seja bem-vindo!</h3>
+          <hr>
         </div>
-        <div class="form-check ms-3">
-          <input class="form-check-input config-radius" type="radio" name="flexRadioDefault" id="cnpj-radius">
-          <label class="form-check-label fw-bold" for="flexRadioDefault2">
-            CNPJ
-          </label>
-        </div>
+  
+        <form action="/usuarios/user_config" method="POST" class="form-asylum-cad mt-5">
+          <label for="pro-name" class="mb-2 fw-bolder">Nome</label>
+          <input type="text" class="form-control mb-3" placeholder="Nome" name="user-name">
+          <div class="form-group d-flex">
+            <div class="form-check">
+              <input class="form-check-input config-radius" type="radio" name="flexRadioDefault" id="cpf-radius" checked>
+              <label class="form-check-label fw-bold" for="flexRadioDefault1">
+                CPF
+              </label>
+            </div>
+            <div class="form-check ms-3">
+              <input class="form-check-input config-radius" type="radio" name="flexRadioDefault" id="cnpj-radius">
+              <label class="form-check-label fw-bold" for="flexRadioDefault2">
+                CNPJ
+              </label>
+            </div>
+          </div>
+          <input type="text" class="form-control mb-3 cpf-cnpj" placeholder="CPF" name="cpf-cnpj">
+          <input type="submit" class="btn bg-dark-blue text-white form-control fw-bolder mt-4 mb-5 py-3" value="Confirmar">
+        </form>
       </div>
-      <input type="text" class="form-control mb-3 cpf-cnpj" placeholder="CPF" name="cpf-cnpj">
-      <input type="submit" class="btn bg-dark-blue text-white form-control fw-bolder mt-4 mb-5 py-3" value="Confirmar">
-    </form>
-    
+    </div>
   </div>
 </section>
 {% endblock %}

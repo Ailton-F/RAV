@@ -74,9 +74,11 @@ class User():
             return redirect('/usuarios')
 
         user = Usuario.query.filter_by(id=id).first()
-
+        if user.user_type._value_ == 'V':
+          usertype = Voluntario.query.filter_by(id_usuario=user.id).first()
+        else: usertype = Asilo.query.filter_by(id_usuario=user.id).first()
         if request.method == 'GET':
-            return render_template('user/edit.html', user=user)
+            return render_template('user/edit.html', user=user, usertype=usertype)
 
         elif request.method == 'POST':
             email = request.form.get('edit-email')

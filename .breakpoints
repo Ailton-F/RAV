@@ -1,5 +1,13 @@
 {
   "files": {
+    "controllers/UserController.py": [
+      {
+        "id": "40c8a646-1238-4fd4-a885-537c60969458",
+        "line": 108,
+        "version": 6746,
+        "index": 3615
+      }
+    ],
     "routes/usuarios.py": [
       {
         "id": "e42bad5e-1486-4ee0-8987-2ae6af1426b2",

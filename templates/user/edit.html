@@ -1,0 +1,56 @@
+{% extends 'indexwhf.html' %}
+{% block titulo %}
+  Editar usuário
+{% endblock %}
+
+{% block conteudo %}
+  <section>
+    <div class="d-flex">
+      {% include 'user/loghome.html' %}
+      <div class="flex-grow-1 vh-100">
+        {% with u=usertype %}
+          {% include 'user/logheader.html' %}
+        {% endwith %}
+        <div class="user-edit-content justify-content-center align-items-center flex-grow-1">
+          <div class="border-0">
+            <div class="card-body">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                  <div class="alert alert-{{category}} position-relative top-0 mx-auto" role="alert">
+                    {{message}}
+                  </div>
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
+              <div class="d-flex align-items-center justify-content-between mt-4">
+                <h2 class="fw-bold mb-0">Editar perfil</h2>
+                <hr class="w-75">
+              </div>
+              <form class="edit-user-form" method="post" action="/usuarios/edit/{{user.id}}">
+                <div class="mb-3 mt-5">
+                  <label class="form-label" for="edit-email">E-mail</label>
+                  <input class="form-control" type="email" placeholder="Email" name="edit-email" value="{{user.email}}">
+                </div>
+                
+                <div class="row">
+                  <div class="mb-3 col-md-6 col-12">
+                    <label class="form-label" for="edit-pass">Senha:</label>
+                    <input class="form-control" type="password" placeholder="Senha" name="edit-pass" value={{user.senha}}>
+                  </div>
+    
+                  <div class="mb-3 col-md-6 col-12">
+                    <label class="form-label" for="confirm-edit-pass">Confirmar senha:</label>
+                    <input class="form-control" type="password" placeholder="Senha" name="confirm-edit-pass" value="{{user.senha}}">
+                  </div>
+                </div>
+                
+                <button type="submit" class="btn btn-edit-user form-control text-white fw-bold my-5 p-2 ">Atualizar informações</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

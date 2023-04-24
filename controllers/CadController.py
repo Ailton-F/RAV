@@ -1,6 +1,7 @@
-from flask import render_template, request, redirect, flash
+from flask import render_template, request, redirect, flash, url_for
+from flask_login import login_user
 from models import Usuario
-from database import db
+from utils import db
 
 
 class Cad():
@@ -16,15 +17,25 @@ class Cad():
       return render_template('cad.html')
   
     if request.method=='POST':
-      nome = request.form.get('nome')
-      email = request.form.get('email')
-      senha = request.form.get('senha')
+      email = request.form.get('cad-email')
+      senha = request.form.get('cad-password')
+      csenha = request.form.get('cad-repassword')
       admin = False
       user_type = request.form.get('tipo')
-      usuario = Usuario(nome, email, senha, admin, user_type)
-      
+      usuario = Usuario(email, senha, admin, user_type, 1)
+      usuario_existe = Usuario.query.filter_by(email = email).first()
+
+      if usuario_existe and usuario.email in usuario_existe.email:
+        flash('Email já cadastrado', 'danger')
+        return redirect('/cadastro')
+        
+      if senha != csenha:
+        flash('Senhas diferentes', 'danger')
+        return redirect('/cadastro')
+
       db.session.add(usuario)
       db.session.commit()
-      flash('Dados cadastrados com sucesso!', 'success')
-      return redirect('/user-config')
-
+      
+      login_user(usuario)
+      
+      return redirect('/usuarios/user_config')  

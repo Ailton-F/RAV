@@ -1,17 +1,41 @@
 {
   "files": {
+    "controllers/UserController.py": [
+      {
+        "id": "40c8a646-1238-4fd4-a885-537c60969458",
+        "line": 108,
+        "version": 6746,
+        "index": 3615
+      }
+    ],
+    "routes/usuarios.py": [
+      {
+        "id": "e42bad5e-1486-4ee0-8987-2ae6af1426b2",
+        "line": 36,
+        "version": 1917,
+        "index": 848
+      }
+    ],
     "templates/index.html": [
       {
         "id": "e55bf068-28b6-447d-bc0c-3112dd9c1f17",
-        "line": 48,
-        "version": 2680,
-        "index": 2032
+        "line": 46,
+        "version": 2767,
+        "index": 2103
       },
       {
         "id": "dddc70b6-ec8f-4011-b235-0c37dd7d7b28",
-        "line": 48,
-        "version": 2680,
-        "index": 2032
+        "line": 46,
+        "version": 2767,
+        "index": 2103
+      }
+    ],
+    "templates/loghome.html": [
+      {
+        "id": "7dec16e9-9520-4d33-b01a-d562d2f67a2a",
+        "line": 26,
+        "version": 260,
+        "index": 1172
       }
     ]
   }

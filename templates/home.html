@@ -5,6 +5,15 @@
 {% endblock %}
 
 {% block conteudo %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+      <div class="alert alert-{{category}} position-relative top-0 mx-auto" role="alert">
+        {{message}}
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
   <main class="main-home py-4">
     <section class="container-fluid px-8 main-container">
       <div class="home text-left py-12r">

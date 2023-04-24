@@ -1,0 +1,16 @@
+.voulunteer-type-card{
+  max-width: 45em;
+  min-height: 25em;
+}
+
+.form-asylum-cad input:not(:last-child){
+  background-color: #ECECEC !important;
+}
+
+.asylum-cad-card{
+  max-width: 40em;
+}
+
+.text-area-dark{
+  background-color: #ECECEC !important
+}

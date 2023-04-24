@@ -1,0 +1,101 @@
+{% extends 'indexwhf.html' %}
+
+{% block titulo%}
+  Admin
+{% endblock %}
+
+{% block conteudo %}
+<section>
+  <div class="d-flex">
+    {% with wAfter = True%}
+      {% include 'user/loghome.html'%}
+    {% endwith %}
+    <div class="vh-100 flex-grow-1 px-5">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{category}} position-relative top-0 mx-auto" role="alert">
+          {{message}}
+        </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+      
+      <div class="d-flex text-left align-items-center my-5">
+        <h2 class="fw-bold">Visitas</h2>
+      </div>
+  
+      <table class="table table-striped mt-2">
+        <thead>
+          <tr>
+            {% if current_user.user_type._value_ == 'V' %}
+              <th class="text-center" scope="col">Local</th>
+            {% else %}
+              <th class="text-center" scope="col">Voluntário</th>
+            {% endif %}
+            <th class="text-center" scope="col">Dia</th>
+            <th class="text-center" scope="col">Hora</th>
+            {% if current_user.user_type._value_ == 'V' %}
+              <th class="text-center" scope="col">Editar</th>
+              <th class="text-center" scope="col">Excluir</th>
+            {% else %}
+              <th class="text-center" scope="col">Informações adicionais</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+        {%for visita in visitas%}
+          <tr>
+            {% if current_user.user_type._value_ == 'V' %}
+              <td class="align-middle">{{visita.nome_asilo}}</td>
+            {% else %}
+              <td class="align-middle">{{visita.nome_voluntario}}</td>
+            {% endif %}
+            <td class="align-middle">{{visita.data.strftime('%d/%m/%Y')}}</td>
+            <td class="text-center align-middle">{{visita.hora.strftime('%H:%M')}}</td>
+            {% if current_user.user_type._value_ == 'V' %}
+              <td class="text-center">
+                <form method="get" action="/usuarios/edit_visit/{{visita.id}}">
+                  <button type="submit" class="btn border-0 text-info admin-edit">
+                    <i class="ri-edit-box-line admin-action"></i>
+                  </button>
+                </form>
+              </td>
+              <td class="text-center">
+                <button id="{{visita.id}}" class="btn border-0 text-danger" onclick="deleteVisit(this)">
+                  <i class="ri-delete-bin-6-line admin-action"></i>
+                </button>
+              </td>
+            {% else %}
+              <td class="text-center">
+                <button class="btn border-0 text-danger visit-info-btn" data-bs-toggle="modal" data-bs-target="#infoModal{{visita.id}}">
+                  <i class="ri-information-line text-info"></i>
+                </button>
+              </td>
+            
+              <div class="modal fade" id="infoModal{{visita.id}}" tabindex="-1" aria-labelledby="infoLabel{{visita.id}}" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="infoLabel{{visita.id}}">Informações adicionais</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <h4>Razão da visita: </h4>
+                      <hr>
+                      <p>
+                        {{visita.motivo}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </tr>
+        {%endfor%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,23 @@
+.user-edit-content{
+  padding: 5.25em 7em;
+}
+
+.user-edit-content .card-body{
+  padding-left: 6em;
+  padding-right: 6em;
+}
+
+.edit-user-form input{
+  background-color: #ECECEC;
+  padding-left: 1.8em;
+  border-radius: 10px;
+}
+
+.btn-edit-user{
+  background-color: #41C2A6;
+}
+
+.btn-success {
+  background-color: #41C2A6;
+  border: 1px solid transparent;
+}

@@ -11,10 +11,19 @@
 
   <section class="row cad-container">
     <div class="col-md-6 px-8">
-      <h1 class="fw-bold text-center py-3">Bem-vindo de volta!</h1>
+      <h1 class="fw-bold text-center py-3">Bem-vindo!</h1>
       <div class="card border-0">  
         <div class="card-body border-top border-bottom px-0">
-          <form class="cad-home-form" action="/usuarios/create" method="POST">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+              <div class="alert alert-{{category}} position-relative top-0 mx-auto" role="alert">
+                {{message}}
+              </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          <form class="home-forms" action="/usuarios/create" method="POST">
             
             <div class="mb-3 mt-5">
               <label class="fw-bold form-label" for="cademail">Email</label>
@@ -34,20 +43,20 @@
             <div class="form-radio-options mb-5">
               
               <div class="form-check d-flex align-items-center mb-3">
-                <input class="form-check-input" type="radio" name="tipo" id="radioVoluntario" value="V" checked>
+                <input class="form-check-input cad-check-input" type="radio" name="tipo" id="radioVoluntario" value="V" checked>
                 <label class="form-check-label ms-2" for="tipo">
                   <h5 class="mb-0">Voluntário</h5>
                 </label>
               </div>
               <div class="form-check d-flex align-items-center mb-0">
-                <input class="form-check-input" type="radio" name="tipo" id="radioAsilo" value="A">
+                <input class="form-check-input cad-check-input" type="radio" name="tipo" id="radioAsilo" value="A">
                 <label class="form-check-label ms-2" for="tipo">
                   <h5 class="mb-0">Asilo</h5>
                 </label>
               </div>
               
             </div>
-            <button type="submit" class="btn btn-login form-control text-white fw-bold mb-5 py-3">Entrar</button>
+            <button type="submit" class="btn btn-login form-control text-white fw-bold mb-5 py-3">Cadastrar</button>
           </form>
         </div>
         <p class="text-center mt-5">Já possuí uma conta? Entre com <a class="fw-bold text-decoration-none text-dark" href="/login">Login</a></p>

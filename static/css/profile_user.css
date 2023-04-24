@@ -1,0 +1,11 @@
+.user-profile-content{
+ padding: 2em 7em;
+}
+
+.profile-picture{
+  max-width: 20rem;
+}
+
+.profile-header-picture{
+ max-width: 3.5em; 
+}

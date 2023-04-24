@@ -1,0 +1,39 @@
+{% extends 'indexwhf.html' %}
+{% block titulo %}
+  Editar visita
+{% endblock %}
+
+{% block conteudo %}
+  <section class="d-flex align-items-center justify-content-center vh-100 bg-dark-blue bottom-l-detail">
+    <div class="card asylum-cad-card flex-grow-1 px-5 py-3 shadow-lg">
+      <div class="card-header text-center bg-transparent p-3 mb-3">
+        <h2 class="fw-bold">Formulário de visita</h2>
+      </div>
+      <div class="card-body">
+        <form class="form" action="/usuarios/edit_visit/{{visit.id}}" method="POST">
+          <div class="form-group row">
+            <div class="col-6">    
+              <label class="form-label mb-3 fw-bold" for="name">Nome do usuário</label>
+              <input class="form-control mb-5" type="text" name="name" placeholder="Nome" value="{{visit.nome_voluntario}}">
+              <label class="form-label mb-3 fw-bold" for="visit-date">Data da visita</label>
+              <input class="form-control mb-5" type="date" name="visit-date" value="{{visit.data.strftime('%Y-%m-%d')}}">
+            </div>
+            <div class="col-6">    
+              <label class="form-label mb-3 fw-bold" for="asylum-name">Asilo de destino</label>
+              <input class="form-control mb-5" name="asylum-name" value="{{visit.nome_asilo}}" readonly>
+              <label class="form-label mb-3 fw-bold" for="visit-hour">Hora da visita</label>
+              <input class="form-control mb-5" type="time" name="visit-hour" value="{{visit.hora.strftime('%H:%M')}}">
+            </div>
+            <div class="col-12">
+              <label for="visit-reason" class="form-label fw-bold">Motivo da visita</label>
+              <textarea class="form-control textarea" name="visit-reason" placeholder="Escreva sua mensagem..." rows="4">{{visit.motivo}}</textarea>
+            </div>
+          </div>
+          <div class="text-center mt-4">
+            <input type="submit" value="Submeter" class="btn bg-dark-blue px-5 fw-bolder text-white">
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}

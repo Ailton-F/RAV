@@ -1,0 +1,9 @@
+pyvenv.cfg
+replit.nix
+Lib
+Scripts
+Include
+__pycache__
+.flaskenv
+.breakpoints
+.env

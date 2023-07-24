@@ -7,74 +7,73 @@
 {% block conteudo %}
 
 
-
-
-  <section class="row cad-container">
-    <div class="col-md-6 px-8">
-      <h1 class="fw-bold text-center py-3">Bem-vindo!</h1>
-      <div class="card border-0">  
-        <div class="card-body border-top border-bottom px-0">
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, message in messages %}
-              <div class="alert alert-{{category}} position-relative top-0 mx-auto" role="alert">
-                {{message}}
+              <div id="toast">
+                <div class="alert-container {{category}}">
+                  <p class="message px-4 py-3 m-0">
+                    {{message}}
+                  </p>
+                </div>
               </div>
               {% endfor %}
             {% endif %}
           {% endwith %}
-          <form class="home-forms" action="/usuarios/create" method="POST">
-            
-            <div class="mb-3 mt-5">
-              <label class="fw-bold form-label" for="cademail">Email</label>
-              <input class="form-control" type="email" placeholder="Email" name="cad-email" required>
-            </div>
-            
-            <div class="mb-3">
-              <label class="fw-bold form-label" for="cad-password">Senha</label>
-              <input class="form-control" type="password" placeholder="Senha" name="cad-password" required>
-            </div>
-            
-            <div class="mb-3">
-              <label class="fw-bold form-label" for="cad-repassword">Confirmar senha</label>
-              <input class="form-control" type="password" placeholder="Senha" name="cad-repassword" required>
-            </div>
-            <p class="fw-bold">Selecione seu tipo de cadastro</p>
-            <div class="form-radio-options mb-5">
-              
-              <div class="form-check d-flex align-items-center mb-3">
-                <input class="form-check-input cad-check-input" type="radio" name="tipo" id="radioVoluntario" value="V" checked>
-                <label class="form-check-label ms-2" for="tipo">
-                  <h5 class="mb-0">Voluntário</h5>
-                </label>
-              </div>
-              <div class="form-check d-flex align-items-center mb-0">
-                <input class="form-check-input cad-check-input" type="radio" name="tipo" id="radioAsilo" value="A">
-                <label class="form-check-label ms-2" for="tipo">
-                  <h5 class="mb-0">Asilo</h5>
-                </label>
-              </div>
-              
-            </div>
-            <button type="submit" class="btn btn-login form-control text-white fw-bold mb-5 py-3">Cadastrar</button>
-          </form>
-        </div>
-        <p class="text-center mt-5">Já possuí uma conta? Entre com <a class="fw-bold text-decoration-none text-dark" href="/login">Login</a></p>
-      </div><!--card-->
-    </div><!--colmd6-->
-    
-    <div class="col-md-6 cad-aside d-flex align-items-center justify-content-center">
-      <div class="text-center">
-        <a href="/">
-          <img class="mb-5" src="{{url_for('static', filename='img/asylumm 3.svg')}}" width="200" alt=""><br>
-        </a>
-        <img class="mb-3" src="{{url_for('static', filename='img/Hospital wheelchair-bro 1.svg')}}" width="561" alt="">
-        <div class="px-5">
-          <h4 class="mt-3 px-5 text-white subtitle-login">Faça parte dessa iniciativa tão importante e significativa!</h4>
-        </div>
-      </div>
-    </div>
-  </section>
 
+          <section class="d-flex justify-content-center align-items-center login-section">
+            <div class="card cad-card border-0 mt-4">
+              <form action="/usuarios/create" method="POST">
+                <h4 class="form-login-title fw-bold text-center">Crie sua conta</h4>
+                <div class="mb-3 mt-4">
+                  <label class="fw-bold form-label" for="cademail">Email</label>
+                  <input class="form-control" type="email" name="cad-email" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="fw-bold form-label" for="cad-password">Senha</label>
+                  <input class="form-control" type="password" name="cad-password" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="fw-bold form-label" for="cad-repassword">Confirmar senha</label>
+                  <input class="form-control" type="password" name="cad-repassword" required>
+                </div>
+                <p class="fw-bold">Selecione seu tipo de cadastro</p>
+
+                <div class="form-radio-options mb-4">
+
+                  <div class="form-check d-flex align-items-center mb-2 p-0">
+                    <input class="cad-check-input" type="radio" name="tipo" id="radioVoluntario" value="V" checked>
+                    <label class="ms-2" for="tipo">
+                      Voluntário
+                    </label>
+                  </div>
+
+                  <div class="form-check d-flex align-items-center mb-0 p-0">
+                    <input class="cad-check-input" type="radio" name="tipo" id="radioAsilo" value="A">
+                    <label class="ms-2" for="tipo">
+                      Asilo
+                    </label>
+                  </div>
+                  
+                </div>
+
+                <button type="submit" class="form-control mt-3 btn-login text-white">Cadastrar</button>
+
+              </form>
+
+              <div class="or my-3 px-2">
+                <hr>
+                <span>ou</span>
+              </div>
+              <div class="d-flex google-login align-items-center justify-content-center">
+                <img class="google-mark" src="../static/img/div.google-logo.svg" alt="google mark">
+                <button class="form-control border-0 bg-transparent text-white" type="submit">Cadastre-se com google</button>
+              </div>
+              <hr class="mt-4">
+              <p class="text-center">Já possui conta? <a class="text-decoration-none" href="/login">Entrar</a></p>
+            </div>
+          </section>
 
 {% endblock %}

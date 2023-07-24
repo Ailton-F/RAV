@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap');
 @import url("css/admin.css");
 @import url("css/edit_user.css");
 @import url("css/home_user.css");
@@ -8,11 +8,12 @@
 @import url("css/login.css");
 @import url("css/cad.css");
 @import url("css/visit.css");
+@import url("css/toasts.css");
 
 
 /*Configs*/
 body{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
   min-height: 100vh;
   min-height: -webkit-fill-available;
   overflow-x: hidden;
@@ -253,18 +254,6 @@ footer {
 .link--metis:hover::before {
     transform-origin: 0% 50%;
     transform: scale3d(1, 1, 1);
-}
-
-.cad-check-input:checked[type=radio] {
-    background-image: none !important;
-}
-
-.cad-check-input[type=radio] {
-    border-radius: 0;
-}
-
-.form-radio-options label{
-  font-size: 1.5em;
 }
 
 .btn:focus{

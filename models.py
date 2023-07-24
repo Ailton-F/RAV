@@ -68,9 +68,8 @@ class Asilo(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'), unique=True)
   nome = db.Column(db.String(100))
-  # Não tá querendo entrar no banco de dados RESOLVER DEPOIS!!!!!!!!!
-  # pix = db.Column(db.String(100))
-  # cep = db.Column(db.String(100))
+  pix = db.Column(db.String(100))
+  cep = db.Column(db.String(100))
   cnpj = db.Column(db.String(100))
   rs_asylum_visit = db.relationship('Visita', cascade="all,delete", backref="asylum_visita")
 

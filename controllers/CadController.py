@@ -22,20 +22,24 @@ class Cad():
       csenha = request.form.get('cad-repassword')
       admin = False
       user_type = request.form.get('tipo')
-      usuario = Usuario(email, senha, admin, user_type, 1)
-      usuario_existe = Usuario.query.filter_by(email = email).first()
+      try:
+        usuario = Usuario(email, senha, admin, user_type, 1)
+        usuario_existe = Usuario.query.filter_by(email = email).first()
 
-      if usuario_existe and usuario.email in usuario_existe.email:
-        flash('Email já cadastrado', 'danger')
-        return redirect('/cadastro')
+        if usuario_existe and usuario.email in usuario_existe.email:
+          flash('Email já cadastrado', 'danger')
+          return redirect('/cadastro')
+          
+        if senha != csenha:
+          flash('Senhas diferentes', 'danger')
+          return redirect('/cadastro')
+
+        db.session.add(usuario)
+        db.session.commit()
         
-      if senha != csenha:
-        flash('Senhas diferentes', 'danger')
+        login_user(usuario)
+      except:
+        flash('Erro interno, por favor aguarde', 'danger')
         return redirect('/cadastro')
-
-      db.session.add(usuario)
-      db.session.commit()
-      
-      login_user(usuario)
       
       return redirect('/usuarios/user_config')  

@@ -142,11 +142,10 @@ class User():
 
         asilos = db.session.query(Asilo.id, Asilo.nome).limit(8)
         if current_user.user_type._value_ == 'V':
-            rs_visits = Visita.query.filter_by(id_usuario=current_user.id)
+            rs_visits = Visita.query.filter_by(id_usuario=current_user.id).limit(3)
         else:
-            rs_asilo = Asilo.query.filter_by(
-                id_usuario=current_user.id).first()
-            rs_visits = Visita.query.filter_by(nome_asilo=rs_asilo.nome)
+            rs_asilo = Asilo.query.filter_by(id_usuario=current_user.id).first()
+            rs_visits = Visita.query.filter_by(nome_asilo=rs_asilo.nome).limit(3)
 
         return render_template('visit/home.html',
                                asilos=asilos,

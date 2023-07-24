@@ -1,29 +1,47 @@
 /*cad container*/
-.cad-container{
-  min-height: 100vh;
+.cad-check-input:checked[type=radio] {
+  background-image: none !important;
 }
 
-.subtitle-login{
-  max-width: fit-content;
-  margin: auto;
+.cad-check-input[type=radio] {
+  max-width: 1.375em;
 }
 
-.cad-container>.col-md-6:nth-child(2){
+.form-radio-options label{
+  font-size: .875em;
+   cursor: pointer;
+   margin-right: 10px;
+}
+
+.cad-card{
+  min-width: 29.125em;
+  padding-top: 4em ;
+  padding-left: 4.25em;
+  padding-right: 4.25em;
+  padding-bottom: 1em;
   position: relative;
-  min-height: 100vh;
-  background-color: #195F82;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-  margin: 0;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px 0px rgba(153, 153, 153, 0.20);
 }
 
-.cad-container>.col-md-6:nth-child(2):after{
+.cad-card::before{
   content: "";
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  background-image: url('img/top-r-detail.svg');
-  background-repeat: no-repeat;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background-color: #195F82;
   position: absolute;
-  left: calc(100% - 259px);
+  top: -50px;
+  left: calc(50% - 50px);
+}
+
+.cad-card a,
+.cad-card p,
+.cad-card label,
+.cad-card span{
+  font-size: .75rem;
+}
+
+.cad-card .form-control{
+  font-size: .875rem;
 }

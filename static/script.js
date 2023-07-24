@@ -1,36 +1,6 @@
 $(document).ready( () => {
   $(".cpf-cnpj").mask("999.999.999-99");
 
-  var socket = io.connect('https://asylum.ailtonborges.repl.co');
-
-  socket.on('message', function (data) {
-    $.ajax({
-      type: "GET",
-      url: '/usuarios/chat_template'
-    }).done((res)=>{
-      let dados = $(res);
-      if($('#sendMsg').val() != data.id){
-        dados.addClass('align-self-start'); 
-      }else{
-        dados.addClass('align-self-end')
-      }
-        
-      dados.find('.user-msg').text(data.email);
-      dados.find('.msg-with-data').text(data.data);
-      $('#chat').append(dados);
-    });
-  });
-
-  $('#sendMsg').on('click', function() {
-    if($.trim($('#msg').val()) == ''){
-      return $('#msg').val('');
-    }
-    
-    socket.emit('message', {data: $('#msg').val()});
-    $('#msg').val('');
-  })
-  
-
   $('.config-radius').on('change', function(){
     if($('#cpf-radius').is(':checked')){
       $(".cpf-cnpj").mask("999.999.999-99");
@@ -43,6 +13,10 @@ $(document).ready( () => {
 
   
   $('.config').css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, 'slow');
+  setTimeout(()=>{
+    let toast = document.getElementById('toast');
+    toast.remove();
+  }, 6000);
 });
 
 //DELETA USUÁRIOS

@@ -10,13 +10,15 @@ class User():
     #retorna a página de usuário
     @staticmethod
     def getHome():
-        u_id = current_user.id
-        if current_user.user_type._value_ == 'A':
-            user = db.session.query(Asilo.nome).join(
-                Usuario, Asilo.id_usuario == u_id).first()
-        else:
-            user = db.session.query(Voluntario.nome).join(
-                Usuario, Voluntario.id_usuario == u_id).first()
+        if "google_id" not in session:
+            u_id = current_user.id
+            if current_user.user_type._value_ == 'A':
+                user = db.session.query(Asilo.nome).join(
+                    Usuario, Asilo.id_usuario == u_id).first()
+            else:
+                user = db.session.query(Voluntario.nome).join(
+                    Usuario, Voluntario.id_usuario == u_id).first()
+        else: user=session
         return render_template('user/home.html', user=user)
 
     #retorna a página de administradores

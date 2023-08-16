@@ -1,5 +1,6 @@
 pyvenv.cfg
 replit.nix
+client_secret.com.json
 Lib
 Scripts
 Include

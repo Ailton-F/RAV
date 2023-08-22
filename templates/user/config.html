@@ -38,6 +38,24 @@
             </div>
           </div>
           <input type="text" class="form-control mb-3 cpf-cnpj" placeholder="CPF" name="cpf-cnpj">
+          {% if user.user_type==None %}
+          <div class="form-radio-options mb-4">
+            <div class="form-check d-flex align-items-center mb-2 p-0">
+              <input class="cad-check-input" type="radio" name="tipo" id="radioVoluntario" value="V" checked>
+              <label class="ms-2" for="tipo">
+                Voluntário
+              </label>
+            </div>
+
+            <div class="form-check d-flex align-items-center mb-0 p-0">
+              <input class="cad-check-input" type="radio" name="tipo" id="radioAsilo" value="L">
+              <label class="ms-2" for="tipo">
+                Lar
+              </label>
+            </div>
+            
+          </div>
+          {%endif%}
           <input type="submit" class="btn bg-dark-blue text-white form-control fw-bolder mt-4 mb-5 py-3" value="Confirmar">
         </form>
       </div>

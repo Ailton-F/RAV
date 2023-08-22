@@ -20,4 +20,4 @@ def log(): return login.getLogin()
 def logoogle(): return login.getGoogleLogin()
 
 @log_bl.route('/callback')
-def callbackOauth(): return login.callback()
+def callback(): return login.callback()

@@ -1,10 +1,13 @@
 from flask import render_template, request, redirect, flash, session, abort
-from models import Usuario
 from flask_login import login_user
+from models import Usuario
+from utils import db
 from google.oauth2 import id_token
 from pip._vendor import cachecontrol
 from google_auth_oauthlib.flow import Flow
-import os, pathlib, requests, json, google.auth.transport.requests
+import os, pathlib, requests, json, google.auth.transport.requests, bcrypt
+
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 client_secrets_file = os.path.join(pathlib.Path(), "client_secret.com.json")
 secret_file = open(client_secrets_file)
@@ -15,9 +18,8 @@ flow = Flow.from_client_secrets_file(
   redirect_uri="http://127.0.0.1:5000/login/callback",
 )
 GOOGLE_CLIENT_ID = secret_data['web']['client_id']
-class Login():
-  
 
+class Login():
   #Método responsável por retornar a página de login
   @staticmethod
   def getLogin():
@@ -26,9 +28,15 @@ class Login():
     if request.method == 'POST':
       email = request.form.get('login-email')
       senha = request.form.get('login-password')
-      user = Usuario.query.filter_by(email = email).first()
 
-      if email == user.email and senha == user.senha:    
+      user = Usuario.query.filter_by(email = email).first()
+      
+      if user is None:
+        flash('Dado(s) incorreto(s)','danger')
+        return redirect('/login')
+      
+      user_password = user.senha
+      if bcrypt.checkpw(senha.encode('utf-8'), user_password.encode('utf-8')):    
         login_user(user)
         return redirect('/usuarios')
       else:
@@ -40,7 +48,7 @@ class Login():
     authorization_url, state = flow.authorization_url()
     session["state"] = state
     return redirect(authorization_url)
-
+      
   @staticmethod
   def callback():
     flow.fetch_token(authorization_response=request.url)
@@ -59,6 +67,10 @@ class Login():
         audience=GOOGLE_CLIENT_ID
     )
 
-    session["google_id"] = id_info.get("sub")
-    session["nome"] = id_info.get("name")
+    user = Usuario.query.filter_by(email = id_info.get('email')).first()
+    if user == None:
+      flash('Usuário não encontrado', 'danger')
+      return redirect('/')
+    
+    login_user(user)
     return redirect("/usuarios")

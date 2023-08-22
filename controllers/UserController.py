@@ -1,5 +1,5 @@
 from flask import render_template, redirect, flash, session, request
-from models import Usuario, Voluntario, Visita, Asilo
+from models import Usuario, Voluntario, Visita, Lar
 from utils import db
 from flask_login import current_user, logout_user
 from datetime import datetime
@@ -13,8 +13,8 @@ class User():
         if "google_id" not in session:
             u_id = current_user.id
             if current_user.user_type._value_ == 'A':
-                user = db.session.query(Asilo.nome).join(
-                    Usuario, Asilo.id_usuario == u_id).first()
+                user = db.session.query(Lar.nome).join(
+                    Usuario, Lar.id_usuario == u_id).first()
             else:
                 user = db.session.query(Voluntario.nome).join(
                     Usuario, Voluntario.id_usuario == u_id).first()
@@ -78,7 +78,7 @@ class User():
         user = Usuario.query.filter_by(id=id).first()
         if user.user_type._value_ == 'V':
           usertype = Voluntario.query.filter_by(id_usuario=user.id).first()
-        else: usertype = Asilo.query.filter_by(id_usuario=user.id).first()
+        else: usertype = Lar.query.filter_by(id_usuario=user.id).first()
         if request.method == 'GET':
             return render_template('user/edit.html', user=user, usertype=usertype)
 
@@ -106,7 +106,7 @@ class User():
     def getProfilePage():
       user = Usuario.query.filter_by(id=current_user.id).first()
       if current_user.user_type._value_ == 'A':
-        userType = Asilo.query.filter_by(id_usuario=user.id).first()
+        userType = Lar.query.filter_by(id_usuario=user.id).first()
       else: userType = Voluntario.query.filter_by(id_usuario=user.id).first()
       return render_template('user/profile.html', user=user, userType=userType)
 
@@ -115,14 +115,20 @@ class User():
     @staticmethod
     def getVolunteerConfigPage():
         if request.method == 'GET':
-            return render_template('user/config.html')
+            return render_template('user/config.html', user=current_user)
 
         name = request.form.get('user-name')
         cpf_cnpj = request.form.get('cpf-cnpj')
+        tipo = request.form.get('tipo')
         id_user = current_user.id
+        
+        if current_user.user_type is None:
+            current_user.user_type = tipo
+            db.session.add(current_user)
+            db.session.commit()
 
-        if current_user.user_type._value_ == 'A':
-            user = Asilo(id_user, name, cpf_cnpj)
+        if current_user.user_type == 'L':
+            user = Lar(id_user, name, cpf_cnpj)
         else:
             user = Voluntario(id_user, name, cpf_cnpj)
 
@@ -142,15 +148,15 @@ class User():
     @staticmethod
     def getVisitHomePage():
 
-        asilos = db.session.query(Asilo.id, Asilo.nome).limit(8)
+        lares = db.session.query(Lar.id, Lar.nome).limit(8)
         if current_user.user_type._value_ == 'V':
             rs_visits = Visita.query.filter_by(id_usuario=current_user.id).limit(3)
         else:
-            rs_asilo = Asilo.query.filter_by(id_usuario=current_user.id).first()
-            rs_visits = Visita.query.filter_by(nome_asilo=rs_asilo.nome).limit(3)
+            rs_lar = Lar.query.filter_by(id_usuario=current_user.id).first()
+            rs_visits = Visita.query.filter_by(nome_lar=rs_lar.nome).limit(3)
 
         return render_template('visit/home.html',
-                               asilos=asilos,
+                               lares=lares,
                                visitas=rs_visits)
 
     #Retorna a página do chat
@@ -160,7 +166,6 @@ class User():
         return render_template('user/chat.html', user=current_user)
 
     #Retorna o template das mensagens
-
     @staticmethod
     def getMsgTemplate():
         return render_template('msg.html')
@@ -170,16 +175,16 @@ class User():
     @staticmethod
     def getBookVisitPage(request_id):
 
-        asilo = Asilo.query.filter_by(id=request_id).first()
+        lar = Lar.query.filter_by(id=request_id).first()
 
         if request.method == "GET":
 
-            return render_template('visit/book.html', asilo=asilo)
+            return render_template('visit/book.html', lar=lar)
 
         id_usuario = current_user.id
-        asylum_id = asilo.id
+        lar_id = lar.id
         volunteer_name = request.form.get('name')
-        asylum_name = asilo.nome
+        lar_name = lar.nome
 
         #Faz a formatação da data
         visit_date = request.form.get('visit-date')
@@ -197,7 +202,7 @@ class User():
 
         visit_reason = request.form.get('visit-reason')
 
-        visit = Visita(id_usuario, asylum_id, volunteer_name, asylum_name,
+        visit = Visita(id_usuario, lar_id, volunteer_name, lar_name,
                        visit_date, visit_hour, visit_reason)
 
         db.session.add(visit)
@@ -213,9 +218,9 @@ class User():
         if current_user.user_type._value_ == 'V':
             rs_visits = Visita.query.filter_by(id_usuario=current_user.id)
         else:
-            rs_asilo = Asilo.query.filter_by(
+            rs_lar = Lar.query.filter_by(
                 id_usuario=current_user.id).first()
-            rs_visits = Visita.query.filter_by(nome_asilo=rs_asilo.nome)
+            rs_visits = Visita.query.filter_by(nome_lar=rs_lar.nome)
         return render_template('visit/dashboard.html', visitas=rs_visits)
 
     #Deleta a visita do banco de dados
@@ -264,5 +269,5 @@ class User():
 
     @staticmethod
     def getAsylumProfile(id):
-        asylum = Asilo.query.filter_by(id=id).first()
-        return f'ID: {asylum.id}<br> NOME: {asylum.nome}<br> LINK: <a href="/usuarios/book/{asylum.id}">Marcar visita</a>'
+        lar = Lar.query.filter_by(id=id).first()
+        return f'ID: {lar.id}<br> NOME: {lar.nome}<br> LINK: <a href="/usuarios/book/{lar.id}">Marcar visita</a>'

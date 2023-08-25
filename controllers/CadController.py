@@ -21,7 +21,6 @@ GOOGLE_CLIENT_ID = secret_data['web']['client_id']
 
 
 class Cad():
-  
   #Método responsável por retornar a página de cadastro
   @staticmethod
   def getCadPage():
@@ -39,31 +38,31 @@ class Cad():
       admin = False
       user_type = request.form.get('tipo')
 
-      # try:
-      if senha != csenha:
-        flash('Senhas diferentes', 'danger')
-        return redirect('/cadastro')
-      
-      # Adding the salt to password
-      salt = bcrypt.gensalt()
-      # Hashing the password
-      senha = bcrypt.hashpw(senha.encode('utf-8'), salt)
-      
-      usuario = Usuario(email, senha, admin, user_type, 1)
-      usuario_existe = Usuario.query.filter_by(email = email).first()
-
-      if usuario_existe and usuario.email in usuario_existe.email:
-        flash('Email já cadastrado', 'danger')
-        return redirect('/cadastro')
+      try:
+        if senha != csenha:
+          flash('Senhas diferentes', 'danger')
+          return redirect('/cadastro')
         
+        # Adding the salt to password
+        salt = bcrypt.gensalt()
+        # Hashing the password
+        senha = bcrypt.hashpw(senha.encode('utf-8'), salt)
+        
+        usuario = Usuario(email, senha, admin, user_type, 1)
+        usuario_existe = Usuario.query.filter_by(email = email).first()
 
-      db.session.add(usuario)
-      db.session.commit()
-      
-      login_user(usuario)
-      # except:
-      #   flash('Erro interno, por favor aguarde', 'danger')
-      #   return redirect('/cadastro')
+        if usuario_existe and usuario.email in usuario_existe.email:
+          flash('Email já cadastrado', 'danger')
+          return redirect('/cadastro')
+          
+
+        db.session.add(usuario)
+        db.session.commit()
+        
+        login_user(usuario)
+      except:
+        flash('Erro interno, por favor aguarde', 'danger')
+        return redirect('/cadastro')
       
       return redirect('/usuarios/user_config')
     

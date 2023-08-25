@@ -1,0 +1,24 @@
+{% extends 'indexwhf.html' %}
+
+{% block titulo %}
+  Erro 403
+{% endblock %}
+
+{% block conteudo %}
+    <main class="d-flex justify-content-center align-items-center vh-100 flex-column error-container">
+        
+        <figure class="text-center">
+            <img src="/static/img/403_error.svg" alt="Erro 403">
+            <figcaption class="text-center my-4">
+                <h1 class="px-5">
+                    Você não tem permissão para acessar esse conteúdo
+                </h1>
+            </figcaption>
+            <small>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur scelerisque tempus metus, sed luctus ante. In aliquet dignissim dui non egestas. Etiam ligula mauris.
+            </small>
+        </figure>
+
+        <a class="btn btn-cad text-white px-3 py-2" href="/">Ir para a página inicial</a>
+    </main>
+{% endblock %}

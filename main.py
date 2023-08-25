@@ -3,7 +3,7 @@ import os
 import routes
 import json
 
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, abort
 from flask_migrate import Migrate
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
@@ -28,6 +28,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db.init_app(app)
 lm.init_app(app)
+@app.errorhandler(404)
+def not_found(e): return render_template('errors/404.html', e=e)
+@app.errorhandler(500)
+def internal(e): return render_template('errors/500.html', e=e)
+@app.errorhandler(403)
+def forbidden(e): return render_template('errors/403.html', e=e)
 
 
 @app.route('/')

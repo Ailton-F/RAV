@@ -1,7 +1,6 @@
 from flask import render_template, request, redirect, flash, session, abort
 from flask_login import login_user
 from models import Usuario
-from utils import db
 from google.oauth2 import id_token
 from pip._vendor import cachecontrol
 from google_auth_oauthlib.flow import Flow

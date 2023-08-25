@@ -1,0 +1,11 @@
+.error-container{
+    position: relative;
+    overflow: hidden;
+}
+
+.error-container::after{
+    content: url('/static/img/bottom-r-detail.svg');
+    position: absolute;
+    right: 0;
+    bottom: -1%;
+}

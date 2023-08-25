@@ -36,6 +36,7 @@ class User():
 
     @staticmethod
     def logUserOff():
+        session.clear()
         logout_user()
         if session.get('was_once_logged_in'):
             # prevent flashing automatically logged out message

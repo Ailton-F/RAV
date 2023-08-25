@@ -8,7 +8,6 @@ cadastro_bl = Blueprint('cadastro', __name__)
 @cadastro_bl.route('/')
 def cadastro(): return cad.getCadPage()
 
-
 @cadastro_bl.route('/google-cad', methods=["POST"])
 def google(): return cad.getGoogleCad()
 

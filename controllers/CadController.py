@@ -98,6 +98,8 @@ class Cad():
       1,
     )
 
+    session['id_info'] = id_info 
+
     usuario_existe = Usuario.query.filter_by(email = usuario.email).first()
     if usuario_existe and usuario.email in usuario_existe.email:
       flash('Email já cadastrado', 'danger')

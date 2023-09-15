@@ -105,11 +105,12 @@ class User():
 
     @staticmethod
     def getProfilePage():
-      user = Usuario.query.filter_by(id=current_user.id).first()
-      if current_user.user_type._value_ == 'A':
-        userType = Lar.query.filter_by(id_usuario=user.id).first()
-      else: userType = Voluntario.query.filter_by(id_usuario=user.id).first()
-      return render_template('user/profile.html', user=user, userType=userType)
+        user = Usuario.query.filter_by(id=current_user.id).first()
+        if current_user.user_type._value_ == 'A':
+            userType = Lar.query.filter_by(id_usuario=user.id).first()
+        else: userType = Voluntario.query.filter_by(id_usuario=user.id).first()
+        #return f'{session}'
+        return render_template('user/profile.html', user=user, userType=userType, s=session)
 
     #Retorna a página de configuração de usuário do tipo voluntário
 

@@ -7,61 +7,53 @@
   <section>
     <div class="d-flex vh-100">
 
-      {% include 'user/loghome.html' %}
+      {%with wAfter = True %}
+        {% include 'user/loghome.html'%}
+      {%endwith%}
 
       <div class="flex-grow-1">
         {% with u=userType %}
           {% include 'user/logheader.html'%}
         {% endwith %}
         <div class="user-profile-content flex-grow-1">
-          <div class="card border-0">
-            <div class="card-body px-5">
-              <div class="d-flex align-items-center justify-content-between mt-4">
-                <h2 class="fw-bold mb-0">Meu perfil</h2>
-                <hr class="w-75">
-              </div>
-              <div class="row mt-5">
-                <div class="col-6 d-flex flex-column justify-content-between">
-                  <div class="border rounded py-2 px-3">
-                    <label class="form-label fw-bold">E-mail</label>
-                    <p class="mb-0">{{user.email}}</p>
-                  </div>
-                  <div class="border rounded py-2 px-3">
-                    <label class="form-label fw-bold">Tipo</label>
-                    <p class="mb-0">
-                      {% if user.user_type._value_ == 'L'%}
-                        Lar
-                      {% else %}
-                        Voluntário
-                      {% endif %}
-                    </p>
-                  </div>
-                  <div class="border rounded py-2 px-3">
-                    <label class="form-label fw-bold">Pix</label>
-                    <p class="mb-0">Não inserido</p>
-                  </div>
-                  <div class="border rounded py-2 px-3">
-                    <label class="form-label fw-bold">Número</label>
-                    <p class="mb-0">Não inserido</p>
-                  </div>
+          <div class="row">
+
+            <div class="d-flex flex-column col-4 align-items-center">
+              <img class="profile-picture" src="
+              {%if s['id_info']%}
+                {{s['id_info']['picture']}}
+              {%endif%}
+              "/>
+
+              <button class="mt-4 text-white edit-btn fw-bold">Editar perfil</button>
+            </div>
+
+            <div class="col-8">
+              <div class="card shadow-lg border-0 py-4">
+                <div class="card-header py-4">
+                  <h4 class="fw-bold mb-0">Dados da conta</h4>
                 </div>
-                <div class="col-6">
-                  <figure class="text-center">
-                    <img class="profile-picture"src="https://www.thesoupspoon.com/wp-content/uploads/2014/11/user.jpg"/>
-                  </figure>
+                <div class="card-body profile-contact py-4">
+                  <label class="fw-bold">E-mail</label>
+                  <p class="mt-2">{{user.email}}</p>
+                  <label class="fw-bold mt-3">Nome</label>
+                  <p class="mt-2">{{session['id_info']['given_name']}} {{session['id_info']['family_name']}}</p>
                 </div>
               </div>
 
-              <div class="text-center mt-4">
-                <button class="btn btn-success my-4 px-5 py-2">
-                  <a class="text-white fw-bold text-decoration-none py-2" href="/usuarios/edit/{{user.id}}">Editar perfil</a>
-                </button>
-    
-                <button id="{{user.id}}" class="btn btn-danger text-white admin-delete fw-bold px-5 py-2 my-4 mx-3">
-                  Excluir perfil
-                </button>
+              <div class="card mt-5 shadow-lg border-0">
+                <div class="card-header py-4">
+                  <h4 class="fw-bold mb-0">Dados de contato</h4>
+                </div>
+                <form class="card-body profile-contact py-4">
+                  <label class="mb-2">Telefone</label><br>
+                  <div class="input-group">
+                    <input class="form-control tel-input" type="text" placeholder="Adicionar telefone">
+                    <button class="input-group-text plus">+</button>
+                  </div>
+                  <button type="submit" class="sbmt-btn-profile fw-bold text-white mt-4">Enviar</button>
+                </form>
               </div>
-  
             </div>
           </div>
         </div>

@@ -3,9 +3,44 @@
 }
 
 .profile-picture{
-  max-width: 20rem;
+  width: 13rem;
+  border-radius: 50%;
 }
 
 .profile-header-picture{
- max-width: 3.5em; 
+ width: 3.5em; 
+}
+
+.edit-btn{
+  background-color: #1FD2A7;
+  padding: 1em 4em;
+  border: none;
+  border-radius: 10px;
+}
+
+.sbmt-btn-profile{
+  padding: .5em 2.625em;
+  border: none;
+  border-radius: 10px;
+  background-color: #195F82;
+}
+
+.profile-contact{
+  padding-left: 5.5em;
+}
+
+.tel-input{
+  max-width: 22em;
+  border-radius: 10px;
+  border-right: none;
+}
+
+.plus{
+  background-color: white;
+  border-left: none;
+  color: #41C2A6;
+}
+
+.plus:hover{
+  
 }

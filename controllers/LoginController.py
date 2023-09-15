@@ -35,6 +35,10 @@ class Login():
         return redirect('/login')
       
       user_password = user.senha
+      if not user.senha: 
+        flash('Dados(s) incorreto(s)', 'danger')
+        return redirect('/login')
+      
       if bcrypt.checkpw(senha.encode('utf-8'), user_password.encode('utf-8')):    
         login_user(user)
         return redirect('/usuarios')
@@ -65,6 +69,8 @@ class Login():
         request=token_request,
         audience=GOOGLE_CLIENT_ID
     )
+
+    session['id_info']=id_info
 
     user = Usuario.query.filter_by(email = id_info.get('email')).first()
     if user == None:

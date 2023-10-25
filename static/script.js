@@ -1,24 +1,3 @@
-$(document).ready( () => {
-  $(".cpf-cnpj").mask("999.999.999-99");
-
-  $('.config-radius').on('change', function(){
-    if($('#cpf-radius').is(':checked')){
-      $(".cpf-cnpj").mask("999.999.999-99");
-      $('.cpf-cnpj').attr('placeholder', 'CPF')
-    } else {
-      $(".cpf-cnpj").mask("99.999.999/9999-99");
-      $('.cpf-cnpj').attr('placeholder', 'CNPJ')
-    }
-  });
-
-  
-  $('.config').css({opacity: 0, visibility: "visible"}).animate({opacity: 1}, 'slow');
-  setTimeout(()=>{
-    let toast = document.getElementById('toast');
-    toast.remove();
-  }, 6000);
-});
-
 //DELETA USUÁRIOS
 function deleteUser(e){
   let id = $(e).attr('id')

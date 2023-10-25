@@ -45,26 +45,26 @@ def delete(id): return user.deleteUser(id)
 def edit(id): return user.editUser(id)
 
 @users_bl.route('/user_config', methods=['GET', 'POST'])
-def volunteerConfigPage(): return user.getVolunteerConfigPage()
-
-@users_bl.route('/asylum_config', methods=['GET'])
 @login_required
-def asylumConfigPage(): return user.getAsylumConfigPage()
-
+def volunteerConfigPage(): return user.getVolunteerConfigPage()
 @users_bl.route('/visit', methods=["GET"])
 @login_required
+
 def visitHomePage(): return user.getVisitHomePage()
 
 @users_bl.route('/visit/<int:id>', methods=['GET'])
 @login_required
+
 def asylumProfile(id): return user.getAsylumProfile(id)
 
 @users_bl.route('/book/<int:id>', methods=["GET", "POST"])
 @login_required
+
 def bookVisit(id): return user.getBookVisitPage(id)
 
 @users_bl.route('/dashboard', methods=["GET", "POST"])
 @login_required
+
 def dashboard(): return user.getDashboard()
 
 @users_bl.route('/delete_visit/<int:id>', methods=["POST"])
@@ -74,3 +74,7 @@ def deleteVisit(id): return user.deleteVisitLink(id)
 @users_bl.route('/edit_visit/<int:id>', methods=["GET", "POST"])
 @login_required
 def editVisit(id): return user.editVisitPage(id)
+
+@users_bl.route('/save_data', methods=["POST", "GET"])
+@login_required
+def saveUserData(): return user.saveData()

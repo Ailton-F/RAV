@@ -117,33 +117,21 @@ class User():
     @staticmethod
     def getVolunteerConfigPage():
         if request.method == 'GET':
-            return render_template('user/config.html', user=current_user)
+            return render_template('user/config.html')
 
-        name = request.form.get('user-name')
-        cpf_cnpj = request.form.get('cpf-cnpj')
         tipo = request.form.get('tipo')
-        id_user = current_user.id
         
         if current_user.user_type is None:
             current_user.user_type = tipo
             db.session.add(current_user)
             db.session.commit()
 
-        if current_user.user_type == 'L':
-            user = Lar(id_user, name, cpf_cnpj)
-        else:
-            user = Voluntario(id_user, name, cpf_cnpj)
+        else: redirect('/')
 
         db.session.add(user)
         db.session.commit()
 
         return redirect('/')
-
-    #Retorna a página de configuração de usuário do tipo asylum
-
-    @staticmethod
-    def getAsylumConfigPage():
-        return render_template('user/asylum_config.html')
 
     #retorna a página de visitas
 
@@ -151,6 +139,7 @@ class User():
     def getVisitHomePage():
 
         lares = db.session.query(Lar.id, Lar.nome).limit(8)
+
         if current_user.user_type._value_ == 'V':
             rs_visits = Visita.query.filter_by(id_usuario=current_user.id).limit(3)
         else:
@@ -273,3 +262,7 @@ class User():
     def getAsylumProfile(id):
         lar = Lar.query.filter_by(id=id).first()
         return f'ID: {lar.id}<br> NOME: {lar.nome}<br> LINK: <a href="/usuarios/book/{lar.id}">Marcar visita</a>'
+
+    @staticmethod
+    def saveData():
+        pass

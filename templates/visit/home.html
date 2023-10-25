@@ -141,13 +141,14 @@
             {% if current_user.user_type._value_ == 'V' %}
               <div class="card mt-5">
               <div class="card-header py-4">
-                <h4 class="fw-bold mb-0">Opções de asilo para visita</h4>
+                <h4 class="fw-bold mb-0">Opções de Lares para visita</h4>
               </div>
               <div class="card-body">
                 <ul class="list-group">
-                  {% for asilo in asilos %}
+                    {{ lares }}
+                  {% for lar in lares %}
                   <li class="list-group-item border-0">
-                    <a class="text-decoration-none text-dark link link--metis" href="/usuarios/visit/{{asilo.id}}">{{asilo.nome.capitalize()}}</a>
+                    <a class="text-decoration-none text-dark link link--metis" href="/usuarios/visit/{{lar.id}}">{{lar.nome.capitalize()}}</a>
                   </li>
                   {% endfor %}
                 </ul>

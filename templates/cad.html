@@ -1,83 +1,67 @@
 {% extends 'indexwhf.html' %}
 
 {% block titulo%}
-  Cadastro
+    Cadastro
 {% endblock %}
 
 {% block conteudo %}
-
-
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-              <div id="toast">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div id="toast">
                 <div class="alert-container {{category}}">
-                  <p class="message px-4 py-3 m-0">
-                    {{message}}
-                  </p>
+                    <p class="message px-4 py-3 m-0">
+                        {{message}}
+                    </p>
                 </div>
-              </div>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
-          
-          <section class="d-flex justify-content-center align-items-center login-section">
-            <div class="card cad-card border-0 mt-4">
-              <form action="/usuarios/create" method="POST">
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <section class="d-flex justify-content-center align-items-center flex-column login-section">
+        <div class="card cad-card border-0 mt-4">
+            <form action="/usuarios/create" method="POST">
                 <h4 class="form-login-title fw-bold text-center">Crie sua conta</h4>
                 <div class="mb-3 mt-4">
-                  <label class="fw-bold form-label" for="cademail">Email</label>
-                  <input class="form-control" type="email" name="cad-email" required>
+                    <label class="fw-bold form-label" for="cademail">Email</label>
+                    <input class="form-control" type="email" name="cad-email" required>
                 </div>
-                
+
                 <div class="mb-3">
-                  <label class="fw-bold form-label" for="cad-password">Senha</label>
-                  <input class="form-control" type="password" name="cad-password" required>
+                    <label class="fw-bold form-label" for="cad-password">Senha</label>
+                    <input class="form-control" type="password" name="cad-password" required>
                 </div>
-                
+
                 <div class="mb-3">
-                  <label class="fw-bold form-label" for="cad-repassword">Confirmar senha</label>
-                  <input class="form-control" type="password" name="cad-repassword" required>
-                </div>
-                <p class="fw-bold">Selecione seu tipo de cadastro</p>
-
-                <div class="form-radio-options mb-4">
-
-                  <div class="form-check d-flex align-items-center mb-2 p-0">
-                    <input class="cad-check-input" type="radio" name="tipo" id="radioVoluntario" value="V" checked>
-                    <label class="ms-2" for="tipo">
-                      Voluntário
-                    </label>
-                  </div>
-
-                  <div class="form-check d-flex align-items-center mb-0 p-0">
-                    <input class="cad-check-input" type="radio" name="tipo" id="radioAsilo" value="L">
-                    <label class="ms-2" for="tipo">
-                      Lar
-                    </label>
-                  </div>
-                  
+                    <label class="fw-bold form-label" for="cad-repassword">Confirmar senha</label>
+                    <input class="form-control" type="password" name="cad-repassword" required>
                 </div>
 
                 <button type="submit" class="form-control mt-3 btn-login text-white">Cadastrar</button>
 
-              </form>
+            </form>
 
-              <div class="or my-3 px-2">
+            <div class="or my-3 px-2">
                 <hr>
                 <span>ou</span>
-              </div>
-              <div class="d-flex google-login align-items-center justify-content-center">
+            </div>
+
+            <div class="d-flex google-login align-items-center justify-content-center">
                 <img class="google-mark" src="../static/img/div.google-logo.svg" alt="google mark">
                 <form class="w-100" method="POST" action="google-cad">
-                  <button class="form-control border-0 bg-transparent text-white w-100" type="submit">
+                    <button class="form-control border-0 bg-transparent text-white w-100" type="submit">
                     Cadastre-se com google
-                  </button>
+                    </button>
                 </form>
-              </div>
-              <hr class="mt-4">
-              <p class="text-center">Já possui conta? <a class="text-decoration-none" href="/login">Entrar</a></p>
             </div>
-          </section>
+            <hr class="mt-4">
+            <p class="text-center">Já possui conta? <a class="text-decoration-none" href="/login">Entrar</a></p>
+        </div>
 
+        <div class="steps mt-3">
+            <canvas class="step-color"></canvas>
+            <canvas class="step-uncolor"></canvas>
+        </div>
+    </section>
 {% endblock %}

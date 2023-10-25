@@ -1,65 +1,35 @@
 {% extends 'indexwhf.html' %}
 
 {% block titulo%}
-  Cadastro
+    Cadastro
 {% endblock %}
 
 {% block conteudo %}
-<section class="d-flex align-items-center justify-content-center vh-100 bg-dark-blue bottom-l-detail">
-  <div class="flex-grow-1 asylum-cad-card">
-    <div>
-      <a href="#" class="text-white text-decoration-none d-flex align-items-center">
-        <i class="ri-arrow-left-line me-3"></i>
-        <span>voltar</span>
-      </a>
-    </div>
-    <div class="card config mt-4 px-5 py-3 shadow-lg">
-      <div class="card-body">
-        <div class="my-4">
-          <h3 class="fw-bold text-center">Seja bem-vindo!</h3>
-          <hr>
+<section class="d-flex align-items-center justify-content-center vh-100 login-section flex-column">
+    <div class="card cad-card">
+        <div class="cad-body">
+            <h4>Selecione seu tipo de usuário</h4>
+            <form action="#" method="post" class="pb-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipo" id="homeCheck" checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                    Lar de idosos
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipo" id="volCheck">
+                    <label class="form-check-label" for="volCheck">
+                    Voluntário
+                    </label>
+                </div>
+                <button type="submit" class="form-control mt-3 btn-login text-white">Selecionar</button>
+            </form>
         </div>
-  
-        <form action="/usuarios/user_config" method="POST" class="form-asylum-cad mt-5">
-          <label for="pro-name" class="mb-2 fw-bolder">Nome</label>
-          <input type="text" class="form-control mb-3" placeholder="Nome" name="user-name">
-          <div class="form-group d-flex">
-            <div class="form-check">
-              <input class="form-check-input config-radius" type="radio" name="flexRadioDefault" id="cpf-radius" checked>
-              <label class="form-check-label fw-bold" for="flexRadioDefault1">
-                CPF
-              </label>
-            </div>
-            <div class="form-check ms-3">
-              <input class="form-check-input config-radius" type="radio" name="flexRadioDefault" id="cnpj-radius">
-              <label class="form-check-label fw-bold" for="flexRadioDefault2">
-                CNPJ
-              </label>
-            </div>
-          </div>
-          <input type="text" class="form-control mb-3 cpf-cnpj" placeholder="CPF" name="cpf-cnpj">
-          {% if user.user_type==None %}
-          <div class="form-radio-options mb-4">
-            <div class="form-check d-flex align-items-center mb-2 p-0">
-              <input class="cad-check-input" type="radio" name="tipo" id="radioVoluntario" value="V" checked>
-              <label class="ms-2" for="tipo">
-                Voluntário
-              </label>
-            </div>
-
-            <div class="form-check d-flex align-items-center mb-0 p-0">
-              <input class="cad-check-input" type="radio" name="tipo" id="radioAsilo" value="L">
-              <label class="ms-2" for="tipo">
-                Lar
-              </label>
-            </div>
-            
-          </div>
-          {%endif%}
-          <input type="submit" class="btn bg-dark-blue text-white form-control fw-bolder mt-4 mb-5 py-3" value="Confirmar">
-        </form>
-      </div>
     </div>
-  </div>
+
+    <div class="steps mt-3">
+        <canvas class="step-uncolor"></canvas>
+        <canvas class="step-color"></canvas>
+    </div>
 </section>
 {% endblock %}

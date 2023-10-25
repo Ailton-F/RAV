@@ -18,12 +18,11 @@ class Usuario(db.Model, UserMixin):
   rs_usuario_volunteer = db.relationship('Voluntario', cascade="all,delete", backref="usuario_voluntario")
   rs_usuario_visit = db.relationship('Visita', cascade="all,delete", backref="usuario_visita")
 
-  def __init__(self, email, senha, admin, user_type, login_step):
+  def __init__(self, email, senha, admin, user_type):
     self.email = email
     self.senha = senha
     self.admin = admin
     self.user_type = user_type
-    self.login_step = login_step
 
   def __repr__(self):
     return f"usuario('{self.email}, {self.senha}, {self.admin}, {self.user_type}')"
@@ -48,17 +47,15 @@ class Voluntario(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'), unique=True)
   nome = db.Column(db.String(100))
-  cpf_cnpj = db.Column(db.String(100))
 
   usuario = db.relationship('Usuario', foreign_keys=id_usuario)
 
-  def __init__(self, id_usuario, nome, cpf_cnpj):
+  def __init__(self, id_usuario, nome):
     self.id_usuario = id_usuario
     self.nome = nome
-    self.cpf_cnpj = cpf_cnpj
 
   def __repr__(self):
-    return f"voluntario('{self.nome}, {self.cpf_cnpj}')"
+    return f"voluntario('{self.nome}')"
     
 
 class Lar(db.Model):
@@ -68,16 +65,14 @@ class Lar(db.Model):
   nome = db.Column(db.String(100))
   pix = db.Column(db.String(100))
   cep = db.Column(db.String(100))
-  cnpj = db.Column(db.String(100))
   rs_lar_visit = db.relationship('Visita', cascade="all,delete", backref="lar_visita")
 
-  def __init__(self, id_usuario, nome, cnpj):
+  def __init__(self, id_usuario, nome):
     self.id_usuario = id_usuario
     self.nome = nome
-    self.cnpj = cnpj
 
   def __repr__(self):
-    return f"Lar_de_idosos('{self.nome}, {self.cnpj}')"
+    return f"Lar_de_idosos('{self.nome}')"
 
 class Visita(db.Model):
   __tablename__ = 'visita'

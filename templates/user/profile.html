@@ -5,7 +5,7 @@
 
 {% block conteudo %}
   <section>
-    <div class="d-flex vh-100">
+    <div class="d-flex">
 
       {%with wAfter = True %}
         {% include 'user/loghome.html'%}
@@ -22,6 +22,8 @@
               <img class="profile-picture" src="
               {%if s['id_info']%}
                 {{s['id_info']['picture']}}
+              {% else %}
+                https://static.vecteezy.com/system/resources/previews/000/574/512/large_2x/vector-sign-of-user-icon.jpg
               {%endif%}
               "/>
 
@@ -37,11 +39,16 @@
                   <label class="fw-bold">E-mail</label>
                   <p class="mt-2">{{user.email}}</p>
                   <label class="fw-bold mt-3">Nome</label>
-                  <p class="mt-2">{{session['id_info']['given_name']}} {{session['id_info']['family_name']}}</p>
+                    {% if 'id_info' in session %}
+                      <p class="mt-2">{{session['id_info']['given_name']}} {{session['id_info']['family_name']}}</p>
+                    {% else %}
+                        <p class="mt-2">{{user}}</p>
+                    {% endif %}
                 </div>
               </div>
 
               <div class="card mt-5 shadow-lg border-0">
+              {% if user.user_type.value == 'V' %}
                 <div class="card-header py-4">
                   <h4 class="fw-bold mb-0">Dados de contato</h4>
                 </div>
@@ -53,6 +60,26 @@
                   </div>
                   <button type="submit" class="sbmt-btn-profile fw-bold text-white mt-4">Enviar</button>
                 </form>
+              {% else %}
+                  <div class="card-header py-4">
+                  <h4 class="fw-bold mb-0">Dados adicionais</h4>
+                </div>
+                <form class="card-body profile-contact py-4" action="/usuarios/save_data">
+                  <label class="mb-2">Telefone</label><br>
+                  <div class="input-group">
+                    <input class="form-control tel-input" type="text" placeholder="Adicionar telefone">
+                  </div>
+                  <label class="mb-2 mt-4">Chave pix</label><br>
+                  <div class="input-group">
+                    <input class="form-control tel-input" type="text" placeholder="Adicionar chave pix">
+                  </div>
+                  <label class="mb-2 mt-4">Telefone</label><br>
+                  <div class="input-group">
+                    <textarea class="form-control tel-input" placeholder="Fraldas geriátricas, alimentos, etc."></textarea>
+                  </div>
+                  <button type="submit" class="sbmt-btn-profile fw-bold text-white mt-4">Enviar</button>
+                </form>
+              {% endif %}
               </div>
             </div>
           </div>

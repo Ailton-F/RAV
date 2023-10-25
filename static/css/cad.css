@@ -45,3 +45,17 @@
 .cad-card .form-control{
   font-size: .875rem;
 }
+
+.steps canvas{
+  width: .5em;
+  height: .5em;
+  border-radius: 50%;
+}
+
+.step-color{
+  background-color: #195F82;
+}
+
+.step-uncolor{
+  background-color: #86989B;
+}

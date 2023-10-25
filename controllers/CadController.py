@@ -32,11 +32,10 @@ class Cad():
       return render_template('cad.html')
   
     if request.method=='POST':
+
       email = request.form.get('cad-email')
       senha = request.form.get('cad-password')
       csenha = request.form.get('cad-repassword')
-      admin = False
-      user_type = request.form.get('tipo')
 
       try:
         if senha != csenha:
@@ -48,7 +47,7 @@ class Cad():
         # Hashing the password
         senha = bcrypt.hashpw(senha.encode('utf-8'), salt)
         
-        usuario = Usuario(email, senha, admin, user_type, 1)
+        usuario = Usuario(email, senha, user_type=None, admin=False)
         usuario_existe = Usuario.query.filter_by(email = email).first()
 
         if usuario_existe and usuario.email in usuario_existe.email:
@@ -60,7 +59,8 @@ class Cad():
         db.session.commit()
         
         login_user(usuario)
-      except:
+      except Exception as e:
+        print(e)
         flash('Erro interno, por favor aguarde', 'danger')
         return redirect('/cadastro')
       

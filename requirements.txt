@@ -6,3 +6,10 @@ Flask_SocketIO==5.3.2
 Flask_SQLAlchemy==2.5.1
 folium==0.14.0
 SQLAlchemy==1.4.40
+Werkzeug==2.2.2
+geopy==2.4.0
+google-auth==2.23.3
+google-auth-oauthlib==1.1.0
+oauthlib==3.2.2
+bcrypt==4.0.1
+mysql_connector==2.2.9

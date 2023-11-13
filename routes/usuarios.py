@@ -74,7 +74,3 @@ def deleteVisit(id): return user.deleteVisitLink(id)
 @users_bl.route('/edit_visit/<int:id>', methods=["GET", "POST"])
 @login_required
 def editVisit(id): return user.editVisitPage(id)
-
-@users_bl.route('/save_data', methods=["POST", "GET"])
-@login_required
-def saveUserData(): return user.saveData()

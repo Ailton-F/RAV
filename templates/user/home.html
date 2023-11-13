@@ -7,9 +7,10 @@
 {% block conteudo %}
   <section>
     <div class="d-flex">
-      {% include 'user/loghome.html' %}
-      
-      <div class="flex-grow-1 vh-100">
+      {% with wAfter=True%}
+        {% include 'user/loghome.html' %}
+      {% endwith %}
+      <div class="flex-grow-1">
         
         {% with u=user %}
           {% include 'user/logheader.html'%}
@@ -26,12 +27,132 @@
             {% endif %}
           {% endwith %}
           
-          
-          <div class="card border-0 shadow-lg">
-            <div class="card-boyd">
-              <h2 class="fw-bold p-5">Olá, {{ user.nome.capitalize().split()[0] }}! Bem-vindo ao Asylum!</h2>
+          <div class="d-flex flex-column gap-4">
+
+            <div class="card border-0 shadow-lg">
+              <div class="card-body p-5 bg-dark-blue home-title-card">
+                <h2 class="fw-bold mb-5 text-white">Complete seu perfil para realizar uma <br> visita! Clique no botão abaixo</h2>
+                <button class="edit-btn py-3 px-4 text-white">Completar perfil</button>
+              </div>
+            </div>
+
+            <div class="d-flex gap-5">
+
+              <div class="d-flex card-body shadow-lg align-items-center justify-content-between px-3">
+                <div class="d-flex align-items-center gap-4">
+                  <i class="ri-file-list-line home-file-icon"></i>
+                  <div>
+                    <p class="fw-bold text-muted mb-0">Visitas marcadas</p>
+                    <small>85</small>
+                  </div>
+                </div>
+                <i class="ri-more-2-fill"></i>
+              </div>
+
+              <div class="d-flex card-body shadow-lg align-items-center justify-content-between px-3">
+                <div class="d-flex align-items-center gap-4">
+                  <i class="ri-file-list-line home-file-icon"></i>
+                  <div>
+                    <p class="fw-bold text-muted mb-0">Visitas realizadas</p>
+                    <small>85</small>
+                  </div>
+                </div>
+                <i class="ri-more-2-fill"></i>
+              </div>
+
+              <div class="d-flex card-body shadow-lg align-items-center justify-content-between px-3">
+                <div class="d-flex align-items-center gap-4">
+                  <i class="ri-file-list-line home-file-icon"></i>
+                  <div>
+                    <p class="fw-bold text-muted mb-0">Doações realizadas</p>
+                    <small>85</small>
+                  </div>
+                </div>
+                <i class="ri-more-2-fill"></i>
+              </div>
+            </div>
+
+            <div class="d-flex gap-4">
+              <div class="card border-0 shadow-lg p-0 d-flex flex-grow-1">
+                <div class="card-header border-0 bg-white p-3">
+                  <p class="mb-0 fw-bold">Próximas vistas</p>
+                </div>
+                <div class="card-body p-0">
+                <table class="home-table">
+                  <thead class="home-table-header">
+                    <tr>
+                      <td>Nome</td>
+                      <td>Motivo</td>
+                      <td>Data</td>
+                    </tr>
+                  </thead>
+                  <tbody class="home-table-body">
+
+                    <tr>
+                      <td class="d-flex gap-3">
+                        <img src="https://picsum.photos/42/42" alt="user x image" class="rounded-circle">
+                        <div>
+                          <h6 class="mb-0">Ailton Filho</h6>
+                          <small>ailtonxdz@gmail.com</small>
+                        </div>
+                      </td>
+                      <td>
+                        <small>Cantar</small>
+                      </td>
+                      <td>
+                        <small>Today</small>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="d-flex gap-3">
+                        <img src="https://picsum.photos/42/42" alt="user x image" class="rounded-circle">
+                        <div>
+                          <h6 class="mb-0">Ailton Filho</h6>
+                          <small>ailtonxdz@gmail.com</small>
+                        </div>
+                      </td>
+                      <td>
+                        <small>Cantar</small>
+                      </td>
+                      <td>
+                        <small>Today</small>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="d-flex gap-3">
+                        <img src="https://picsum.photos/42/42" alt="user x image" class="rounded-circle">
+                        <div>
+                          <h6 class="mb-0">Ailton Filho</h6>
+                          <small>ailtonxdz@gmail.com</small>
+                        </div>
+                      </td>
+                      <td>
+                        <small>Cantar</small>
+                      </td>
+                      <td>
+                        <small>Today</small>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+              </div>
+
+              <div class="d-flex card-body shadow-lg p-4 flex-column gap-3 justify-content-center map-container">
+                <div>
+                  <p class="fw-bold mb-2">Mapa para lar de idosos</p>
+                  <small>Clique no botão para acompanhar lares de idosos que<br> precisam de sua ajuda!</small>
+                  <br><button class="edit-btn btn py-2 px-4 mt-3 map-btn">Ver mapa</button>
+                </div>
+                <img src="/static/img/Location.svg" class="map-image">
+              </div>
             </div>
           </div>
+
+
         </div>
       </div>
       

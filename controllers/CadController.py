@@ -78,7 +78,7 @@ class Cad():
 
     if not session["state"] == request.args["state"]:
         abort(500)  # State does not match!
-    
+
     credentials = flow.credentials
     request_session = requests.session()
     cached_session = cachecontrol.CacheControl(request_session)
@@ -90,23 +90,15 @@ class Cad():
         audience=GOOGLE_CLIENT_ID
     )
 
-    usuario = Usuario(
-      id_info.get('email'),
-      None,
-      False,
-      None,
-      1,
-    )
-
-    session['id_info'] = id_info 
-
-    usuario_existe = Usuario.query.filter_by(email = usuario.email).first()
+    usuario = Usuario(email=id_info.get('email'), admin=0, user_type=None, senha=None)
+    session['id_info'] = id_info
+    usuario_existe = Usuario.query.filter_by(email=usuario.email).first()
     if usuario_existe and usuario.email in usuario_existe.email:
       flash('Email já cadastrado', 'danger')
       return redirect('/login')
 
     db.session.add(usuario)
     db.session.commit()
-    
+
     login_user(usuario)
     return redirect("/usuarios/user_config")

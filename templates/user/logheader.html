@@ -1,17 +1,23 @@
 <header>
-  <div class="d-flex align-items-center justify-content-end px-5 py-3">
-    <figure class="m-0 me-3">
-      <img class="profile-header-picture rounded-circle" src="
-      {%if session['id_info']%}
-        {{session['id_info']['picture']}}
-      {% else %}
-        https://static.vecteezy.com/system/resources/previews/000/574/512/large_2x/vector-sign-of-user-icon.jpg
-      {%endif%}
-      "/>
-    </figure>
-    <h4 class="fw-bold mb-0"> 
-      {{ u.nome.capitalize().split()[0] }}
-    </h4>
+  <div class="d-flex align-items-center justify-content-end gap-3 px-5 py-3">
+    <button class="btn btn-notification">
+      <i class="ri-notification-line"></i>
+    </button>
+
+    <div class="d-flex gap-1 align-items-center">
+      <figure class="m-0 me-3">
+        <img class="profile-header-picture rounded-circle" src="
+        {%if session['id_info']%}
+          {{session['id_info']['picture']}}
+        {% else %}
+          https://static.vecteezy.com/system/resources/previews/000/574/512/large_2x/vector-sign-of-user-icon.jpg
+        {%endif%}
+        "/>
+      </figure>
+      <small class="mb-0">
+        {{ u.nome.capitalize().split()[0] }}
+      </small>
+    </div>
   </div>
   <hr class="m-0">
 </header>

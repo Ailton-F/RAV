@@ -10,7 +10,7 @@ class User():
     #retorna a página de usuário
     @staticmethod
     def getHome():
-        if "google_id" not in session:
+        if "id_info" not in session:
             u_id = current_user.id
             if current_user.user_type._value_ == 'A':
                 user = db.session.query(Lar.nome).join(
@@ -18,7 +18,11 @@ class User():
             else:
                 user = db.session.query(Voluntario.nome).join(
                     Usuario, Voluntario.id_usuario == u_id).first()
-        else: user=session
+
+        else:
+            user = {}
+            user['nome'] = session['id_info']['given_name']
+
         return render_template('user/home.html', user=user)
 
     #retorna a página de administradores
@@ -125,11 +129,6 @@ class User():
             current_user.user_type = tipo
             db.session.add(current_user)
             db.session.commit()
-
-        else: redirect('/')
-
-        db.session.add(user)
-        db.session.commit()
 
         return redirect('/')
 
@@ -262,7 +261,3 @@ class User():
     def getAsylumProfile(id):
         lar = Lar.query.filter_by(id=id).first()
         return f'ID: {lar.id}<br> NOME: {lar.nome}<br> LINK: <a href="/usuarios/book/{lar.id}">Marcar visita</a>'
-
-    @staticmethod
-    def saveData():
-        pass

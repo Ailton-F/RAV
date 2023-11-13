@@ -39,7 +39,7 @@
   width:360px;
   padding: 1.5em 2em;
   border-radius:10px;
-  background:var(--calendar-bgd);
+  background:var(--calendar-bg);
 }
 
 table {

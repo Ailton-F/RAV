@@ -1,3 +1,66 @@
 .user-home-content{
  padding: 1em 7em 5.25em 7em;
 }
+
+.home-title-card{
+ background-image: url("/static/img/Pharmacist.svg");
+ background-repeat: no-repeat;
+ background-position: right bottom;
+ border-radius: 15px;
+}
+
+.home-file-icon{
+ display: flex;
+ font-size: 1.25em;
+ background-color: #D4FDE9;
+ color: #41C2A6;
+ min-width: 3em;
+ min-height: 3em;
+ align-items: center;
+ justify-content: center;
+}
+
+.home-table-header tr td{
+ font-size: 12px;
+ text-transform: none;
+ text-align: left;
+ font-weight: bold;
+ background-color: #F4F4F4;
+ padding: 1em;
+}
+
+.home-table-body tr td{
+ text-transform: none;
+ text-align: left;
+ padding-left: 1em;
+ margin-bottom: .5em;
+ margin-top: .5em;
+}
+
+.home-table{
+  border-collapse: collapse;
+}
+
+.home-table tr{
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.home-table tr:last-child{
+  border: 0;
+}
+
+.map-btn{
+ font-size: 11px;
+ font-weight: bold;
+ color: white;
+}
+
+.map-image{
+ background-color: #D5F0FD;
+ border-radius: 15px;
+ padding: 1em 2em;
+}
+
+.map-container{
+ max-width: 28.5em;
+}

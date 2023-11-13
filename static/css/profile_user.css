@@ -2,13 +2,22 @@
  padding: 2em 7em;
 }
 
+.btn-notification{
+  border-radius: 50%;
+}
+
+.btn-notification:focus{
+  background-color: #c0c0c0 !important;
+  box-shadow: none;
+}
+
 .profile-picture{
   width: 13rem;
   border-radius: 50%;
 }
 
 .profile-header-picture{
- width: 3.5em; 
+ width: 2.5em;
 }
 
 .edit-btn{

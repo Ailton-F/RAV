@@ -71,9 +71,11 @@ class Lar(db.Model):
     cep = db.Column(db.String(100))
     rs_lar_visit = db.relationship('Visita', cascade="all,delete", backref="lar_visita")
 
-    def __init__(self, id_usuario, nome):
+    def __init__(self, id_usuario):
         self.id_usuario = id_usuario
-        self.nome = nome
+        self.nome = None
+        self.pix = ''
+        self.cep = ''
 
     def __repr__(self):
         return f"Lar_de_idosos('{self.nome}')"

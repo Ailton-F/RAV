@@ -1,25 +1,54 @@
 {% extends 'indexwhf.html' %}
 {% block titulo %}
-  Meu perfil
+Meu perfil
 {% endblock %}
 
 {% block conteudo %}
-  <section>
+<section>
     <div class="d-flex">
 
-      {%with wAfter = True %}
+        {%with wAfter = True %}
         {% include 'user/loghome.html'%}
-      {%endwith%}
-
-      <div class="flex-grow-1">
-        {% with u=userType %}
-          {% include 'user/logheader.html'%}
+        {%endwith%}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div id="toast">
+            <div class="alert-container {{category}}">
+                <p class="message px-4 py-3 m-0">
+                    {{message}}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
-        <div class="user-profile-content flex-grow-1">
-          <div class="row">
+        <div class="flex-grow-1">
+            {% if session['id_info'] %}
 
-            <div class="d-flex flex-column col-4 align-items-center">
-              <img class="profile-picture" src="
+                {% with u=session['id_info']['given_name'] %}
+                    {% include 'user/logheader.html'%}
+                {% endwith %}
+
+            {% else %}
+
+                {% if u=='' %}
+                    {% with u='' %}
+                        {% include 'user/logheader.html'%}
+                    {% endwith %}
+                {% else %}
+                    {% with u=name %}
+                        {% include 'user/logheader.html'%}
+                    {% endwith %}
+                {% endif %}
+
+            {% endif %}
+
+            <div class="user-profile-content flex-grow-1">
+                <div class="row">
+
+                    <div class="d-flex flex-column col-4 align-items-center">
+                        <img alt="Foto do perfil" class="profile-picture" src="
               {%if s['id_info']%}
                 {{s['id_info']['picture']}}
               {% else %}
@@ -27,64 +56,72 @@
               {%endif%}
               "/>
 
-              <button class="mt-4 text-white edit-btn fw-bold">Editar perfil</button>
-            </div>
+                        <button class="mt-4 text-white edit-btn fw-bold">Editar foto</button>
+                    </div>
 
-            <div class="col-8">
-              <div class="card shadow-lg border-0 py-4">
-                <div class="card-header py-4">
-                  <h4 class="fw-bold mb-0">Dados da conta</h4>
-                </div>
-                <div class="card-body profile-contact py-4">
-                  <label class="fw-bold">E-mail</label>
-                  <p class="mt-2">{{user.email}}</p>
-                  <label class="fw-bold mt-3">Nome</label>
-                    {% if 'id_info' in session %}
-                      <p class="mt-2">{{session['id_info']['given_name']}} {{session['id_info']['family_name']}}</p>
-                    {% else %}
-                        <p class="mt-2">{{user}}</p>
-                    {% endif %}
-                </div>
-              </div>
+                    <div class="col-8">
+                        <form class="card shadow-lg border-0 py-4" method="POST" action="/usuarios/save ">
+                            <div class="card-header py-4">
+                                <h4 class="fw-bold mb-0">Dados da conta</h4>
+                            </div>
+                            <div class="card-body profile-contact py-4">
+                                <label class="fw-bold">E-mail</label>
+                                <p class="mt-2">{{user.email}}</p>
+                                <label class="fw-bold mt-3" for="nome">Nome</label><br>
+                                {% if 'id_info' in session %}
+                                <p class="mt-2">{{ session['id_info']['given_name']}}
+                                    {{session['id_info']['family_name'] }}</p>
+                                {% else %}
+                                {% if name == '' %}
+                                <input type="text" placeholder="Insira seu nome" id="nome" name="nome"
+                                       class="border-0 form-control form-control-sm w-auto mb-4" autofocus>
+                                <button type="submit" class="sbmt-btn-profile fw-bold text-white">Enviar</button>
+                                {% else %}
+                                <p class="mt-2">{{name}}</p>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                        </form>
 
-              <div class="card mt-5 shadow-lg border-0">
-              {% if user.user_type.value == 'V' %}
-                <div class="card-header py-4">
-                  <h4 class="fw-bold mb-0">Dados de contato</h4>
+                        <div class="card mt-5 shadow-lg border-0">
+                            {% if user.user_type.value == 'V' %}
+                            <div class="card-header py-4">
+                                <h4 class="fw-bold mb-0">Dados de contato</h4>
+                            </div>
+                            <form class="card-body profile-contact py-4">
+                                <label class="mb-2">Telefone</label><br>
+                                <div class="input-group">
+                                    <input class="form-control tel-input" type="text" placeholder="Adicionar telefone">
+                                    <button class="input-group-text plus">+</button>
+                                </div>
+                                <button type="submit" class="sbmt-btn-profile fw-bold text-white mt-4">Enviar</button>
+                            </form>
+                            {% else %}
+                            <div class="card-header py-4">
+                                <h4 class="fw-bold mb-0">Dados adicionais</h4>
+                            </div>
+                            <form class="card-body profile-contact py-4" action="/usuarios/save_data">
+                                <label class="mb-2">Telefone</label><br>
+                                <div class="input-group">
+                                    <input class="form-control tel-input" type="text" placeholder="Adicionar telefone">
+                                </div>
+                                <label class="mb-2 mt-4">Chave pix</label><br>
+                                <div class="input-group">
+                                    <input class="form-control tel-input" type="text" placeholder="Adicionar chave pix">
+                                </div>
+                                <label class="mb-2 mt-4">Telefone</label><br>
+                                <div class="input-group">
+                                    <textarea class="form-control tel-input"
+                                              placeholder="Fraldas geriátricas, alimentos, etc."></textarea>
+                                </div>
+                                <button type="submit" class="sbmt-btn-profile fw-bold text-white mt-4">Enviar</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-                <form class="card-body profile-contact py-4">
-                  <label class="mb-2">Telefone</label><br>
-                  <div class="input-group">
-                    <input class="form-control tel-input" type="text" placeholder="Adicionar telefone">
-                    <button class="input-group-text plus">+</button>
-                  </div>
-                  <button type="submit" class="sbmt-btn-profile fw-bold text-white mt-4">Enviar</button>
-                </form>
-              {% else %}
-                  <div class="card-header py-4">
-                  <h4 class="fw-bold mb-0">Dados adicionais</h4>
-                </div>
-                <form class="card-body profile-contact py-4" action="/usuarios/save_data">
-                  <label class="mb-2">Telefone</label><br>
-                  <div class="input-group">
-                    <input class="form-control tel-input" type="text" placeholder="Adicionar telefone">
-                  </div>
-                  <label class="mb-2 mt-4">Chave pix</label><br>
-                  <div class="input-group">
-                    <input class="form-control tel-input" type="text" placeholder="Adicionar chave pix">
-                  </div>
-                  <label class="mb-2 mt-4">Telefone</label><br>
-                  <div class="input-group">
-                    <textarea class="form-control tel-input" placeholder="Fraldas geriátricas, alimentos, etc."></textarea>
-                  </div>
-                  <button type="submit" class="sbmt-btn-profile fw-bold text-white mt-4">Enviar</button>
-                </form>
-              {% endif %}
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </section>
+</section>
 {% endblock %}

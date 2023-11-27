@@ -7,7 +7,7 @@ from datetime import datetime
 
 class User():
 
-    #retorna a página de usuário
+    # retorna a página de usuário
     @staticmethod
     def getHome():
         if "id_info" not in session:
@@ -25,7 +25,7 @@ class User():
 
         return render_template('user/home.html', user=user)
 
-    #retorna a página de administradores
+    # retorna a página de administradores
 
     @staticmethod
     def getAdminPage():
@@ -36,7 +36,7 @@ class User():
             flash('Você não tem autorização para acessar', 'danger')
             return redirect('/usuarios')
 
-    #Encerra sessão do usuário
+    # Encerra sessão do usuário
 
     @staticmethod
     def logUserOff():
@@ -49,7 +49,7 @@ class User():
         flash('Conta deslogada', 'success')
         return redirect('/login')
 
-    #Deleta o usuário do banco de dados
+    # Deleta o usuário do banco de dados
 
     @staticmethod
     def deleteUser(id):
@@ -70,7 +70,7 @@ class User():
             flash('Sua conta foi deletada com sucesso!', 'success')
             return '/'
 
-    #GET:Carrega a página de edição de usuário, POST:Edita o usuário
+    # GET:Carrega a página de edição de usuário, POST:Edita o usuário
 
     @staticmethod
     def editUser(id):
@@ -82,8 +82,9 @@ class User():
 
         user = Usuario.query.filter_by(id=id).first()
         if user.user_type._value_ == 'V':
-          usertype = Voluntario.query.filter_by(id_usuario=user.id).first()
-        else: usertype = Lar.query.filter_by(id_usuario=user.id).first()
+            usertype = Voluntario.query.filter_by(id_usuario=user.id).first()
+        else:
+            usertype = Lar.query.filter_by(id_usuario=user.id).first()
         if request.method == 'GET':
             return render_template('user/edit.html', user=user, usertype=usertype)
 
@@ -105,18 +106,21 @@ class User():
             flash('Dados alterados com sucesso', 'success')
             return redirect('/usuarios')
 
-    #Retorna a página de perfil do usuário
+    # Retorna a página de perfil do usuário
 
     @staticmethod
     def getProfilePage():
-        user = Usuario.query.filter_by(id=current_user.id).first()
+        u_id = current_user.id
         if current_user.user_type._value_ == 'A':
-            userType = Lar.query.filter_by(id_usuario=user.id).first()
-        else: userType = Voluntario.query.filter_by(id_usuario=user.id).first()
-        #return f'{session}'
-        return render_template('user/profile.html', user=user, userType=userType, s=session)
+            userName = db.session.query(Lar.nome).join(
+                Usuario, Lar.id_usuario == u_id).first()
+        else:
+            userName = db.session.query(Voluntario.nome).join(
+                Usuario, Voluntario.id_usuario == u_id).first()
 
-    #Retorna a página de configuração de usuário do tipo voluntário
+        return render_template('user/profile.html', user=current_user, name=userName[0], s=session)
+
+    # Retorna a página de configuração de usuário do tipo voluntário
 
     @staticmethod
     def getVolunteerConfigPage():
@@ -124,15 +128,22 @@ class User():
             return render_template('user/config.html')
 
         tipo = request.form.get('tipo')
-        
-        if current_user.user_type is None:
+        if current_user.user_type is '' or current_user.user_type is None:
             current_user.user_type = tipo
             db.session.add(current_user)
-            db.session.commit()
 
+        if tipo == 'V':
+            vol = Voluntario(current_user.id, '')
+            db.session.add(vol)
+
+        else:
+            lar = Lar(current_user.id)
+            db.session.add(lar)
+
+        db.session.commit()
         return redirect('/')
 
-    #retorna a página de visitas
+    # retorna a página de visitas
 
     @staticmethod
     def getVisitHomePage():
@@ -149,18 +160,7 @@ class User():
                                lares=lares,
                                visitas=rs_visits)
 
-    #Retorna a página do chat
-
-    @staticmethod
-    def getChatPage():
-        return render_template('user/chat.html', user=current_user)
-
-    #Retorna o template das mensagens
-    @staticmethod
-    def getMsgTemplate():
-        return render_template('msg.html')
-
-    #Retorna a página para marcar visitas
+    # Retorna a página para marcar visitas
 
     @staticmethod
     def getBookVisitPage(request_id):
@@ -168,7 +168,6 @@ class User():
         lar = Lar.query.filter_by(id=request_id).first()
 
         if request.method == "GET":
-
             return render_template('visit/book.html', lar=lar)
 
         id_usuario = current_user.id
@@ -176,14 +175,14 @@ class User():
         volunteer_name = request.form.get('name')
         lar_name = lar.nome
 
-        #Faz a formatação da data
+        # Faz a formatação da data
         visit_date = request.form.get('visit-date')
         date = map(lambda item: int(item), visit_date.split('-'))
         date = list(date)
         fdate = datetime(date[0], date[1], date[2])
         visit_date = fdate.date()
 
-        #Faz a formatação da hora
+        # Faz a formatação da hora
         visit_hour = request.form.get('visit-hour')
         visit_hour = map(lambda item: int(item), visit_hour.split(':'))
         visit_hour = list(visit_hour)
@@ -201,7 +200,7 @@ class User():
         flash('Visita marcada com sucesso!', 'success')
         return redirect('/usuarios/visit')
 
-    #Retorna o dashboard das visitas
+    # Retorna o dashboard das visitas
 
     @staticmethod
     def getDashboard():
@@ -213,7 +212,7 @@ class User():
             rs_visits = Visita.query.filter_by(nome_lar=rs_lar.nome)
         return render_template('visit/dashboard.html', visitas=rs_visits)
 
-    #Deleta a visita do banco de dados
+    # Deleta a visita do banco de dados
 
     @staticmethod
     def deleteVisitLink(id):
@@ -224,7 +223,7 @@ class User():
         flash('Visita deletada com sucesso!', 'success')
         return redirect('/usuarios/dashboard')
 
-    #GET: Retorna a página de edição da visita, POST: edita a visita
+    # GET: Retorna a página de edição da visita, POST: edita a visita
 
     @staticmethod
     def editVisitPage(id):
@@ -232,14 +231,14 @@ class User():
         if request.method == "GET":
             return render_template('visit/edit.html', visit=visit)
 
-        #Faz a formatação da data
+        # Faz a formatação da data
         visit_date = request.form.get('visit-date')
         date = map(lambda item: int(item), visit_date.split('-'))
         date = list(date)
         fdate = datetime(int(date[0]), int(date[1]), int(date[2]))
         visit_date = fdate.date()
 
-        #Faz a formatação da hora
+        # Faz a formatação da hora
         visit_hour = request.form.get('visit-hour')
         visit_hour = map(lambda item: int(item), visit_hour.split(':'))
         visit_hour = list(visit_hour)
@@ -261,3 +260,16 @@ class User():
     def getAsylumProfile(id):
         lar = Lar.query.filter_by(id=id).first()
         return f'ID: {lar.id}<br> NOME: {lar.nome}<br> LINK: <a href="/usuarios/book/{lar.id}">Marcar visita</a>'
+
+    @staticmethod
+    def saveName():
+        if current_user.user_type._value_ == 'L':
+            user = Lar.query.filter_by(id_usuario=current_user.id).first()
+            user.nome = request.form.get('nome')
+        else:
+            user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
+            user.nome = request.form.get('nome')
+
+        db.session.add(user)
+        db.session.commit()
+        return redirect('/usuarios/profile')

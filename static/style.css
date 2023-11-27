@@ -10,6 +10,7 @@
 @import url("css/visit.css");
 @import url("css/toasts.css");
 @import url("css/error.css");
+@import url("css/lares_page.css");
 
 
 /*Configs*/
@@ -262,3 +263,10 @@ footer {
   background-color: #195F82;
 }
 
+.text-green{
+  color: #41C2A6;
+}
+
+.text-dark-blue{
+  color: #195F82;
+}

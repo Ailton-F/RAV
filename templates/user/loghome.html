@@ -21,6 +21,14 @@
         Doações
       </a>
     </li>
+    {% if current_user.user_type._value_ == 'V'%}
+    <li class="nav-item admin-sidebar-item">
+      <a href="#" class="nav-link text-white d-flex align-items-center link link--metis">
+        <i class="ri-community-line sidebar-icon"></i>
+        Lares
+      </a>
+    </li>
+    {% endif %}
     {% if current_user.admin %}
     <li class="nav-item admin-sidebar-item">
       <a href="/usuarios/admin" class="nav-link text-white d-flex align-items-center link link--metis">

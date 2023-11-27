@@ -26,21 +26,21 @@ Meu perfil
         <div class="flex-grow-1">
             {% if session['id_info'] %}
 
-                {% with u=session['id_info']['given_name'] %}
-                    {% include 'user/logheader.html'%}
-                {% endwith %}
+            {% with u=session['id_info']['given_name'] %}
+            {% include 'user/logheader.html'%}
+            {% endwith %}
 
             {% else %}
 
-                {% if u=='' %}
-                    {% with u='' %}
-                        {% include 'user/logheader.html'%}
-                    {% endwith %}
-                {% else %}
-                    {% with u=name %}
-                        {% include 'user/logheader.html'%}
-                    {% endwith %}
-                {% endif %}
+            {% if u=='' %}
+            {% with u='' %}
+            {% include 'user/logheader.html'%}
+            {% endwith %}
+            {% else %}
+            {% with u=name %}
+            {% include 'user/logheader.html'%}
+            {% endwith %}
+            {% endif %}
 
             {% endif %}
 
@@ -72,7 +72,7 @@ Meu perfil
                                 <p class="mt-2">{{ session['id_info']['given_name']}}
                                     {{session['id_info']['family_name'] }}</p>
                                 {% else %}
-                                {% if name == '' %}
+                                {% if name == '' or name == None %}
                                 <input type="text" placeholder="Insira seu nome" id="nome" name="nome"
                                        class="border-0 form-control form-control-sm w-auto mb-4" autofocus>
                                 <button type="submit" class="sbmt-btn-profile fw-bold text-white">Enviar</button>
@@ -109,7 +109,7 @@ Meu perfil
                                 <div class="input-group">
                                     <input class="form-control tel-input" type="text" placeholder="Adicionar chave pix">
                                 </div>
-                                <label class="mb-2 mt-4">Telefone</label><br>
+                                <label class="mb-2 mt-4">Principais necessidades</label><br>
                                 <div class="input-group">
                                     <textarea class="form-control tel-input"
                                               placeholder="Fraldas geriátricas, alimentos, etc."></textarea>

@@ -81,4 +81,9 @@ def edit_visit(id): return user.editVisitPage(id)
 
 @users_bl.route('/save', methods=["POST"])
 @login_required
-def save_name(): return user.saveName()
+def save_name(): return user.save_name()
+
+
+@users_bl.route('/lares', methods=["GET"])
+@login_required
+def all_lares(): return user.get_all_lares_page()

@@ -1,0 +1,137 @@
+{% extends 'indexwhf.html' %}
+{% block titulo %}
+Editar visita
+{% endblock %}
+
+{% block conteudo %}
+<section>
+    <div class="d-flex">
+
+        {%with wAfter = True %}
+        {% include 'user/loghome.html'%}
+        {%endwith%}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div id="toast">
+            <div class="alert-container {{category}}">
+                <p class="message px-4 py-3 m-0">
+                    {{message}}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <div class="flex-grow-1">
+            {% if session['id_info'] %}
+
+            {% with u=session['id_info']['given_name'] %}
+            {% include 'user/logheader.html'%}
+            {% endwith %}
+
+            {% else %}
+
+            {% if nome=='' %}
+            {% with u='' %}
+            {% include 'user/logheader.html'%}
+            {% endwith %}
+            {% else %}
+            {% with u=nome %}
+            {% include 'user/logheader.html'%}
+            {% endwith %}
+            {% endif %}
+            {% endif %}
+
+            <div class="lares-container">
+                <p class="mb-0 fw-bold lares-pre-title text-green">ESCOLHA UM LAR DE IDOSOS PARA VISITAR</p>
+                <h3 class="fw-bold">Opções para visita</h3>
+                <div class="lares-cards">
+                    <div class="row gap-3 mb-5 justify-content-around">
+                        <div class="col-4 lar-card card p-0 border-0 shadow-lg">
+                            <div class="card-header p-0">
+                                <img class="lares-perfil-photo" src="https://picsum.photos/278/251" alt="Foto de perfil do lar">
+                            </div>
+                            <div class="card-body d-flex flex-column gap-2">
+                                <p class="mb-0 lar-title fw-bold text-dark-blue">Lar de idosos Santo Amaro </p>
+                                <div>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-map-pin-line"></i> Av. Não sei o Que Lá, 201</p>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-mail-line"></i> LarIdososSantoAmaro@gmail.com</p>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-phone-line"></i> (84)99999-9999</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 lar-card card p-0 border-0 shadow-lg">
+                            <div class="card-header p-0">
+                                <img class="lares-perfil-photo" src="https://picsum.photos/278/251" alt="Foto de perfil do lar">
+                            </div>
+                            <div class="card-body d-flex flex-column gap-2">
+                                <p class="mb-0 lar-title fw-bold text-dark-blue">Lar de idosos Santo Amaro </p>
+                                <div>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-map-pin-line"></i> Av. Não sei o Que Lá, 201</p>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-mail-line"></i> LarIdososSantoAmaro@gmail.com</p>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-phone-line"></i> (84)99999-9999</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 lar-card card p-0 border-0 shadow-lg">
+                            <div class="card-header p-0">
+                                <img class="lares-perfil-photo" src="https://picsum.photos/278/251" alt="Foto de perfil do lar">
+                            </div>
+                            <div class="card-body d-flex flex-column gap-2">
+                                <p class="mb-0 lar-title fw-bold text-dark-blue">Lar de idosos Santo Amaro </p>
+                                <div>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-map-pin-line"></i> Av. Não sei o Que Lá, 201</p>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-mail-line"></i> LarIdososSantoAmaro@gmail.com</p>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-phone-line"></i> (84)99999-9999</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gap-3 mb-5 justify-content-around">
+                        <div class="col-4 lar-card card p-0 border-0 shadow-lg">
+                            <div class="card-header p-0">
+                                <img class="lares-perfil-photo" src="https://picsum.photos/278/251" alt="Foto de perfil do lar">
+                            </div>
+                            <div class="card-body d-flex flex-column gap-2">
+                                <p class="mb-0 lar-title fw-bold text-dark-blue">Lar de idosos Santo Amaro </p>
+                                <div>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-map-pin-line"></i> Av. Não sei o Que Lá, 201</p>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-mail-line"></i> LarIdososSantoAmaro@gmail.com</p>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-phone-line"></i> (84)99999-9999</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 lar-card card p-0 border-0 shadow-lg">
+                            <div class="card-header p-0">
+                                <img class="lares-perfil-photo" src="https://picsum.photos/278/251" alt="Foto de perfil do lar">
+                            </div>
+                            <div class="card-body d-flex flex-column gap-2">
+                                <p class="mb-0 lar-title fw-bold text-dark-blue">Lar de idosos Santo Amaro </p>
+                                <div>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-map-pin-line"></i> Av. Não sei o Que Lá, 201</p>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-mail-line"></i> LarIdososSantoAmaro@gmail.com</p>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-phone-line"></i> (84)99999-9999</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 lar-card card p-0 border-0 shadow-lg">
+                            <div class="card-header p-0">
+                                <img class="lares-perfil-photo" src="https://picsum.photos/278/251" alt="Foto de perfil do lar">
+                            </div>
+                            <div class="card-body d-flex flex-column gap-2">
+                                <p class="mb-0 lar-title fw-bold text-dark-blue">Lar de idosos Santo Amaro </p>
+                                <div>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-map-pin-line"></i> Av. Não sei o Que Lá, 201</p>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-mail-line"></i> LarIdososSantoAmaro@gmail.com</p>
+                                    <p class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-phone-line"></i> (84)99999-9999</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

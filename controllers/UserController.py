@@ -111,7 +111,7 @@ class User():
     @staticmethod
     def getProfilePage():
         u_id = current_user.id
-        if current_user.user_type._value_ == 'A':
+        if current_user.user_type._value_ == 'L':
             userName = db.session.query(Lar.nome).join(
                 Usuario, Lar.id_usuario == u_id).first()
         else:
@@ -148,13 +148,13 @@ class User():
     @staticmethod
     def getVisitHomePage():
 
-        lares = db.session.query(Lar.id, Lar.nome).limit(8)
+        lares = db.session.query(Lar.id, Lar.nome).limit(8).all()
 
         if current_user.user_type._value_ == 'V':
-            rs_visits = Visita.query.filter_by(id_usuario=current_user.id).limit(3)
+            rs_visits = Visita.query.filter_by(id_usuario=current_user.id).limit(3).all()
         else:
             rs_lar = Lar.query.filter_by(id_usuario=current_user.id).first()
-            rs_visits = Visita.query.filter_by(nome_lar=rs_lar.nome).limit(3)
+            rs_visits = Visita.query.filter_by(nome_lar=rs_lar.nome).limit(3).all()
 
         return render_template('visit/home.html',
                                lares=lares,
@@ -262,7 +262,7 @@ class User():
         return f'ID: {lar.id}<br> NOME: {lar.nome}<br> LINK: <a href="/usuarios/book/{lar.id}">Marcar visita</a>'
 
     @staticmethod
-    def saveName():
+    def save_name():
         if current_user.user_type._value_ == 'L':
             user = Lar.query.filter_by(id_usuario=current_user.id).first()
             user.nome = request.form.get('nome')
@@ -273,3 +273,12 @@ class User():
         db.session.add(user)
         db.session.commit()
         return redirect('/usuarios/profile')
+
+    @staticmethod
+    def get_all_lares_page():
+        if current_user.user_type._value_ == 'L':
+            user = Lar.query.filter_by(id_usuario=current_user.id).first()
+        else:
+            user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
+
+        return render_template('visit/all_lares_page.html', nome=user.nome)

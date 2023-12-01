@@ -12,7 +12,7 @@
       {% endwith %}
       <div class="flex-grow-1">
         
-        {% with u=user %}
+        {% with u=user[0] %}
           {% include 'user/logheader.html'%}
         {% endwith %}
         

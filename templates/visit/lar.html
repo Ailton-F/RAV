@@ -1,0 +1,42 @@
+{% extends 'indexwhf.html' %}
+{% block titulo %}
+Editar visita
+{% endblock %}
+
+{% block conteudo %}
+<section>
+    {% with back=True %}
+    {% if session['id_info'] %}
+    {% with u=session['id_info']['given_name'] %}
+    {% include 'user/logheader.html'%}
+    {% endwith %}
+    {% else %}
+    {% if nome=='' %}
+    {% with u='' %}
+    {% include 'user/logheader.html'%}
+    {% endwith %}
+    {% else %}
+    {% with u=nome %}
+    {% include 'user/logheader.html'%}
+    {% endwith %}
+    {% endif %}
+    {% endif %}
+    {% endwith %}
+    <figure class="mb-4">
+        <img src="http://placehold.it/1440x316">
+    </figure>
+    <div class="lar-content-container">
+        <h2 class="text-dark-blue fw-bold">Lar de idosos Santo Amaro</h2>
+        <h4 class="d-flex align-items-center gap-1 mb-4"><i class="ri-map-pin-2-fill"></i> Av. Não sei o Que Lá, 201</h4>
+        <hr>
+        <h3 class="fw-bold">Contatar</h3>
+        <ol class="p-0 d-flex flex-column gap-2 text-dark-blue">
+            <li class="d-flex align-items-center gap-2"><i class="ri-phone-line"></i> (020) 123 456 789</li>
+            <li class="d-flex align-items-center gap-2"><i class="ri-mail-line"></i> s.amaro@gmail.com</li>
+            <li class="d-flex align-items-center gap-2"><i class="ri-computer-line"></i> www.santamaro.com</li>
+            <li class="d-flex align-items-center gap-2"><i class="ri-facebook-box-fill"></i> Santo Amaro</li>
+            <li class="d-flex align-items-center gap-2"><i class="ri-instagram-line"></i> @s_amaro</li>
+        </ol>
+    </div>
+</section>
+{% endblock %}

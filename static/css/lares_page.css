@@ -21,8 +21,13 @@
 
 .lar-card{
     max-width: 17.375em;
+    transition: .5s ease;
 }
 
 .lares-perfil-photo{
     width: -webkit-fill-available;
+}
+
+.lar-card:hover {
+    transform: translateY(-5px);
 }

@@ -282,3 +282,11 @@ class User():
             user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
 
         return render_template('visit/all_lares_page.html', nome=user.nome)
+
+    @staticmethod
+    def get_lar_page():
+        if current_user.user_type._value_ == 'L':
+            user = Lar.query.filter_by(id_usuario=current_user.id).first()
+        else:
+            user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
+        return render_template('visit/lar.html', nome=user.nome)

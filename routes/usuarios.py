@@ -87,3 +87,8 @@ def save_name(): return user.save_name()
 @users_bl.route('/lares', methods=["GET"])
 @login_required
 def all_lares(): return user.get_all_lares_page()
+
+
+@users_bl.route('/lar', methods=["GET"])
+@login_required
+def get_lar(): return user.get_lar_page()

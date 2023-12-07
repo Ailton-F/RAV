@@ -1,107 +1,11 @@
-:root{
-  --main-bg: rgb(40,40,59);
-  --calendar-border:rgb(220,220,255);
-  --calendar-bg:#fff;
-  --calendar-standout:rgb(40,40,59);
-  --calendar-color:#444;
-  --calendar-fade-color:#c0c0c0;
-  --body-color:#444;
-}
-
 .visit-info-btn{
   cursor: pointer;
 }
 
-.group {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+.visit-home-content{
+  padding: 0 3.75em;
 }
 
-.max(@maxWidth;
-  @rules) {
-    @media only screen and (max-width: @maxWidth) {
-      @rules();
-    }
-  }
-
-.min(@minWidth;
-  @rules) {
-    @media only screen and (min-width: @minWidth) {
-      @rules();
-    }
-  }
-
-
-.calendar-wrapper {
-  width:360px;
-  padding: 1.5em 2em;
-  border-radius:10px;
-  background:var(--calendar-bg);
-}
-
-table {
-  clear:both;
-  width:100%;
-  border-radius:3px;
-  border-collapse:collapse;
-  color:var(--calendar-color);
-}
-
-td {
-  height:48px;
-  text-align:center;
-  vertical-align:middle;
-  width:calc(100% / 7);
-}
-
-td.not-current {
-  color:var(--calendar-fade-color);
-}
-td.normal {}
-
-td.today {
-  font-weight:700;
-  color:var(--calendar-standout);
-  font-size:1.5em;
-}
-thead td {
-  border:none;
-  color:var(--calendar-standout);
-  text-transform:uppercase;
-  font-size:1.5em;
-}
-#btnPrev {
-  float:left;
-  margin-bottom:20px;
-  &:before {
-    content:'\f104';
-    font-family:FontAwesome;
-    padding-right:4px;
-  }
-}
-#btnNext {
-  float:right;
-  margin-bottom:20px;
-  &:after {
-    content:'\f105';
-    font-family:FontAwesome;
-    padding-left:4px;
-  }
-}
-#btnPrev, #btnNext {
-  background:transparent;
-  border:none;
-  outline:none;
-  font-size:1em;
-  color:var(--calendar-fade-color);
-  cursor:pointer;
-  text-transform:uppercase;
-  transition:all 0.3s ease;
-  &:hover {
-    color:var(--calendar-standout);
-    font-weight:bold;
-  }
+.btn-visit{
+  padding: 1.20em 3.75em;
 }

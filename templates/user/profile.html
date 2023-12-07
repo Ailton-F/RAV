@@ -66,7 +66,7 @@ Meu perfil
                             </div>
                             <div class="card-body profile-contact py-4">
                                 <label class="fw-bold">E-mail</label>
-                                <p class="mt-2">{{user.email}}</p>
+                                <p class="mt-2">{{current_user.email}}</p>
                                 <label class="fw-bold mt-3" for="nome">Nome</label><br>
                                 {% if 'id_info' in session %}
                                 <p class="mt-2">{{ session['id_info']['given_name']}}
@@ -84,14 +84,16 @@ Meu perfil
                         </form>
 
                         <div class="card mt-5 shadow-lg border-0">
-                            {% if user.user_type.value == 'V' %}
+                            {% if current_user.user_type.value == 'V' %}
                             <div class="card-header py-4">
                                 <h4 class="fw-bold mb-0">Dados de contato</h4>
                             </div>
-                            <form class="card-body profile-contact py-4">
+                            <form class="card-body profile-contact py-4" action="/usuarios/save_aditional_data"
+                                  method="POST">
                                 <label class="mb-2">Telefone</label><br>
                                 <div class="input-group">
-                                    <input class="form-control tel-input" type="text" placeholder="Adicionar telefone">
+                                    <input class="form-control tel-input" type="text" name="tel"
+                                           placeholder="{%if not user.telefone%}Adicionar telefone{%else%}{{user.telefone}}{%endif%}">
                                     <button class="input-group-text plus">+</button>
                                 </div>
                                 <button type="submit" class="sbmt-btn-profile fw-bold text-white mt-4">Enviar</button>
@@ -100,19 +102,37 @@ Meu perfil
                             <div class="card-header py-4">
                                 <h4 class="fw-bold mb-0">Dados adicionais</h4>
                             </div>
-                            <form class="card-body profile-contact py-4" action="/usuarios/save_data">
-                                <label class="mb-2">Telefone</label><br>
+                            <form class="card-body profile-contact py-4" action="/usuarios/save_aditional_data"
+                                  method="POST">
+                                <label class="mb-2 mt-4">CEP</label><br>
                                 <div class="input-group">
-                                    <input class="form-control tel-input" type="text" placeholder="Adicionar telefone">
+                                    <input class="form-control tel-input" type="text" name="cep"
+                                           placeholder="{% if user.cep == '' %}Adicionar endereço CEP{% else %}{{user.cep}}{% endif %}"
+                                           required>
+                                </div>
+                                <label class="mb-2 mt-4">Telefone</label><br>
+                                <div class="input-group">
+                                    <input class="form-control tel-input" type="text" name="tel"
+                                           placeholder="{% if user.telefone == '' %}Adicionar telefone{% else %}{{user.telefone}}{% endif %}"
+                                           required>
                                 </div>
                                 <label class="mb-2 mt-4">Chave pix</label><br>
                                 <div class="input-group">
-                                    <input class="form-control tel-input" type="text" placeholder="Adicionar chave pix">
+                                    <input class="form-control tel-input" type="text" name="pix"
+                                           placeholder="{% if user.pix == '' %}Adicionar chave pix{% else %}{{user.pix}}{% endif %}"
+                                           required>
+                                </div>
+                                <label class="mb-2 mt-4">Instagram</label><br>
+                                <div class="input-group">
+                                    <input class="form-control tel-input" type="text" name="insta"
+                                           placeholder="{% if user.instagram == '' %}Adicionar instagram{% else %}{{user.instagram}}{% endif %}"
+                                           required>
                                 </div>
                                 <label class="mb-2 mt-4">Principais necessidades</label><br>
                                 <div class="input-group">
                                     <textarea class="form-control tel-input"
-                                              placeholder="Fraldas geriátricas, alimentos, etc."></textarea>
+                                              placeholder="{% if user.principais_necessidades == ''%}Adicionar principais necessidades{% else %}{{user.principais_necessidades}}{% endif %}"
+                                              name="principais" required></textarea>
                                 </div>
                                 <button type="submit" class="sbmt-btn-profile fw-bold text-white mt-4">Enviar</button>
                             </form>

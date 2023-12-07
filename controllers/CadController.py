@@ -47,7 +47,7 @@ class Cad():
         # Hashing the password
         senha = bcrypt.hashpw(senha.encode('utf-8'), salt)
         
-        usuario = Usuario(email, senha, user_type=None, admin=False)
+        usuario = Usuario(email, senha, user_type=None)
         usuario_existe = Usuario.query.filter_by(email = email).first()
 
         if usuario_existe and usuario.email in usuario_existe.email:

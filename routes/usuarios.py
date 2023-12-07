@@ -92,3 +92,7 @@ def all_lares(): return user.get_all_lares_page()
 @users_bl.route('/lar', methods=["GET"])
 @login_required
 def get_lar(): return user.get_lar_page()
+
+@users_bl.route('/save_aditional_data', methods=["POST"])
+@login_required
+def save_data(): return user.save_data()

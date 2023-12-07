@@ -112,13 +112,11 @@ class User():
     def getProfilePage():
         u_id = current_user.id
         if current_user.user_type._value_ == 'L':
-            userName = db.session.query(Lar.nome).join(
-                Usuario, Lar.id_usuario == u_id).first()
+            user = Lar.query.filter_by(id_usuario=u_id).first()
         else:
-            userName = db.session.query(Voluntario.nome).join(
-                Usuario, Voluntario.id_usuario == u_id).first()
+            user = Voluntario.query.filter_by(id_usuario=u_id).first()
 
-        return render_template('user/profile.html', user=current_user, name=userName[0], s=session)
+        return render_template('user/profile.html', user=user, name=user.nome, s=session)
 
     # Retorna a página de configuração de usuário do tipo voluntário
 
@@ -133,7 +131,7 @@ class User():
             db.session.add(current_user)
 
         if tipo == 'V':
-            vol = Voluntario(current_user.id, '')
+            vol = Voluntario(current_user.id)
             db.session.add(vol)
 
         else:
@@ -151,7 +149,8 @@ class User():
         lares = db.session.query(Lar.id, Lar.nome).limit(8).all()
 
         if current_user.user_type._value_ == 'V':
-            rs_visits = Visita.query.filter_by(id_usuario=current_user.id).limit(3).all()
+            voluntario = Voluntario.query.filter_by(id_usuario=current_user.id).first()
+            rs_visits = Visita.query.filter_by(id_voluntario=voluntario.id).limit(3).all()
         else:
             rs_lar = Lar.query.filter_by(id_usuario=current_user.id).first()
             rs_visits = Visita.query.filter_by(nome_lar=rs_lar.nome).limit(3).all()
@@ -257,11 +256,6 @@ class User():
         return redirect('/usuarios/dashboard')
 
     @staticmethod
-    def getAsylumProfile(id):
-        lar = Lar.query.filter_by(id=id).first()
-        return f'ID: {lar.id}<br> NOME: {lar.nome}<br> LINK: <a href="/usuarios/book/{lar.id}">Marcar visita</a>'
-
-    @staticmethod
     def save_name():
         if current_user.user_type._value_ == 'L':
             user = Lar.query.filter_by(id_usuario=current_user.id).first()
@@ -290,3 +284,21 @@ class User():
         else:
             user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
         return render_template('visit/lar.html', nome=user.nome)
+
+    @staticmethod
+    def save_data():
+        if current_user.user_type._value_ == 'L':
+            user = Lar.query.filter_by(id_usuario=current_user.id).first()
+            user.principais_necessidades = request.form.get('principais')
+            user.pix = request.form.get('pix')
+            user.telefone = request.form.get('tel')
+            user.cep = request.form.get('cep')
+            user.instagram = request.form.get('insta')
+        else:
+            user = Voluntario.query.filter_by(id=current_user.id).first()
+            user.telefone = request.form.get('tel')
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect('/usuarios/profile')

@@ -10,135 +10,158 @@ Visitas
         {% include 'user/loghome.html' %}
         {% endwith %}
 
-        <div class="flex-grow-1 visit-home-content py-5">
-            <div class="mt-3">
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                {% for category, message in messages %}
-                <div class="alert alert-{{category}} position-relative top-0 mx-auto" role="alert">
-                    {{message}}
-                </div>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-            </div>
 
-            <h3 class="fw-bold mb-4">Visitas</h3>
 
-            <div class="card border-0 bg-dark-blue">
-                <div class="card-body p-5">
-                    <h4 class="fw-bold text-white">Marque uma visita!</h4>
-                    <p class="text-white mt-4">
-                        Para marcar uma visita, você deve escolher um asilo e preencher um formulário informando
-                        o seu nome completo, a data, a hora e o motivo da visita.
-                    </p>
-                </div>
-            </div>
+        <div class="flex-grow-1">
+            {% if session['id_info'] %}
 
-            {% if visitas %}
-            <div class="card mt-5">
-                <div class="card-header d-flex align-items-center justify-content-between py-4 px-5">
-                    <h4 class="fw-bold mb-0">Suas visitas marcadas</h4>
-                    <a class="btn bg-green text-decoration-none text-white py-1 px-4"
-                       href="/usuarios/dashboard">Ver tudo</a>
-                </div>
-                <div class="card-body">
-                    {% for visita in visitas %}
-                    <div class="d-flex justify-content-around mb-3">
-                        <div>
-                            <label for="day" class="form-label text-muted">Data</label><br>
-                            <input readonly id="day" name="day" value="{{visita.data.strftime('%d/%m/%Y')}}"
-                                   class="border-0 bg-transparent focus-none">
-                        </div>
+            {% with u=session['id_info']['given_name'] %}
+            {% include 'user/logheader.html'%}
+            {% endwith %}
 
-                        <div>
-                            <label for="hour" class="form-label text-muted">Horário</label><br>
-                            <input readonly id="hour" name="hour" value="{{visita.hora.strftime('%H:%M')}}"
-                                   class="border-0 bg-transparent focus-none">
-                        </div>
+            {% else %}
 
-                        {% if current_user.user_type._value_ == "V" %}
-                        <div>
-                            <label for="lar" class="form-label text-muted">Asilo</label><br>
-                            <input readonly id="lar" name="lar" value="{{visita.nome_asilo}}"
-                                   class="border-0 bg-transparent focus-none">
-                        </div>
-                        {% else %}
-                        <div>
-                            <label for="volunteer" class="form-label text-muted">Voluntário</label><br>
-                            <input readonly id="volunteer" name="volunteer" value="{{visita.nome_voluntario}}"
-                                   class="border-0 bg-transparent focus-none">
-                        </div>
-                        {% endif %}
+            {% if u=='' %}
+            {% with u='' %}
+            {% include 'user/logheader.html'%}
+            {% endwith %}
+            {% else %}
+            {% with u=name %}
+            {% include 'user/logheader.html'%}
+            {% endwith %}
+            {% endif %}
+
+            {% endif %}
+            <div class="visit-home-content py-5">
+                <div class="mt-3">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{category}} position-relative top-0 mx-auto" role="alert">
+                        {{message}}
                     </div>
                     {% endfor %}
+                    {% endif %}
+                    {% endwith %}
                 </div>
+
+                <h3 class="fw-bold mb-4">Visitas</h3>
+
+                <div class="card border-0 bg-dark-blue">
+                    <div class="card-body p-5">
+                        <h4 class="fw-bold text-white">Marque uma visita!</h4>
+                        <p class="text-white mt-4">
+                            Para marcar uma visita, você deve escolher um asilo e preencher um formulário informando
+                            o seu nome completo, a data, a hora e o motivo da visita.
+                        </p>
+                    </div>
+                </div>
+
+                {% if visitas %}
+                <div class="card mt-5">
+                    <div class="card-header d-flex align-items-center justify-content-between py-4 px-5">
+                        <h4 class="fw-bold mb-0">Suas visitas marcadas</h4>
+                        <a class="btn bg-green text-decoration-none text-white py-1 px-4"
+                           href="/usuarios/dashboard">Ver tudo</a>
+                    </div>
+                    <div class="card-body">
+                        {% for visita in visitas %}
+                        <div class="d-flex justify-content-around mb-3">
+                            <div>
+                                <label for="data" class="form-label text-muted">Data e hora</label><br>
+                                <input type="datetime-local" readonly id="data" name="day" value="{{visita.dt_hr}}"
+                                       class="border-0 bg-transparent focus-none">
+                            </div>
+
+                            {% if current_user.user_type._value_ == "V" %}
+                            <div>
+                                <label for="lar" class="form-label text-muted">Lar</label><br>
+                                <input readonly id="lar" name="lar" value="{{visita.nome}}"
+                                       class="border-0 bg-transparent focus-none">
+                            </div>
+                            {% else %}
+                            <div>
+                                <label for="volunteer" class="form-label text-muted">Voluntário</label><br>
+                                <input readonly id="volunteer" name="volunteer" value="{{visita.nome    }}"
+                                       class="border-0 bg-transparent focus-none">
+                            </div>
+                            {% endif %}
+                            <div>
+                                <label for="lar" class="form-label text-muted">Status</label><br>
+                                <input readonly id="lar" name="lar"
+                                       value="{%if visita.status._value_ == 'P'%}Pendente{%elif visita.status._value_  == 'A'%}Aceita{%elif visita.status._value_  == 'C'%}Cancelada/Completa{%elif visita.status._value_  == 'N'%}Negada{%endif%}"
+                                       class="border-0 bg-transparent focus-none">
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+                <div class="card mt-5">
+                    <div class="card-header d-flex align-items-center justify-content-between py-4 px-5">
+                        <h4 class="fw-bold mb-0">Suas visitas realizadas</h4>
+                        <a class="btn bg-green text-decoration-none text-white py-1 px-4" href="#">Ver tudo</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-around mb-3">
+                            <div>
+                                <label for="day" class="form-label text-muted">Dia</label><br>
+                                <input readonly name="day" value="17" class="border-0 bg-transparent focus-none">
+                            </div>
+
+                            <div>
+                                <label for="hour" class="form-label text-muted">Horário</label><br>
+                                <input readonly name="hour" value="08:00"
+                                       class="border-0 bg-transparent focus-none">
+                            </div>
+
+                            <div>
+                                <label for="asylum" class="form-label text-muted">Asilo</label><br>
+                                <input readonly name="asylum" value="Padre São Miguel"
+                                       class="border-0 bg-transparent focus-none">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-around mb-3">
+                            <div>
+                                <label for="day" class="form-label text-muted">Dia</label><br>
+                                <input readonly name="day" value="17" class="border-0 bg-transparent focus-none">
+                            </div>
+
+                            <div>
+                                <label for="hour" class="form-label text-muted">Horário</label><br>
+                                <input readonly name="hour" value="08:00"
+                                       class="border-0 bg-transparent focus-none">
+                            </div>
+
+                            <div>
+                                <label for="asylum" class="form-label text-muted">Asilo</label><br>
+                                <input readonly name="asylum" value="Padre São Miguel"
+                                       class="border-0 bg-transparent focus-none">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-around mb-3">
+                            <div>
+                                <label for="day" class="form-label text-muted">Dia</label><br>
+                                <input readonly name="day" value="17" class="border-0 bg-transparent focus-none">
+                            </div>
+
+                            <div>
+                                <label for="hour" class="form-label text-muted">Horário</label><br>
+                                <input readonly name="hour" value="08:00"
+                                       class="border-0 bg-transparent focus-none">
+                            </div>
+
+                            <div>
+                                <label for="asylum" class="form-label text-muted">Asilo</label><br>
+                                <input readonly name="asylum" value="Padre São Miguel"
+                                       class="border-0 bg-transparent focus-none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
             </div>
-
-
-            <div class="card mt-5">
-                <div class="card-header d-flex align-items-center justify-content-between py-4 px-5">
-                    <h4 class="fw-bold mb-0">Suas visitas realizadas</h4>
-                    <a class="btn bg-green text-decoration-none text-white py-1 px-4" href="#">Ver tudo</a>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-around mb-3">
-                        <div>
-                            <label for="day" class="form-label text-muted">Dia</label><br>
-                            <input readonly name="day" value="17" class="border-0 bg-transparent focus-none">
-                        </div>
-
-                        <div>
-                            <label for="hour" class="form-label text-muted">Horário</label><br>
-                            <input readonly name="hour" value="08:00"
-                                   class="border-0 bg-transparent focus-none">
-                        </div>
-
-                        <div>
-                            <label for="asylum" class="form-label text-muted">Asilo</label><br>
-                            <input readonly name="asylum" value="Padre São Miguel"
-                                   class="border-0 bg-transparent focus-none">
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-around mb-3">
-                        <div>
-                            <label for="day" class="form-label text-muted">Dia</label><br>
-                            <input readonly name="day" value="17" class="border-0 bg-transparent focus-none">
-                        </div>
-
-                        <div>
-                            <label for="hour" class="form-label text-muted">Horário</label><br>
-                            <input readonly name="hour" value="08:00"
-                                   class="border-0 bg-transparent focus-none">
-                        </div>
-
-                        <div>
-                            <label for="asylum" class="form-label text-muted">Asilo</label><br>
-                            <input readonly name="asylum" value="Padre São Miguel"
-                                   class="border-0 bg-transparent focus-none">
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-around mb-3">
-                        <div>
-                            <label for="day" class="form-label text-muted">Dia</label><br>
-                            <input readonly name="day" value="17" class="border-0 bg-transparent focus-none">
-                        </div>
-
-                        <div>
-                            <label for="hour" class="form-label text-muted">Horário</label><br>
-                            <input readonly name="hour" value="08:00"
-                                   class="border-0 bg-transparent focus-none">
-                        </div>
-
-                        <div>
-                            <label for="asylum" class="form-label text-muted">Asilo</label><br>
-                            <input readonly name="asylum" value="Padre São Miguel"
-                                   class="border-0 bg-transparent focus-none">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
         </div>
 
     </div>

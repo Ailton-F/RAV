@@ -28,7 +28,7 @@ Editar visita
     <div class="lar-content-container">
         <div class="d-flex align-items-center">
             <div>
-                <h2 class="text-dark-blue fw-bold">Lar de idosos Santo Amaro</h2>
+                <h2 class="text-dark-blue fw-bold">{{lar.nome}}</h2>
                 <h4 class="d-flex align-items-center gap-1 mb-4"><i class="ri-map-pin-2-fill"></i> Av. Não sei o Que Lá, 201</h4>
             </div>
             <a class="text-decoration-none text-white btn btn-success btn-visit ms-auto" href="#">Visitar lar</a>
@@ -36,11 +36,9 @@ Editar visita
         <hr>
         <h3 class="fw-bold">Contatar</h3>
         <ol class="p-0 d-flex flex-column gap-2 text-dark-blue">
-            <li class="d-flex align-items-center gap-2"><i class="ri-phone-line"></i> (020) 123 456 789</li>
-            <li class="d-flex align-items-center gap-2"><i class="ri-mail-line"></i> s.amaro@gmail.com</li>
-            <li class="d-flex align-items-center gap-2"><i class="ri-computer-line"></i> www.santamaro.com</li>
-            <li class="d-flex align-items-center gap-2"><i class="ri-facebook-box-fill"></i> Santo Amaro</li>
-            <li class="d-flex align-items-center gap-2"><i class="ri-instagram-line"></i> @s_amaro</li>
+            <li class="d-flex align-items-center gap-2"><i class="ri-phone-line"></i>{{lar.telefone}}</li>
+            <li class="d-flex align-items-center gap-2"><i class="ri-mail-line"></i>{{email}}</li>
+            <li class="d-flex align-items-center gap-2"><i class="ri-instagram-line"></i>{{lar.instagram}}</li>
         </ol>
     </div>
 </section>

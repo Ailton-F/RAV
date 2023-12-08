@@ -149,49 +149,44 @@ class User():
         lares = db.session.query(Lar.id, Lar.nome).limit(8).all()
 
         if current_user.user_type._value_ == 'V':
-            voluntario = Voluntario.query.filter_by(id_usuario=current_user.id).first()
-            rs_visits = Visita.query.filter_by(id_voluntario=voluntario.id).limit(3).all()
-        else:
-            rs_lar = Lar.query.filter_by(id_usuario=current_user.id).first()
-            rs_visits = Visita.query.filter_by(nome_lar=rs_lar.nome).limit(3).all()
+            user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
+            rs_visits = Visita.query.filter_by(id_voluntario=user.id).limit(3).all()
+            for visit in rs_visits:
+                lar = Lar.query.filter_by(id=visit.id_lar).first()
+                visit.nome = lar.nome
 
-        return render_template('visit/home.html',
-                               lares=lares,
-                               visitas=rs_visits)
+        elif current_user.user_type._value_ == 'L':
+            user = Lar.query.filter_by(id_usuario=current_user.id).first()
+            rs_visits = Visita.query.filter_by(id_lar=user.id).limit(3).all()
+            for visit in rs_visits:
+                voluntario = Voluntario.query.filter_by(id=visit.id_voluntario).first()
+                visit.nome = voluntario.nome
+
+        return render_template('visit/home.html', lares=lares, visitas=rs_visits, name=user.nome)
 
     # Retorna a página para marcar visitas
 
     @staticmethod
-    def getBookVisitPage(request_id):
+    def get_book_visit_page(request_id):
 
         lar = Lar.query.filter_by(id=request_id).first()
+        if lar.principais_necessidades == '':
+            abort(404)
 
         if request.method == "GET":
             return render_template('visit/book.html', lar=lar)
 
         id_usuario = current_user.id
+        vol = Voluntario.query.filter_by(id_usuario=id_usuario).first()
         lar_id = lar.id
         volunteer_name = request.form.get('name')
+        visit_date = request.form.get('visit-date')
+        visit_date = visit_date.split('T')
+        v_datetime = '{} {}'.format(visit_date[0], visit_date[1])
+        visit_reason = request.form.get('visit-reason')
         lar_name = lar.nome
 
-        # Faz a formatação da data
-        visit_date = request.form.get('visit-date')
-        date = map(lambda item: int(item), visit_date.split('-'))
-        date = list(date)
-        fdate = datetime(date[0], date[1], date[2])
-        visit_date = fdate.date()
-
-        # Faz a formatação da hora
-        visit_hour = request.form.get('visit-hour')
-        visit_hour = map(lambda item: int(item), visit_hour.split(':'))
-        visit_hour = list(visit_hour)
-        fhour = datetime(1999, 1, 1, visit_hour[0], visit_hour[1])
-        visit_hour = fhour.time()
-
-        visit_reason = request.form.get('visit-reason')
-
-        visit = Visita(id_usuario, lar_id, volunteer_name, lar_name,
-                       visit_date, visit_hour, visit_reason)
+        visit = Visita(vol.id, request_id, lar_name, v_datetime, visit_reason, 'P')
 
         db.session.add(visit)
         db.session.commit()
@@ -208,7 +203,7 @@ class User():
         else:
             rs_lar = Lar.query.filter_by(
                 id_usuario=current_user.id).first()
-            rs_visits = Visita.query.filter_by(nome_lar=rs_lar.nome)
+            rs_visits = Visita.query.filter_by(id_lar=rs_lar.id)
         return render_template('visit/dashboard.html', visitas=rs_visits)
 
     # Deleta a visita do banco de dados
@@ -278,12 +273,17 @@ class User():
         return render_template('visit/all_lares_page.html', nome=user.nome)
 
     @staticmethod
-    def get_lar_page():
+    def get_lar_page(id):
+        lar = Lar.query.filter_by(id=id).first()
+        email = Usuario.query.filter_by(id=lar.id_usuario).first()
+        if lar.principais_necessidades == '':
+            abort(404)
+
         if current_user.user_type._value_ == 'L':
             user = Lar.query.filter_by(id_usuario=current_user.id).first()
         else:
             user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
-        return render_template('visit/lar.html', nome=user.nome)
+        return render_template('visit/lar.html', nome=user.nome, lar=lar, email=email.email)
 
     @staticmethod
     def save_data():
@@ -295,7 +295,7 @@ class User():
             user.cep = request.form.get('cep')
             user.instagram = request.form.get('insta')
         else:
-            user = Voluntario.query.filter_by(id=current_user.id).first()
+            user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
             user.telefone = request.form.get('tel')
 
         db.session.add(user)

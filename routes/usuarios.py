@@ -54,14 +54,9 @@ def volunteer_config_page(): return user.getVolunteerConfigPage()
 def visit_home_page(): return user.getVisitHomePage()
 
 
-@users_bl.route('/visit/<int:id>', methods=['GET'])
-@login_required
-def asylum_profile(id): return user.getAsylumProfile(id)
-
-
 @users_bl.route('/book/<int:id>', methods=["GET", "POST"])
 @login_required
-def book_visit(id): return user.getBookVisitPage(id)
+def book_visit(id): return user.get_book_visit_page(id)
 
 
 @users_bl.route('/dashboard', methods=["GET", "POST"])
@@ -89,9 +84,9 @@ def save_name(): return user.save_name()
 def all_lares(): return user.get_all_lares_page()
 
 
-@users_bl.route('/lar', methods=["GET"])
+@users_bl.route('/lar/<int:id>', methods=["GET"])
 @login_required
-def get_lar(): return user.get_lar_page()
+def get_lar(id): return user.get_lar_page(id)
 
 @users_bl.route('/save_aditional_data', methods=["POST"])
 @login_required

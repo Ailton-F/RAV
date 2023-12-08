@@ -1,11 +1,17 @@
 from utils import db
 from flask_login import UserMixin
 import enum
-
+import datetime
 
 class UserType(enum.Enum):
     L = "L"
     V = "V"
+
+class VisitStatus(enum.Enum):
+    P = "P"
+    A = "A"
+    N = "N"
+    C = "C"
 
 class Usuario(db.Model, UserMixin):
     __tablename__ = 'usuario'
@@ -16,6 +22,7 @@ class Usuario(db.Model, UserMixin):
 
     rs_usuario_lar = db.relationship('Lar', cascade="all,delete", backref="usuario_lar")
     rs_usuario_volunteer = db.relationship('Voluntario', cascade="all,delete", backref="usuario_voluntario")
+    rs_usuario_notificacao = db.relationship('Notificacao', cascade="all,delete", backref="usuario_notificacao")
 
     def __init__(self, email, senha, user_type):
         self.email = email
@@ -91,14 +98,31 @@ class Visita(db.Model):
     id_lar = db.Column(db.Integer, db.ForeignKey('lar_de_idosos.id'))
     dt_hr = db.Column(db.DateTime,)
     qnt_pessoas = db.Column(db.Integer)
-    status = db.Column(db.Boolean)
+    status = db.Column(db.Enum(VisitStatus), default='P')
     motivo = db.Column(db.String(500))
 
-    def __init__(self, id_voluntario, id_lar, nome_lar, dt_hr, motivo):
-        self.id_usuario = id_usuario
+    def __init__(self, id_voluntario, id_lar, nome_lar, dt_hr, motivo, status):
+        self.id_voluntario = id_voluntario
         self.id_lar = id_lar
         self.dt_hr = dt_hr
         self.motivo = motivo
+        self.status = status
 
     def __repr__(self):
-        return f"visita('{self.nome_lar}, {self.dt_hr}, {self.motivo}')"
+        return f"visita('{self.dt_hr}, {self.motivo}, {self.status}')"
+
+class Notificacao(db.Model):
+    __tablename__ = 'notificacao'
+    id = db.Column(db.Integer, primary_key=True)
+    id_usuario = db.Column(db.Integer, db.ForeignKey("usuario.id"))
+    mensagem = db.Column(db.String(100))
+    dt_hr = db.Column(db.DateTime, default=datetime.datetime.now())
+    eacao = db.Column(db.Boolean)
+
+    def __init__(self, id_usuario, mensagem, eacao):
+        self.id_usuario = id_usuario
+        self.mensagem = mensagem
+        self.eacao = eacao
+
+    def __repr__(self):
+        return f"notificacao('{self.id_usuario}, {self.mensagem}, {self.eacao}')"

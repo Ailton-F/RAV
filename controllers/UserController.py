@@ -1,5 +1,5 @@
 from flask import render_template, redirect, flash, session, request
-from models import Usuario, Voluntario, Visita, Lar
+from models import Usuario, Voluntario, Visita, Lar, Notificacao
 from utils import db
 from flask_login import current_user, logout_user
 from datetime import datetime
@@ -181,14 +181,17 @@ class User():
         lar_id = lar.id
         volunteer_name = request.form.get('name')
         visit_date = request.form.get('visit-date')
+        qnt = request.form.get('qnt')
         visit_date = visit_date.split('T')
         v_datetime = '{} {}'.format(visit_date[0], visit_date[1])
         visit_reason = request.form.get('visit-reason')
         lar_name = lar.nome
 
-        visit = Visita(vol.id, request_id, lar_name, v_datetime, visit_reason, 'P')
+        visit = Visita(vol.id, request_id, lar_name, v_datetime, visit_reason, 'P', qnt)
+        notify = Notificacao(current_user.id, lar.id_usuario, f'{vol.nome} deseja fazer uma visita', True)
 
         db.session.add(visit)
+        db.session.add(notify)
         db.session.commit()
 
         flash('Visita marcada com sucesso!', 'success')
@@ -302,3 +305,13 @@ class User():
         db.session.commit()
 
         return redirect('/usuarios/profile')
+
+    @staticmethod
+    def get_notification_page():
+        notificacoes = Notificacao.query.filter_by(id_destino=current_user.id).all()
+        return render_template('visit/notificacao.html', notificacoes=notificacoes)
+
+    @staticmethod
+    def get_volunteer_page(id):
+        vol = Voluntario.query.filter_by(id_usuario=id).first()
+        return render_template('visit/volunteer.html', voluntario=vol)

@@ -1,0 +1,11 @@
+<h1>Notificações</h1>
+{% if not notificacoes %}
+<h3>Sem notificações</h3>
+{% else %}
+{% for notificacao in notificacoes %}
+{{notificacao.mensagem}}
+{% if notificacao.eacao %}
+<a href="/usuarios/voluntario/{{notificacao.id_remetente}}">Visitar perfil do usuário</a>
+{%endif%}
+{% endfor %}
+{% endif %}

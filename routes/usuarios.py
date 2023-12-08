@@ -91,3 +91,11 @@ def get_lar(id): return user.get_lar_page(id)
 @users_bl.route('/save_aditional_data', methods=["POST"])
 @login_required
 def save_data(): return user.save_data()
+
+@users_bl.route('/notificacoes', methods=["GET"])
+@login_required
+def notification_page(): return user.get_notification_page()
+
+@users_bl.route('/voluntario/<int:id>', methods=["GET"])
+@login_required
+def get_volunteer(id): return user.get_volunteer_page(id)

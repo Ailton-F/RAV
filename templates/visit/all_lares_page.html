@@ -45,23 +45,32 @@ Editar visita
                 <h3 class="fw-bold">Opções para visita</h3>
                 <div class="lares-cards">
                     <div class="row gap-3 mb-5 justify-content-around py-3">
+                        {% for lar in lares.items%}
                         <div class="col-4 lar-card card p-0 border-0 shadow-lg">
                             <div class="card-header p-0">
                                 <img class="lares-perfil-photo" src="https://picsum.photos/278/251" alt="Foto de perfil do lar">
                             </div>
                             <div class="card-body d-flex flex-column gap-2">
-                                <a href="lar" class="decoration-none"><p class="mb-0 lar-title fw-bold text-dark-blue">Lar de idosos Santo Amaro</p></a>
+                                <a href="lar/{{lar.id}}" class="decoration-none"><p class="mb-0 lar-title fw-bold text-dark-blue">{{lar.nome}}</p></a>
                                 <ol class="p-0">
-                                    <li class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-map-pin-line"></i> Av. Não sei o Que Lá, 201</li>
-                                    <li class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-mail-line"></i> LarIdososSantoAmaro@gmail.com</li>
-                                    <li class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-phone-line"></i> (84)99999-9999</li>
+                                    <li class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-map-pin-line"></i>{{lar.cep}}</li>
+                                    <li class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-mail-line"></i>{{lar.email}}</li>
+                                    <li class="mb-0 lar-desc d-flex align-items-center gap-1"><i class="ri-phone-line"></i>{{lar.telefone}}</li>
                                 </ol>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
+            {% for page_num in lares.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=1) %}
+            {% if page_num %} {% if lares.page == page_num %}
+            <a class="btn btn-info" href="/usuarios/lares?page={{page_num}}">{{page_num}}</a>
+            {% else %}
+            <a class="btn btn-outline-info" href="/usuarios/lares?page={{page_num}}">{{page_num}}</a>
+            {%endif%} {% else %} ... {% endif %} {% endfor %}
         </div>
     </div>
 </section>
+
 {% endblock %}

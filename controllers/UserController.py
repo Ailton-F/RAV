@@ -277,12 +277,18 @@ class User():
 
     @staticmethod
     def get_all_lares_page():
+        page = request.args.get('page', 1, type=int)
+        lares = Lar.query.paginate(page=page, per_page=1)
+        for lar in lares.items:
+            user = Usuario.query.filter_by(id=lar.id).first()
+            lar.email = user.email
+
         if current_user.user_type._value_ == 'L':
             user = Lar.query.filter_by(id_usuario=current_user.id).first()
         else:
             user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
 
-        return render_template('visit/all_lares_page.html', nome=user.nome)
+        return render_template('visit/all_lares_page.html', nome=user.nome, lares=lares)
 
     @staticmethod
     def get_lar_page(id):

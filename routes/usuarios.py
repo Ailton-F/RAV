@@ -99,3 +99,7 @@ def notification_page(): return user.get_notification_page()
 @users_bl.route('/voluntario/<int:id>', methods=["GET"])
 @login_required
 def get_volunteer(id): return user.get_volunteer_page(id)
+
+@users_bl.route('/negar_visita/<int:id>', methods=["POST"])
+@login_required
+def deny_volunteer(id): return user.deny_volunteer(id)

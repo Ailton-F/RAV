@@ -315,3 +315,22 @@ class User():
     def get_volunteer_page(id):
         vol = Voluntario.query.filter_by(id_usuario=id).first()
         return render_template('visit/volunteer.html', voluntario=vol)
+
+    @staticmethod
+    def deny_volunteer(id):
+        vol = Voluntario.query.filter_by(id_usuario=id).first()
+        visit = Visita.query.filter_by(id_voluntario=vol.id, id_lar=current_user.id).first()
+        if not visit.status._value_ == 'P':
+            return redirect('/usuarios/notificacoes')
+
+        visit.status = 'N'
+        notfi = Notificacao.query.filter_by(id_remetente=id, id_destino=current_user.id).first()
+        lar = Lar.query.filter_by(id_usuario=current_user.id).first()
+        new_notfi = Notificacao(mensagem=f'Sua visita ao lar {lar.nome} foi negada', id_remetente=current_user.id, id_destino=id, eacao=False)
+
+        db.session.add(visit)
+        db.session.add(new_notfi)
+        db.session.delete(notfi)
+
+        db.session.commit()
+        return redirect('/usuarios/notificacoes')

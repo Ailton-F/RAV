@@ -1,1 +1,7 @@
 {{voluntario}}
+<form action="/usuarios/aceitar_visita/{{voluntario.id_usuario}}" method="POST">
+   <button class="btn btn-success" type="submit">Aceitar visita</button>
+</form>
+<form action="/usuarios/negar_visita/{{voluntario.id_usuario}}" method="POST">
+   <button class="btn btn-danger" type="submit">Negar visita</button>
+</form>

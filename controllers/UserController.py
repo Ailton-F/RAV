@@ -200,13 +200,22 @@ class User():
     # Retorna o dashboard das visitas
 
     @staticmethod
-    def getDashboard():
+    def get_dashboard_page():
+        page = request.args.get('page', 1, type=int)
         if current_user.user_type._value_ == 'V':
-            rs_visits = Visita.query.filter_by(id_usuario=current_user.id)
+            vol = Voluntario.query.filter_by(id_usuario=current_user.id).first()
+            rs_visits = Visita.query.filter_by(id_voluntario=vol.id).paginate(page=page, per_page=1)
+
+            for visit in rs_visits.items:
+                print(dir(visit))
+                lar_id = visit.id_lar
+                lar = Lar.query.filter_by(id=lar_id).first()
+                visit.nome = lar.nome
         else:
             rs_lar = Lar.query.filter_by(
                 id_usuario=current_user.id).first()
             rs_visits = Visita.query.filter_by(id_lar=rs_lar.id)
+
         return render_template('visit/dashboard.html', visitas=rs_visits)
 
     # Deleta a visita do banco de dados
@@ -319,14 +328,35 @@ class User():
     @staticmethod
     def deny_volunteer(id):
         vol = Voluntario.query.filter_by(id_usuario=id).first()
-        visit = Visita.query.filter_by(id_voluntario=vol.id, id_lar=current_user.id).first()
-        if not visit.status._value_ == 'P':
+        visit = Visita.query.filter_by(id_voluntario=vol.id, id_lar=current_user.id, status='P').first()
+        if not visit:
             return redirect('/usuarios/notificacoes')
 
         visit.status = 'N'
         notfi = Notificacao.query.filter_by(id_remetente=id, id_destino=current_user.id).first()
         lar = Lar.query.filter_by(id_usuario=current_user.id).first()
-        new_notfi = Notificacao(mensagem=f'Sua visita ao lar {lar.nome} foi negada', id_remetente=current_user.id, id_destino=id, eacao=False)
+        new_notfi = Notificacao(mensagem=f'Sua visita ao lar {lar.nome} foi negada', id_remetente=current_user.id,
+                                id_destino=id, eacao=False)
+
+        db.session.add(visit)
+        db.session.add(new_notfi)
+        db.session.delete(notfi)
+
+        db.session.commit()
+        return redirect('/usuarios/notificacoes')
+
+    @staticmethod
+    def accept_volunteer(id):
+        vol = Voluntario.query.filter_by(id_usuario=id).first()
+        visit = Visita.query.filter_by(id_voluntario=vol.id, id_lar=current_user.id, status='P').first()
+        if not visit:
+            return redirect('/usuarios/notificacoes')
+
+        visit.status = 'A'
+        notfi = Notificacao.query.filter_by(id_remetente=id, id_destino=current_user.id).first()
+        lar = Lar.query.filter_by(id_usuario=current_user.id).first()
+        new_notfi = Notificacao(mensagem=f'Su)a visita ao lar {lar.nome} foi aceita', id_remetente=current_user.id,
+                                id_destino=id, eacao=False)
 
         db.session.add(visit)
         db.session.add(new_notfi)

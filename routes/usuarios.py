@@ -61,7 +61,7 @@ def book_visit(id): return user.get_book_visit_page(id)
 
 @users_bl.route('/dashboard', methods=["GET", "POST"])
 @login_required
-def dashboard(): return user.getDashboard()
+def dashboard(): return user.get_dashboard_page()
 
 
 @users_bl.route('/delete_visit/<int:id>', methods=["POST"])
@@ -103,3 +103,7 @@ def get_volunteer(id): return user.get_volunteer_page(id)
 @users_bl.route('/negar_visita/<int:id>', methods=["POST"])
 @login_required
 def deny_volunteer(id): return user.deny_volunteer(id)
+
+@users_bl.route('/aceitar_visita/<int:id>', methods=["POST"])
+@login_required
+def accept_volunteer(id): return user.accept_volunteer(id)

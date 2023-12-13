@@ -1,55 +1,91 @@
-.user-profile-content{
- padding: 2em 7em;
+.user-profile-content {
+    padding: 2em 7em;
 }
 
-.btn-notification{
-  border-radius: 50%;
+.btn-notification {
+    border-radius: 50%;
 }
 
-.btn-notification:focus{
-  background-color: #c0c0c0 !important;
-  box-shadow: none;
+.btn-notification:focus {
+    background-color: #c0c0c0 !important;
+    box-shadow: none;
 }
 
-.profile-picture{
-  width: 13rem;
-  border-radius: 50%;
+.profile-picture {
+    width: 13rem;
+    border-radius: 50%;
 }
 
-.profile-header-picture{
- width: 2.5em;
+.profile-header-picture {
+    width: 2.5em;
+    height: 2.5em;
 }
 
-.edit-btn{
-  background-color: #1FD2A7;
-  padding: 1em 4em;
-  border: none;
-  border-radius: 10px;
+.edit-btn {
+    background-color: #1FD2A7;
+    border: none;
+    border-radius: 50%;
 }
 
-.sbmt-btn-profile{
-  padding: .5em 2.625em;
-  border: none;
-  border-radius: 10px;
-  background-color: #195F82;
+.sbmt-btn-profile {
+    padding: .5em 2.625em;
+    border: none;
+    border-radius: 10px;
+    background-color: #195F82;
 }
 
-.profile-contact{
-  padding-left: 5.5em;
+.profile-contact {
+    padding-left: 5.5em;
 }
 
-.tel-input{
-  max-width: 22em;
-  border-radius: 10px;
-  border-right: none;
+.tel-input {
+    max-width: 22em;
+    border-radius: 10px;
+    border-right: none;
 }
 
-.plus{
-  background-color: white;
-  border-left: none;
-  color: #41C2A6;
+.plus {
+    background-color: white;
+    border-left: none;
+    color: #41C2A6;
 }
 
-.return-button{
-  font-size: 1.5em;
+.return-button {
+    font-size: 1.5em;
+}
+
+    /* Estilizando o contêiner do botão de upload */
+.file-input-container {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 13em;
+    height: 13em;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid #ccc; /* Adicione uma borda para dar destaque */
+    border-radius: 50%; /* Adicione borda arredondada, se desejar */
+
+}
+
+/* Estilizando o botão de upload (visível) */
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+/* Adicionando algum estilo para o texto dentro do botão (opcional) */
+.file-input-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #fff; /* Cor do texto */
+    font-weight: bold;
 }

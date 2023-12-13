@@ -18,6 +18,7 @@ conexao = os.getenv("MYSQL_URI")
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SQLALCHEMY_DATABASE_URI'] = conexao
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
 db.init_app(app)
 lm.init_app(app)
 

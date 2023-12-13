@@ -51,7 +51,7 @@ def volunteer_config_page(): return user.getVolunteerConfigPage()
 
 @users_bl.route('/visit', methods=["GET"])
 @login_required
-def visit_home_page(): return user.getVisitHomePage()
+def visit_home_page(): return user.get_visit_home_page()
 
 
 @users_bl.route('/book/<int:id>', methods=["GET", "POST"])
@@ -107,3 +107,7 @@ def deny_volunteer(id): return user.deny_volunteer(id)
 @users_bl.route('/aceitar_visita/<int:id>', methods=["POST"])
 @login_required
 def accept_volunteer(id): return user.accept_volunteer(id)
+
+@users_bl.route('/save_foto/<int:id>', methods=["POST"])
+@login_required
+def save_foto(id): return user.save_foto(id)

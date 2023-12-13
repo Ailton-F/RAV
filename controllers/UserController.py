@@ -3,6 +3,10 @@ from models import Usuario, Voluntario, Visita, Lar, Notificacao
 from utils import db
 from flask_login import current_user, logout_user
 from datetime import datetime
+from werkzeug.utils import secure_filename
+import main
+import uuid as uuid
+import os
 
 
 class User():
@@ -144,7 +148,7 @@ class User():
     # retorna a página de visitas
 
     @staticmethod
-    def getVisitHomePage():
+    def get_visit_home_page():
 
         lares = db.session.query(Lar.id, Lar.nome).limit(8).all()
 
@@ -162,7 +166,7 @@ class User():
                 voluntario = Voluntario.query.filter_by(id=visit.id_voluntario).first()
                 visit.nome = voluntario.nome
 
-        return render_template('visit/home.html', lares=lares, visitas=rs_visits, name=user.nome)
+        return render_template('visit/home.html', lares=lares, visitas=rs_visits, user=user,)
 
     # Retorna a página para marcar visitas
 
@@ -288,7 +292,7 @@ class User():
         else:
             user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
 
-        return render_template('visit/all_lares_page.html', nome=user.nome, lares=lares)
+        return render_template('visit/all_lares_page.html', user=user, lares=lares)
 
     @staticmethod
     def get_lar_page(id):
@@ -370,3 +374,21 @@ class User():
 
         db.session.commit()
         return redirect('/usuarios/notificacoes')
+
+    @staticmethod
+    def save_foto(id):
+        foto = request.files.get('foto')
+        pic_filename = secure_filename(foto.filename)
+        pic_name = str(uuid.uuid1()) + '_' + pic_filename
+
+        if current_user.user_type._value_ == 'V':
+            user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
+        else:
+            user = Lar.query.filter_by(id_usuario=current_user.id).first()
+
+        foto.save(os.path.join(os.path.abspath(main.app.config['UPLOAD_FOLDER']), pic_name))
+        user.foto = pic_name
+
+        db.session.add(user)
+        db.session.commit()
+        return redirect('usuarios/profile')

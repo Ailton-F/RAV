@@ -56,6 +56,7 @@ class Voluntario(db.Model):
     nome = db.Column(db.String(100))
     telefone = db.Column(db.String(45))
     usuario = db.relationship('Usuario', foreign_keys=id_usuario)
+    foto = db.Column(db.String(500), nullable=True)
     rs_voluntario_visit = db.relationship('Visita', cascade="all,delete", backref="voluntario_visita")
 
     def __init__(self, id_usuario):
@@ -76,6 +77,7 @@ class Lar(db.Model):
     instagram = db.Column(db.String(100))
     telefone = db.Column(db.String(100))
     principais_necessidades = db.Column(db.String(140))
+    foto = db.Column(db.String(500), nullable=True)
     rs_lar_visit = db.relationship('Visita', cascade="all,delete", backref="lar_visita")
 
     def __init__(self, id_usuario):

@@ -14,6 +14,8 @@
         <img class="profile-header-picture rounded-circle" src="
         {%if session['id_info']%}
           {{session['id_info']['picture']}}
+        {% elif user.foto %}
+         {{url_for('static', filename='uploads/'+user.foto)}}
         {% else %}
           https://static.vecteezy.com/system/resources/previews/000/574/512/large_2x/vector-sign-of-user-icon.jpg
         {%endif%}

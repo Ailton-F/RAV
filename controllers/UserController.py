@@ -347,8 +347,11 @@ class User():
 
     @staticmethod
     def get_volunteer_page(id):
+        if current_user.user_type._value_ == 'V':
+            redirect('/usuarios/')
+        user = Lar.query.filter_by(id_usuario=current_user.id).first()
         vol = Voluntario.query.filter_by(id_usuario=id).first()
-        return render_template('visit/volunteer.html', voluntario=vol)
+        return render_template('visit/volunteer.html', voluntario=vol, user=user)
 
     @staticmethod
     def deny_volunteer(id):

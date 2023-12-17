@@ -1,7 +1,95 @@
-{{voluntario}}
-<form action="/usuarios/aceitar_visita/{{voluntario.id_usuario}}" method="POST">
-   <button class="btn btn-success" type="submit">Aceitar visita</button>
-</form>
-<form action="/usuarios/negar_visita/{{voluntario.id_usuario}}" method="POST">
-   <button class="btn btn-danger" type="submit">Negar visita</button>
-</form>
+{% extends 'indexwhf.html' %}
+{% block titulo %}
+Editar visita
+{% endblock %}
+
+{% block conteudo %}
+<section>
+    <div class="d-flex">
+        {% with wAfter=True%}
+        {% include 'user/loghome.html' %}
+        {% endwith %}
+        <div class="flex-grow-1">
+            {% with back=False %}
+            {% if session['id_info'] %}
+            {% with u=session['id_info']['given_name'] %}
+            {% include 'user/logheader.html'%}
+            {% endwith %}
+            {% else %}
+            {% if nome=='' %}
+            {% with u='' %}
+            {% include 'user/logheader.html'%}
+            {% endwith %}
+            {% else %}
+            {% with u=user.nome %} {% with user=user %}
+            {% include 'user/logheader.html'%}
+            {% endwith %} {% endwith %}
+            {% endif %}
+            {% endif %}
+            {% endwith %}
+
+            <div class="d-flex flex-column gap-4 px-5 mt-3">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header volunteer-header px-4 border-0 bg-green position-relative">
+                        <img src="/static/uploads/{{voluntario.foto}}" class="img-volunteer">
+                    </div>
+                    <h4 class="mt-5 mb-4 px-4 text-dark-blue2">{{voluntario.nome.capitalize()}}</h4>
+                </div>
+
+                <div class="card border-0 shadow-lg p-4">
+                    <h4 class="text-dark-blue2 fw-bold">Informações sobre a visita</h4>
+
+                    <table class="mt-3 d-flex">
+                        <tbody>
+                        <tr>
+                            <td class="text-muted me-2">Dia</td>
+                            <td class="text-dark-blue2 fw-bold ps-3">13/06/20234</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Hora</td>
+                            <td class="text-dark-blue2 fw-bold ps-3">13 horas</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Quantidade de pessoas</td>
+                            <td class="text-dark-blue2 fw-bold ps-3">2</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Motivo</td>
+                            <td class="text-dark-blue2 fw-bold ps-3">Cantar</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card border-0 shadow-lg p-4">
+                    <h4 class="text-dark-blue2 fw-bold">Dados de contato</h4>
+                    <small class="text-muted">Veja as informações do voluntário</small>
+                    <table class="mt-3 d-flex">
+                        <tbody>
+                        <tr>
+                            <td class="text-muted me-2">Telefone</td>
+                            <td class="text-dark-blue2 fw-bold ps-3">(84)99491-3745</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Instagram</td>
+                            <td class="text-dark-blue2 fw-bold ps-3">@teste</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">E-mail</td>
+                            <td class="text-dark-blue2 fw-bold ps-3">teste@gmail.com</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <form action="/usuarios/aceitar_visita/{{voluntario.id_usuario}}" method="POST">
+                    <button class="btn btn-success" type="submit">Aceitar visita</button>
+                </form>
+                <form action="/usuarios/negar_visita/{{voluntario.id_usuario}}" method="POST">
+                    <button class="btn btn-danger" type="submit">Negar visita</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock%}

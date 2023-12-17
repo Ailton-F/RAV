@@ -1,0 +1,12 @@
+.volunteer-header{
+    min-height: 12em;
+}
+
+.img-volunteer{
+    width: 9em;
+    height: 9em;
+    border: solid .375em white;
+    border-radius: 50%;
+    position: absolute;
+    top: 45%;
+}

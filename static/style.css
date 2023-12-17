@@ -13,6 +13,7 @@
 @import url("css/lares_page.css");
 @import url("css/lar.css");
 @import url("css/notificacao.css");
+@import url("css/volunteer.css");
 
 
 /*Configs*/
@@ -271,4 +272,8 @@ footer {
 
 .text-dark-blue{
   color: #195F82;
+}
+
+.text-dark-blue2{
+  color: #252F4A;
 }

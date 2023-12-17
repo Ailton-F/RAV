@@ -23,13 +23,21 @@ Marcar visita
                 <h4>Notificações</h4>
                 {% if not notificacoes %}
                 <p>Sem notificações</p>
-                {% else %} {% for notificacao in notificacoes %}
-
+                {% else %} {% for notificacao in notificacoes %} {% if notificacao.eacao %}
                 <div class="d-flex w-100 gap-3 align-items-center mb-3 px-3 py-4 notify-container">
-                    <img src="/static/uploads/{{notificacao.foto}}" class="img-notify">   {{notificacao.mensagem}}
+                    <img src="/static/uploads/{{notificacao.foto}}" class="img-notify">
+                    <div class="d-block">
+                        <p>{{notificacao.mensagem}}</p>
+                        <a class="btn bg-green text-white" href="/usuarios/voluntario/{{notificacao.id_remetente}}">Visualizar pedido</a>
+                    </div>
+
+
                 </div>
-                {% if notificacao.eacao %}
-                <a href="/usuarios/voluntario/{{notificacao.id_remetente}}">Visitar perfil do usuário</a>
+                {%else%}
+                <div class="d-flex w-100 gap-3 align-items-center mb-3 px-3 py-4 notify-container">
+                    <img src="/static/uploads/{{notificacao.foto}}" class="img-notify">
+                    <span>{{notificacao.mensagem}}</span>
+                </div>
                 {%endif%} {% endfor %} {% endif %}
             </div>
         </div>

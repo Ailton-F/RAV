@@ -282,7 +282,7 @@ class User():
     @staticmethod
     def get_all_lares_page():
         page = request.args.get('page', 1, type=int)
-        lares = Lar.query.paginate(page=page, per_page=1)
+        lares = Lar.query.paginate(page=page, per_page=3)
         for lar in lares.items:
             user = Usuario.query.filter_by(id=lar.id).first()
             lar.email = user.email
@@ -305,7 +305,7 @@ class User():
             user = Lar.query.filter_by(id_usuario=current_user.id).first()
         else:
             user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
-        return render_template('visit/lar.html', nome=user.nome, lar=lar, email=email.email)
+        return render_template('visit/lar.html', user=user, lar=lar, email=email.email)
 
     @staticmethod
     def save_data():
@@ -327,8 +327,23 @@ class User():
 
     @staticmethod
     def get_notification_page():
+        if current_user.user_type._value_ == 'V':
+            user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
+        else:
+            user = Lar.query.filter_by(id_usuario=current_user.id).first()
+
+
         notificacoes = Notificacao.query.filter_by(id_destino=current_user.id).all()
-        return render_template('visit/notificacao.html', notificacoes=notificacoes)
+        for notify in notificacoes:
+            id = notify.id_remetente
+            if current_user.user_type._value_ == 'V':
+                user_query = Lar.query.filter_by(id_usuario=id).first()
+                notify.foto = user_query.foto
+            else:
+                user_query = Voluntario.query.filter_by(id_usuario=id).first()
+                notify.foto = user_query.foto
+
+        return render_template('visit/notificacao.html', notificacoes=notificacoes, user=user)
 
     @staticmethod
     def get_volunteer_page(id):
@@ -365,7 +380,7 @@ class User():
         visit.status = 'A'
         notfi = Notificacao.query.filter_by(id_remetente=id, id_destino=current_user.id).first()
         lar = Lar.query.filter_by(id_usuario=current_user.id).first()
-        new_notfi = Notificacao(mensagem=f'Su)a visita ao lar {lar.nome} foi aceita', id_remetente=current_user.id,
+        new_notfi = Notificacao(mensagem=f'{lar.nome.upper()} aceitou seu pedido de visita', id_remetente=current_user.id,
                                 id_destino=id, eacao=False)
 
         db.session.add(visit)
@@ -391,4 +406,4 @@ class User():
 
         db.session.add(user)
         db.session.commit()
-        return redirect('usuarios/profile')
+        return redirect('/usuarios/profile')

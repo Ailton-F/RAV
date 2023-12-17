@@ -13,3 +13,19 @@
 .book-card{
   max-width: 32.5em;
 }
+
+.btn-selected-page{
+  height: 2.8em;
+  width: 2.8em;
+  border-radius: 50%;
+  background-color: #1FD2A7;
+  color: white;
+}
+
+.btn-other-page{
+  height: 2.8em;
+  width: 2.8em;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  color: black;
+}

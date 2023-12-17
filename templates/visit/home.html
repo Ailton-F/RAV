@@ -18,21 +18,14 @@ Visitas
             {% with u=session['id_info']['given_name'] %}
             {% include 'user/logheader.html'%}
             {% endwith %}
-
-            {% else %}
-
-            {% if u=='' %}
-            {% with u='' %}
+            {% else %} {% if u=='' %} {% with u='' %}
             {% include 'user/logheader.html'%}
             {% endwith %}
             {% else %}
             {% with user=user %}
             {% with u=user.nome %}
             {% include 'user/logheader.html'%}
-            {% endwith %} {% endwith %}
-            {% endif %}
-
-            {% endif %}
+            {% endwith %} {% endwith %} {% endif %} {% endif %}
             <div class="visit-home-content py-5">
                 <div class="mt-3">
                     {% with messages = get_flashed_messages(with_categories=true) %}

@@ -46,7 +46,7 @@ Meu perfil
             <div class="user-profile-content flex-grow-1">
                 <div class="row">
 
-                    <form action="save_foto/{{current_user.id}}" enctype="multipart/form-data"
+                    <form action="/usuarios/save_foto/{{current_user.id}}" enctype="multipart/form-data"
                           class="d-flex flex-column col-4 align-items-center" method="POST">
                         <label class="file-input-container"
                                style="background-image:{% if s['id_info']%}url('{{s['id_info']['picture']}}'); {% elif user.foto %} url({{url_for('static', filename='uploads/'+user.foto)}}); {% else %}url('https://static.vecteezy.com/system/resources/previews/000/574/512/large_2x/vector-sign-of-user-icon.jpg');{%endif%}">

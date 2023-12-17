@@ -19,6 +19,7 @@
 .profile-header-picture {
     width: 2.5em;
     height: 2.5em;
+     aspect-ratio: 4/4;
 }
 
 .edit-btn {

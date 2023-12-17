@@ -1,0 +1,14 @@
+.card-notification{
+    max-width: 49em;
+}
+
+.img-notify{
+    height: 3.25em;
+    width: 3.25em;
+    border-radius: 50%;
+}
+
+.notify-container{
+    border: 10px;
+    background-color: #F0F0F0;
+}

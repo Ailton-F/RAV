@@ -1,11 +1,39 @@
-<h1>Notificações</h1>
-{% if not notificacoes %}
-<h3>Sem notificações</h3>
-{% else %}
-{% for notificacao in notificacoes %}
-{{notificacao.mensagem}}
-{% if notificacao.eacao %}
-<a href="/usuarios/voluntario/{{notificacao.id_remetente}}">Visitar perfil do usuário</a>
-{%endif%}
-{% endfor %}
-{% endif %}
+{% extends 'indexwhf.html' %}
+{% block titulo %}
+Marcar visita
+{% endblock %}
+
+{% block conteudo %}
+<div class="d-flex">
+    <div class="flex-grow-1">
+        {% if session['id_info'] %}
+        {% with u=session['id_info']['given_name'] %}
+        {% include 'user/logheader.html'%}
+        {% endwith %}
+        {% else %} {% if u=='' %} {% with u='' %}
+        {% include 'user/logheader.html'%}
+        {% endwith %}
+        {% else %}
+        {% with user=user %} {% with back=True%} {% with u=user.nome %}
+        {% include 'user/logheader.html'%}
+        {% endwith %} {% endwith %} {% endwith %} {% endif %} {% endif %}
+
+        <div class="container-card w-100">
+            <div class="card card-notification m-auto mt-4 border-0 bg-white py-3">
+                <h4>Notificações</h4>
+                {% if not notificacoes %}
+                <p>Sem notificações</p>
+                {% else %} {% for notificacao in notificacoes %}
+
+                <div class="d-flex w-100 gap-3 align-items-center mb-3 px-3 py-4 notify-container">
+                    <img src="/static/uploads/{{notificacao.foto}}" class="img-notify">   {{notificacao.mensagem}}
+                </div>
+                {% if notificacao.eacao %}
+                <a href="/usuarios/voluntario/{{notificacao.id_remetente}}">Visitar perfil do usuário</a>
+                {%endif%} {% endfor %} {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

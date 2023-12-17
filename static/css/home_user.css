@@ -64,3 +64,9 @@
 .map-container{
  max-width: 28.5em;
 }
+
+.edit-home-btn{
+ background-color: #1FD2A7;
+ border-radius: 5px;
+ border: none;
+}

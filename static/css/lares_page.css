@@ -26,6 +26,8 @@
 
 .lares-perfil-photo{
     width: -webkit-fill-available;
+    max-height: 16.5em;
+    aspect-ratio: 4/16;
 }
 
 .lar-card:hover {

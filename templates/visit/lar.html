@@ -16,9 +16,9 @@ Editar visita
     {% include 'user/logheader.html'%}
     {% endwith %}
     {% else %}
-    {% with u=nome %}
+    {% with u=user.nome %} {% with user=user %}
     {% include 'user/logheader.html'%}
-    {% endwith %}
+    {% endwith %} {% endwith %}
     {% endif %}
     {% endif %}
     {% endwith %}

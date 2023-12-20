@@ -13,15 +13,13 @@ class User():
 
     # retorna a página de usuário
     @staticmethod
-    def getHome():
+    def get_home():
         if "id_info" not in session:
             u_id = current_user.id
-            if current_user.user_type._value_ == 'A':
-                user = db.session.query(Lar.nome).join(
-                    Usuario, Lar.id_usuario == u_id).first()
+            if current_user.user_type._value_ == 'L':
+                user = Lar.query.filter_by(id_usuario=u_id).first()
             else:
-                user = db.session.query(Voluntario.nome).join(
-                    Usuario, Voluntario.id_usuario == u_id).first()
+                user = Voluntario.query.filter_by(id_usuario=u_id).first()
 
         else:
             user = {}
@@ -122,10 +120,10 @@ class User():
 
         return render_template('user/profile.html', user=user, name=user.nome, s=session)
 
-    # Retorna a página de configuração de usuário do tipo voluntário
+    # Retorna a página de configuração de usuário
 
     @staticmethod
-    def getVolunteerConfigPage():
+    def get_config_page():
         if request.method == 'GET':
             return render_template('user/config.html')
 
@@ -135,11 +133,18 @@ class User():
             db.session.add(current_user)
 
         if tipo == 'V':
+
             vol = Voluntario(current_user.id)
+            if session['id_info']:
+                vol.foto = session['id_info']['picture']
+                vol.nome = session['id_info']['given_name']
             db.session.add(vol)
 
         else:
             lar = Lar(current_user.id)
+            if session['id_info']:
+                lar.foto = session['id_info']['picture']
+                lar.nome = session['id_info']['given_name']
             db.session.add(lar)
 
         db.session.commit()
@@ -149,24 +154,31 @@ class User():
 
     @staticmethod
     def get_visit_home_page():
-
-        lares = db.session.query(Lar.id, Lar.nome).limit(8).all()
-
         if current_user.user_type._value_ == 'V':
             user = Voluntario.query.filter_by(id_usuario=current_user.id).first()
-            rs_visits = Visita.query.filter_by(id_voluntario=user.id).limit(3).all()
-            for visit in rs_visits:
+            rs_visits_up = Visita.query.filter(Visita.id_voluntario == user.id, Visita.status != 'C').limit(3).all()
+            rs_visits_down = Visita.query.filter(Visita.id_voluntario == user.id, Visita.status == 'C').limit(3).all()
+
+            for visit in rs_visits_up:
+                lar = Lar.query.filter_by(id=visit.id_lar).first()
+                visit.nome = lar.nome
+
+            for visit in rs_visits_down:
                 lar = Lar.query.filter_by(id=visit.id_lar).first()
                 visit.nome = lar.nome
 
         elif current_user.user_type._value_ == 'L':
             user = Lar.query.filter_by(id_usuario=current_user.id).first()
-            rs_visits = Visita.query.filter_by(id_lar=user.id).limit(3).all()
-            for visit in rs_visits:
+            rs_visits_up = Visita.query.filter(Visita.id_lar == user.id, Visita.status != 'C').limit(3).all()
+            rs_visits_down = Visita.query.filter(Visita.id_lar == user.id, Visita.status == 'C').limit(3).all()
+            for visit in rs_visits_up:
+                voluntario = Voluntario.query.filter_by(id=visit.id_voluntario).first()
+                visit.nome = voluntario.nome
+            for visit in rs_visits_down:
                 voluntario = Voluntario.query.filter_by(id=visit.id_voluntario).first()
                 visit.nome = voluntario.nome
 
-        return render_template('visit/home.html', lares=lares, visitas=rs_visits, user=user,)
+        return render_template('visit/home.html', visitas_down=rs_visits_down, visitas_up=rs_visits_up, user=user,)
 
     # Retorna a página para marcar visitas
 
@@ -211,7 +223,6 @@ class User():
             rs_visits = Visita.query.filter(Visita.id_voluntario==vol.id, Visita.status != 'C').paginate(page=page, per_page=3)
 
             for visit in rs_visits.items:
-                print(dir(visit))
                 lar_id = visit.id_lar
                 lar = Lar.query.filter_by(id=lar_id).first()
                 visit.nome = lar.nome
@@ -325,7 +336,8 @@ class User():
     @staticmethod
     def deny_volunteer(id):
         vol = Voluntario.query.filter_by(id_usuario=id).first()
-        visit = Visita.query.filter_by(id_voluntario=vol.id, id_lar=current_user.id, status='P').first()
+        lar = Lar.query.filter_by(id_usuario=current_user.id).first()
+        visit = Visita.query.filter_by(id_voluntario=vol.id, id_lar=lar.id, status='P').first()
         if not visit:
             return redirect('/usuarios/notificacoes')
 
@@ -345,14 +357,15 @@ class User():
     @staticmethod
     def accept_volunteer(id):
         vol = Voluntario.query.filter_by(id_usuario=id).first()
-        visit = Visita.query.filter_by(id_voluntario=vol.id, id_lar=current_user.id, status='P').first()
+        lar = Lar.query.filter_by(id_usuario=current_user.id).first()
+        visit = Visita.query.filter_by(id_voluntario=vol.id, id_lar=lar.id, status='P').first()
         if not visit:
             return redirect('/usuarios/notificacoes')
 
         visit.status = 'A'
         notfi = Notificacao.query.filter_by(id_remetente=id, id_destino=current_user.id).first()
         lar = Lar.query.filter_by(id_usuario=current_user.id).first()
-        new_notfi = Notificacao(mensagem=f'{lar.nome.upper()} aceitou seu pedido de visita', id_remetente=current_user.id,
+        new_notfi = Notificacao(mensagem=f'{lar.nome.capitalize()} aceitou seu pedido de visita', id_remetente=current_user.id,
                                 id_destino=id, eacao=False)
 
         db.session.add(visit)
@@ -390,3 +403,22 @@ class User():
 
         flash('Visita marcada como realizada com sucesso!', 'success')
         return redirect('/usuarios/dashboard')
+
+    @staticmethod
+    def get_realized_page():
+        page = request.args.get('page', 1, type=int)
+        if current_user.user_type._value_ == 'V':
+            vol = Voluntario.query.filter_by(id_usuario=current_user.id).first()
+            rs_visits = Visita.query.filter_by(id_voluntario=vol.id, status ='C').paginate(page=page,per_page=3)
+
+
+            for visit in rs_visits.items:
+                lar_id = visit.id_lar
+                lar = Lar.query.filter_by(id=lar_id).first()
+                visit.nome = lar.nome
+        else:
+            rs_lar = Lar.query.filter_by(
+                id_usuario=current_user.id).first()
+            rs_visits = Visita.query.filter_by(id_lar=rs_lar.id)
+
+        return render_template('visit/dashboard_realizadas.html', visitas=rs_visits)

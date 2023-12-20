@@ -31,7 +31,8 @@ Editar visita
             <div class="d-flex flex-column gap-4 px-5 mt-3">
                 <div class="card border-0 shadow-lg">
                     <div class="card-header volunteer-header px-4 border-0 bg-green position-relative">
-                        <img src="/static/uploads/{{voluntario.foto}}" class="img-volunteer">
+                        <img src="{%if voluntario.foto.startswith('http')%}{{voluntario.foto}}{%else%}/static/uploads/{{voluntario.foto}}{%endif%}"
+                             class="img-volunteer">
                     </div>
                     <h4 class="mt-5 mb-4 px-4 text-dark-blue2">{{voluntario.nome.capitalize()}}</h4>
                 </div>
@@ -81,13 +82,17 @@ Editar visita
                         </tbody>
                     </table>
                 </div>
-
-                <form action="/usuarios/aceitar_visita/{{voluntario.id_usuario}}" method="POST">
-                    <button class="btn btn-success" type="submit">Aceitar visita</button>
-                </form>
-                <form action="/usuarios/negar_visita/{{voluntario.id_usuario}}" method="POST">
-                    <button class="btn btn-danger" type="submit">Negar visita</button>
-                </form>
+                <div class="card border-0 shadow-lg p-4 mb-5">
+                    <h5 class="fw-bold text-dark-blue2">Você deseja aceitar a visita desse voluntário?</h5>
+                    <div class="d-grid forms-container mt-3">
+                        <form class="w-fit" action="/usuarios/aceitar_visita/{{voluntario.id_usuario}}" method="POST">
+                            <button class="btn bg-green text-white py-3 px-5" type="submit">Aceitar</button>
+                        </form>
+                        <form class="" action="/usuarios/negar_visita/{{voluntario.id_usuario}}" method="POST">
+                            <button class="btn btn-reverse-danger py-3 px-5 text-danger" type="submit">Recusar</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

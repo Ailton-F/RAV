@@ -13,7 +13,7 @@ def load_user(id): return Usuario.query.get(id)
 
 @users_bl.route('/')
 @login_required
-def home(): return user.getHome()
+def home(): return user.get_home()
 
 
 @users_bl.route('/profile', methods=['GET'])
@@ -46,7 +46,7 @@ def edit(id): return user.editUser(id)
 
 @users_bl.route('/user_config', methods=['GET', 'POST'])
 @login_required
-def volunteer_config_page(): return user.getVolunteerConfigPage()
+def config_page(): return user.get_config_page()
 
 
 @users_bl.route('/visit', methods=["GET"])
@@ -109,3 +109,7 @@ def save_foto(id): return user.save_foto(id)
 @users_bl.route('/realize/<int:id>', methods=["GET"])
 @login_required
 def realize_visit(id): return user.realize(id)
+
+@users_bl.route('/realizadas', methods=["GET"])
+@login_required
+def realize_page(): return user.get_realized_page()

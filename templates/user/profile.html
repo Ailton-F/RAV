@@ -23,25 +23,15 @@ Meu perfil
         {% endif %}
         {% endwith %}
         <div class="flex-grow-1">
-            {% if session['id_info'] %}
-
-            {% with u=session['id_info']['given_name'] %}
+            {% if session['id_info'] %} {% with u=session['id_info']['given_name'] %}
             {% include 'user/logheader.html'%}
             {% endwith %}
-
-            {% else %}
-
-            {% if u=='' %}
-            {% with u='' %}
+            {% else %} {% if u=='' %} {% with u='' %}
             {% include 'user/logheader.html'%}
             {% endwith %}
-            {% else %}
-            {% with u=name %}
+            {% else %} {% with u=name %}
             {% include 'user/logheader.html'%}
-            {% endwith %}
-            {% endif %}
-
-            {% endif %}
+            {% endwith %} {% endif %} {% endif %}
 
             <div class="user-profile-content flex-grow-1">
                 <div class="row">

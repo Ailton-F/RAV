@@ -1,0 +1,100 @@
+{% extends 'indexwhf.html' %}
+
+{% block titulo%}
+Visitas Marcadas
+{% endblock %}
+
+{% block conteudo %}
+<section>
+    <div class="d-flex">
+        {% with wAfter = True%}
+        {% include 'user/loghome.html'%}
+        {% endwith %}
+        <div class="vh-100 flex-grow-1 px-5 d-flex flex-column justify-content-between pb-3">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{category}} position-relative top-0 mx-auto" role="alert">
+                {{message}}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <div class="d-flex text-left align-items-center my-5">
+                <h2 class="fw-bold">Visitas</h2>
+                <a class="btn ms-auto bg-green text-white" href="/usuarios/lares">Realizar visita</a>
+            </div>
+
+            <table class="visit-table mt-2">
+                <thead>
+                <tr>
+                    {% if current_user.user_type._value_ == 'V' %}
+                    <th class="text-center" scope="col">Local</th>
+                    <th class="text-center" scope="col">Status</th>
+                    {% else %}
+                    <th class="text-center" scope="col">Voluntário</th>
+                    {% endif %}
+                    <th class="text-center" scope="col">Dia</th>
+                    <th class="text-center" scope="col">Hora</th>
+                    {% if current_user.user_type._value_ == 'L' %}
+                    <th class="text-center" scope="col">Informações adicionais</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {%for visita in visitas.items %}
+                <tr>
+                    {% if current_user.user_type._value_ == 'V' %}
+                    <td class="text-center align-middle">{{visita.nome}}</td>
+                    <td class="text-center align-middle">Cancelada/Completa</td>
+                    {% else %}
+                    <td class="align-middle">{{visita.nome_voluntario}}</td>
+                    {% endif %}
+                    <td class="text-center align-middle">{{visita.dt_hr.strftime('%d/%m/%Y')}}</td>
+                    <td class="text-center align-middle">{{visita.dt_hr.strftime('%H:%M')}}</td>
+                    {% if current_user.user_type._value_ == 'L' %}
+                    <td class="text-center">
+                        <button class="btn border-0 text-danger visit-info-btn" data-bs-toggle="modal"
+                                data-bs-target="#infoModal{{visita.id}}">
+                            <i class="ri-information-line text-info"></i>
+                        </button>
+                    </td>
+
+                    <div class="modal fade" id="infoModal{{visita.id}}" tabindex="-1"
+                         aria-labelledby="infoLabel{{visita.id}}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="infoLabel{{visita.id}}">Informações adicionais</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <h4>Razão da visita: </h4>
+                                    <hr>
+                                    <p>
+                                        {{visita.motivo}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </tr>
+                {%endfor%}
+                </tbody>
+            </table>
+
+            <div class="d-flex align-items-center justify-content-center gap-2 mt-auto h-auto">
+                {% for page_num in visitas.iter_pages(left_edge=0,right_edge=1,left_current=1,right_current=2) %}
+                {% if page_num %} {% if visitas.page == page_num %}
+                <a class="btn btn-selected-page " href="/usuarios/dashboard?page={{page_num}}">{{page_num}}</a>
+                {% else %}
+                <a class="btn btn-other-page" href="/usuarios/dashboard?page={{page_num}}">{{page_num}}</a>
+                {%endif%} {% else %} ... {% endif %} {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -7,9 +7,9 @@ Marcar visita
 <div class="d-flex">
     <div class="flex-grow-1">
         {% if session['id_info'] %}
-        {% with u=session['id_info']['given_name'] %}
+        {% with u=session['id_info']['given_name'] %} {% with back = True%}
         {% include 'user/logheader.html'%}
-        {% endwith %}
+        {% endwith %} {% endwith %}
         {% else %} {% if u=='' %} {% with u='' %}
         {% include 'user/logheader.html'%}
         {% endwith %}
@@ -25,17 +25,19 @@ Marcar visita
                 <p>Sem notificações</p>
                 {% else %} {% for notificacao in notificacoes %} {% if notificacao.eacao %}
                 <div class="d-flex w-100 gap-3 align-items-center mb-3 px-3 py-4 notify-container">
-                    <img src="/static/uploads/{{notificacao.foto}}" class="img-notify">
+                    <img src="{%if notificacao.foto[:4] == 'http' %}{{notificacao.foto}}{% else %}/static/uploads/{{notificacao.foto}}{%endif%}" class="img-notify">
                     <div class="d-block">
                         <p>{{notificacao.mensagem}}</p>
-                        <a class="btn bg-green text-white" href="/usuarios/voluntario/{{notificacao.id_remetente}}">Visualizar pedido</a>
+                        <a class="btn bg-green text-white" href="/usuarios/voluntario/{{notificacao.id_remetente}}">Visualizar
+                            pedido</a>
                     </div>
 
 
                 </div>
-                {%else%}
+                {% else %}
                 <div class="d-flex w-100 gap-3 align-items-center mb-3 px-3 py-4 notify-container">
-                    <img src="/static/uploads/{{notificacao.foto}}" class="img-notify">
+                    <img src="{%if notificacao.foto[:4] == 'http' %}{{notificacao.foto}}{% else %}/static/uploads/{{notificacao.foto}}{%endif%}"
+                         class="img-notify">
                     <span>{{notificacao.mensagem}}</span>
                 </div>
                 {%endif%} {% endfor %} {% endif %}

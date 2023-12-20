@@ -12,9 +12,15 @@
       {% endwith %}
       <div class="flex-grow-1">
         
-        {% with u=user[0] %}
-          {% include 'user/logheader.html'%}
+        {% if session['id_info'] %} {% with u=session['id_info']['given_name'] %}
+        {% include 'user/logheader.html'%}
         {% endwith %}
+        {% else %} {% if u=='' %} {% with u='' %}
+        {% include 'user/logheader.html'%}
+        {% endwith %}
+        {% else %} {% with u=user.nome %}
+        {% include 'user/logheader.html'%}
+        {% endwith %} {% endif %} {% endif %}
         
         <div class="user-home-content mt-3">
           {% with messages = get_flashed_messages(with_categories=true) %}

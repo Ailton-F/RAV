@@ -10,3 +10,8 @@
     position: absolute;
     top: 45%;
 }
+
+.forms-container{
+    grid-template-columns: repeat(2, minmax(0, .15fr));
+    gap: 1em;
+}

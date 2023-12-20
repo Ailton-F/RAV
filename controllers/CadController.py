@@ -67,7 +67,7 @@ class Cad():
       return redirect('/usuarios/user_config')
     
   @staticmethod
-  def getGoogleCad():
+  def get_google_cad():
     authorization_url, state = flow.authorization_url()
     session["state"] = state
     return redirect(authorization_url)
@@ -75,7 +75,6 @@ class Cad():
   @staticmethod
   def callback():
     flow.fetch_token(authorization_response=request.url)
-
     if not session["state"] == request.args["state"]:
         abort(500)  # State does not match!
 
@@ -90,7 +89,7 @@ class Cad():
         audience=GOOGLE_CLIENT_ID
     )
 
-    usuario = Usuario(email=id_info.get('email'), admin=0, user_type=None, senha=None)
+    usuario = Usuario(email=id_info.get('email'), user_type=None, senha=None)
     session['id_info'] = id_info
     usuario_existe = Usuario.query.filter_by(email=usuario.email).first()
     if usuario_existe and usuario.email in usuario_existe.email:

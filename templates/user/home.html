@@ -73,6 +73,7 @@
             </div>
 
             <div class="d-flex gap-4">
+              {% if current_user.user_type._value_ == 'L' %}
               <div class="card border-0 shadow-lg p-0 d-flex flex-grow-1">
                 <div class="card-header border-0 bg-white p-3">
                   <p class="mb-0 fw-bold">Próximas vistas</p>
@@ -140,6 +141,7 @@
                 </table>
               </div>
               </div>
+              {% endif %}
 
               <div class="d-flex card-body shadow-lg p-4 flex-column gap-3 justify-content-center map-container">
                 <div>
@@ -149,6 +151,8 @@
                 </div>
                 <img src="/static/img/Location.svg" class="map-image">
               </div>
+
+
             </div>
           </div>
 

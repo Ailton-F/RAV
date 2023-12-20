@@ -68,12 +68,6 @@ def dashboard(): return user.get_dashboard_page()
 @login_required
 def delete_visit(id): return user.deleteVisitLink(id)
 
-
-@users_bl.route('/edit_visit/<int:id>', methods=["GET", "POST"])
-@login_required
-def edit_visit(id): return user.editVisitPage(id)
-
-
 @users_bl.route('/save', methods=["POST"])
 @login_required
 def save_name(): return user.save_name()
@@ -111,3 +105,7 @@ def accept_volunteer(id): return user.accept_volunteer(id)
 @users_bl.route('/save_foto/<int:id>', methods=["POST"])
 @login_required
 def save_foto(id): return user.save_foto(id)
+
+@users_bl.route('/realize/<int:id>', methods=["GET"])
+@login_required
+def realize_visit(id): return user.realize(id)

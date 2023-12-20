@@ -208,7 +208,7 @@ class User():
         page = request.args.get('page', 1, type=int)
         if current_user.user_type._value_ == 'V':
             vol = Voluntario.query.filter_by(id_usuario=current_user.id).first()
-            rs_visits = Visita.query.filter_by(id_voluntario=vol.id).paginate(page=page, per_page=1)
+            rs_visits = Visita.query.filter(Visita.id_voluntario==vol.id, Visita.status != 'C').paginate(page=page, per_page=3)
 
             for visit in rs_visits.items:
                 print(dir(visit))
@@ -234,37 +234,6 @@ class User():
         return redirect('/usuarios/dashboard')
 
     # GET: Retorna a página de edição da visita, POST: edita a visita
-
-    @staticmethod
-    def editVisitPage(id):
-        visit = Visita.query.filter_by(id=id).first()
-        if request.method == "GET":
-            return render_template('visit/edit.html', visit=visit)
-
-        # Faz a formatação da data
-        visit_date = request.form.get('visit-date')
-        date = map(lambda item: int(item), visit_date.split('-'))
-        date = list(date)
-        fdate = datetime(int(date[0]), int(date[1]), int(date[2]))
-        visit_date = fdate.date()
-
-        # Faz a formatação da hora
-        visit_hour = request.form.get('visit-hour')
-        visit_hour = map(lambda item: int(item), visit_hour.split(':'))
-        visit_hour = list(visit_hour)
-        fhour = datetime(1999, 1, 1, visit_hour[0], visit_hour[1])
-        visit_hour = fhour.time()
-
-        visit.data = visit_date
-        visit.hora = visit_hour
-        visit.nome_voluntario = request.form.get('name')
-        visit.motivo = request.form.get('visit-reason')
-
-        db.session.add(visit)
-        db.session.commit()
-
-        flash('Visita editada com sucesso!', 'success')
-        return redirect('/usuarios/dashboard')
 
     @staticmethod
     def save_name():
@@ -410,3 +379,14 @@ class User():
         db.session.add(user)
         db.session.commit()
         return redirect('/usuarios/profile')
+
+    @staticmethod
+    def realize(id):
+        visit = Visita.query.filter_by(id=id).first()
+        visit.status = 'C'
+
+        db.session.add(visit)
+        db.session.commit()
+
+        flash('Visita marcada como realizada com sucesso!', 'success')
+        return redirect('/usuarios/dashboard')

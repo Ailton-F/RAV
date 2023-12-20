@@ -29,3 +29,26 @@
   background-color: #D9D9D9;
   color: black;
 }
+
+.visit-table{
+  border: .5px solid #CECECE;
+  border-radius: 10px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.visit-table thead tr th{
+  color: #808080;
+  font-weight: normal !important;
+  padding: 1.5em 1em;
+  border-bottom: 1px solid #CECECE;
+}
+
+.visit-table tbody tr td{
+  font-weight: bold;
+  padding: 1.5em 1em;
+}
+
+.visit-table tbody tr:not(:last-child) td {
+  border-bottom: 1px solid #CECECE;
+}
